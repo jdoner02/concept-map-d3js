@@ -1,4 +1,4 @@
 -------------------------------------------------------------------------------
 Test set: edu.ewu.cscd211.conceptmap.model.ConceptTest
 -------------------------------------------------------------------------------
-Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.109 s - in edu.ewu.cscd211.conceptmap.model.ConceptTest
+Tests run: 10, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.075 s - in edu.ewu.cscd211.conceptmap.model.ConceptTest

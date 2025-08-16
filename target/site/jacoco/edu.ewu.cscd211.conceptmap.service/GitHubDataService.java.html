@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>GitHubDataService.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSCD211 Concept Map</a> &gt; <a href="index.source.html" class="el_package">edu.ewu.cscd211.conceptmap.service</a> &gt; <span class="el_source">GitHubDataService.java</span></div><h1>GitHubDataService.java</h1><pre class="source lang-java linenums">package edu.ewu.cscd211.conceptmap.service;
+
+import java.io.IOException;
+import java.net.URI;
+import java.net.URLEncoder;
+import java.net.http.HttpClient;
+import java.net.http.HttpRequest;
+import java.net.http.HttpResponse;
+import java.nio.charset.StandardCharsets;
+import java.time.Duration;
+import java.util.Base64;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.Map;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+/**
+ * Service class for fetching concept map data from GitHub repositories.
+ * 
+ * This class demonstrates several important concepts for CSCD211 students:
+ * - Service layer design pattern
+ * - HTTP client usage and API integration
+ * - Exception handling and error recovery
+ * - Caching patterns for performance optimization
+ * - Input validation and defensive programming
+ * - JSON parsing and data transformation
+ * 
+ * @author Test Guardian Agent
+ * @version 1.0
+ * @since 1.0
+ */
+public class GitHubDataService {
+
+    /** Base URL for GitHub API */
+    private static final String GITHUB_API_BASE = &quot;https://api.github.com&quot;;
+    
+    /** HTTP client for making requests */
+    private final HttpClient httpClient;
+    
+    /** JSON parser for processing API responses */
+    private final ObjectMapper objectMapper;
+    
+    /** Cache for storing fetched data to reduce API calls */
+    private final Map&lt;String, CacheEntry&gt; cache;
+    
+    /** Timeout for HTTP requests in seconds */
+<span class="nc" id="L47">    private static final Duration REQUEST_TIMEOUT = Duration.ofSeconds(30);</span>
+    
+    /** Cache expiration time in milliseconds (5 minutes) */
+    private static final long CACHE_EXPIRATION_MS = 5L * 60 * 1000;
+    
+    /** Flag to track if last request was a cache hit */
+<span class="nc" id="L53">    private boolean lastRequestWasCacheHit = false;</span>
+
+    /**
+     * Creates a new GitHubDataService with default configuration.
+     * 
+     * This constructor demonstrates initialization patterns and dependency setup.
+     */
+<span class="nc" id="L60">    public GitHubDataService() {</span>
+<span class="nc" id="L61">        this.httpClient = HttpClient.newBuilder()</span>
+<span class="nc" id="L62">            .connectTimeout(REQUEST_TIMEOUT)</span>
+<span class="nc" id="L63">            .build();</span>
+<span class="nc" id="L64">        this.objectMapper = new ObjectMapper();</span>
+<span class="nc" id="L65">        this.cache = new ConcurrentHashMap&lt;&gt;();</span>
+<span class="nc" id="L66">    }</span>
+
+    /**
+     * Checks if the service is properly configured and ready to use.
+     * 
+     * @return true if the service is configured, false otherwise
+     */
+    public boolean isConfigured() {
+<span class="nc bnc" id="L74" title="All 6 branches missed.">        return httpClient != null &amp;&amp; objectMapper != null &amp;&amp; cache != null;</span>
+    }
+
+    /**
+     * Fetches concept map data from a GitHub repository.
+     * 
+     * This method demonstrates HTTP client usage, error handling, and caching patterns.
+     * 
+     * @param owner the repository owner (e.g., &quot;jdoner02&quot;)
+     * @param repository the repository name (e.g., &quot;cscd211-concept-map-d3js&quot;)
+     * @param filePath the path to the JSON file (e.g., &quot;concept-map.json&quot;)
+     * @return the JSON content as a string
+     * @throws GitHubServiceException if the request fails or data is invalid
+     * @throws IllegalArgumentException if any parameter is null or blank
+     */
+    public String fetchConceptMapData(String owner, String repository, String filePath) 
+            throws GitHubServiceException {
+        
+        // Input validation - defensive programming practice
+<span class="nc" id="L93">        validateParameters(owner, repository, filePath);</span>
+        
+        // Check cache first
+<span class="nc" id="L96">        String cacheKey = buildCacheKey(owner, repository, filePath);</span>
+<span class="nc" id="L97">        CacheEntry cachedEntry = cache.get(cacheKey);</span>
+        
+<span class="nc bnc" id="L99" title="All 4 branches missed.">        if (cachedEntry != null &amp;&amp; !cachedEntry.isExpired()) {</span>
+<span class="nc" id="L100">            lastRequestWasCacheHit = true;</span>
+<span class="nc" id="L101">            return cachedEntry.content;</span>
+        }
+        
+<span class="nc" id="L104">        lastRequestWasCacheHit = false;</span>
+        
+        try {
+            // Build API URL
+<span class="nc" id="L108">            String apiUrl = buildGitHubApiUrl(owner, repository, filePath);</span>
+            
+            // Create HTTP request
+<span class="nc" id="L111">            HttpRequest request = HttpRequest.newBuilder()</span>
+<span class="nc" id="L112">                .uri(URI.create(apiUrl))</span>
+<span class="nc" id="L113">                .header(&quot;Accept&quot;, &quot;application/vnd.github.v3+json&quot;)</span>
+<span class="nc" id="L114">                .header(&quot;User-Agent&quot;, &quot;CSCD211-ConceptMap/1.0&quot;)</span>
+<span class="nc" id="L115">                .timeout(REQUEST_TIMEOUT)</span>
+<span class="nc" id="L116">                .GET()</span>
+<span class="nc" id="L117">                .build();</span>
+            
+            // Send request and get response
+<span class="nc" id="L120">            HttpResponse&lt;String&gt; response = httpClient.send(request, </span>
+<span class="nc" id="L121">                HttpResponse.BodyHandlers.ofString());</span>
+            
+            // Check response status
+<span class="nc bnc" id="L124" title="All 2 branches missed.">            if (response.statusCode() != 200) {</span>
+<span class="nc" id="L125">                throw new GitHubServiceException(</span>
+<span class="nc" id="L126">                    String.format(&quot;GitHub API request failed with status %d: %s&quot;,</span>
+<span class="nc" id="L127">                        response.statusCode(), response.body())</span>
+                );
+            }
+            
+            // Parse JSON response to extract content
+<span class="nc" id="L132">            String content = extractContentFromResponse(response.body());</span>
+            
+            // Cache the result
+<span class="nc" id="L135">            cache.put(cacheKey, new CacheEntry(content));</span>
+            
+<span class="nc" id="L137">            return content;</span>
+            
+<span class="nc" id="L139">        } catch (IOException e) {</span>
+<span class="nc" id="L140">            throw new GitHubServiceException(&quot;Failed to fetch data from GitHub&quot;, e);</span>
+<span class="nc" id="L141">        } catch (InterruptedException e) {</span>
+<span class="nc" id="L142">            Thread.currentThread().interrupt();</span>
+<span class="nc" id="L143">            throw new GitHubServiceException(&quot;Request was interrupted&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Validates input parameters for null and blank values.
+     * 
+     * @param owner the repository owner
+     * @param repository the repository name
+     * @param filePath the file path
+     * @throws IllegalArgumentException if any parameter is invalid
+     */
+    private void validateParameters(String owner, String repository, String filePath) {
+<span class="nc bnc" id="L156" title="All 2 branches missed.">        if (owner == null) {</span>
+<span class="nc" id="L157">            throw new IllegalArgumentException(&quot;Owner cannot be null&quot;);</span>
+        }
+<span class="nc bnc" id="L159" title="All 2 branches missed.">        if (repository == null) {</span>
+<span class="nc" id="L160">            throw new IllegalArgumentException(&quot;Repository cannot be null&quot;);</span>
+        }
+<span class="nc bnc" id="L162" title="All 2 branches missed.">        if (filePath == null) {</span>
+<span class="nc" id="L163">            throw new IllegalArgumentException(&quot;File path cannot be null&quot;);</span>
+        }
+<span class="nc bnc" id="L165" title="All 2 branches missed.">        if (owner.trim().isEmpty()) {</span>
+<span class="nc" id="L166">            throw new IllegalArgumentException(&quot;Owner cannot be empty or blank&quot;);</span>
+        }
+<span class="nc bnc" id="L168" title="All 2 branches missed.">        if (repository.trim().isEmpty()) {</span>
+<span class="nc" id="L169">            throw new IllegalArgumentException(&quot;Repository cannot be empty or blank&quot;);</span>
+        }
+<span class="nc bnc" id="L171" title="All 2 branches missed.">        if (filePath.trim().isEmpty()) {</span>
+<span class="nc" id="L172">            throw new IllegalArgumentException(&quot;File path cannot be empty or blank&quot;);</span>
+        }
+<span class="nc" id="L174">    }</span>
+
+    /**
+     * Builds the GitHub API URL for fetching file contents.
+     * 
+     * @param owner the repository owner
+     * @param repository the repository name
+     * @param filePath the file path
+     * @return the complete API URL
+     */
+    public String buildGitHubApiUrl(String owner, String repository, String filePath) {
+<span class="nc" id="L185">        return String.format(&quot;%s/repos/%s/%s/contents/%s&quot;,</span>
+            GITHUB_API_BASE, 
+<span class="nc" id="L187">            URLEncoder.encode(owner, StandardCharsets.UTF_8),</span>
+<span class="nc" id="L188">            URLEncoder.encode(repository, StandardCharsets.UTF_8),</span>
+<span class="nc" id="L189">            URLEncoder.encode(filePath, StandardCharsets.UTF_8)</span>
+        );
+    }
+
+    /**
+     * Extracts the file content from GitHub API JSON response.
+     * 
+     * GitHub API returns file content as base64 encoded data, so we need to
+     * parse the JSON and decode the content.
+     * 
+     * @param responseBody the JSON response from GitHub API
+     * @return the decoded file content
+     * @throws GitHubServiceException if JSON parsing fails
+     */
+    private String extractContentFromResponse(String responseBody) throws GitHubServiceException {
+        try {
+<span class="nc" id="L205">            JsonNode jsonNode = objectMapper.readTree(responseBody);</span>
+<span class="nc" id="L206">            String encodedContent = jsonNode.get(&quot;content&quot;).asText();</span>
+<span class="nc" id="L207">            return decodeBase64Content(encodedContent);</span>
+<span class="nc" id="L208">        } catch (Exception e) {</span>
+<span class="nc" id="L209">            throw new GitHubServiceException(&quot;Failed to parse GitHub API response&quot;, e);</span>
+        }
+    }
+
+    /**
+     * Decodes base64 encoded content from GitHub API.
+     * 
+     * This method demonstrates base64 decoding and string handling.
+     * 
+     * @param base64Content the base64 encoded content
+     * @return the decoded content as a string
+     */
+    public String decodeBase64Content(String base64Content) {
+        // Remove whitespace and newlines that GitHub API includes
+<span class="nc" id="L223">        String cleanedContent = base64Content.replaceAll(&quot;\\s&quot;, &quot;&quot;);</span>
+<span class="nc" id="L224">        byte[] decodedBytes = Base64.getDecoder().decode(cleanedContent);</span>
+<span class="nc" id="L225">        return new String(decodedBytes, StandardCharsets.UTF_8);</span>
+    }
+
+    /**
+     * Checks if the last request was served from cache.
+     * 
+     * @return true if the last request was a cache hit, false otherwise
+     */
+    public boolean isCacheHit() {
+<span class="nc" id="L234">        return lastRequestWasCacheHit;</span>
+    }
+
+    /**
+     * Checks if specific data is cached and not expired.
+     * 
+     * @param owner the repository owner
+     * @param repository the repository name
+     * @param filePath the file path
+     * @return true if data is cached, false otherwise
+     */
+    public boolean isCached(String owner, String repository, String filePath) {
+<span class="nc" id="L246">        String cacheKey = buildCacheKey(owner, repository, filePath);</span>
+<span class="nc" id="L247">        CacheEntry entry = cache.get(cacheKey);</span>
+<span class="nc bnc" id="L248" title="All 4 branches missed.">        return entry != null &amp;&amp; !entry.isExpired();</span>
+    }
+
+    /**
+     * Clears all cached data.
+     */
+    public void clearCache() {
+<span class="nc" id="L255">        cache.clear();</span>
+<span class="nc" id="L256">    }</span>
+
+    /**
+     * Builds a cache key from the repository parameters.
+     * 
+     * @param owner the repository owner
+     * @param repository the repository name
+     * @param filePath the file path
+     * @return a unique cache key
+     */
+    private String buildCacheKey(String owner, String repository, String filePath) {
+<span class="nc" id="L267">        return String.format(&quot;%s/%s/%s&quot;, owner, repository, filePath);</span>
+    }
+
+    /**
+     * Internal class for storing cached entries with expiration time.
+     */
+    private static class CacheEntry {
+        private final String content;
+        private final long timestamp;
+
+<span class="nc" id="L277">        public CacheEntry(String content) {</span>
+<span class="nc" id="L278">            this.content = content;</span>
+<span class="nc" id="L279">            this.timestamp = System.currentTimeMillis();</span>
+<span class="nc" id="L280">        }</span>
+
+        public boolean isExpired() {
+<span class="nc bnc" id="L283" title="All 2 branches missed.">            return System.currentTimeMillis() - timestamp &gt; CACHE_EXPIRATION_MS;</span>
+        }
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>

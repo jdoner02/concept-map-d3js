@@ -1,3 +1,5 @@
 /Users/jessicadoner/Projects/concept-map-d3js/src/main/java/edu/ewu/cscd211/conceptmap/model/Concept.java
 /Users/jessicadoner/Projects/concept-map-d3js/src/main/java/edu/ewu/cscd211/conceptmap/model/Relationship.java
 /Users/jessicadoner/Projects/concept-map-d3js/src/main/java/edu/ewu/cscd211/conceptmap/model/RelationshipType.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/main/java/edu/ewu/cscd211/conceptmap/service/GitHubServiceException.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/main/java/edu/ewu/cscd211/conceptmap/service/GitHubDataService.java
