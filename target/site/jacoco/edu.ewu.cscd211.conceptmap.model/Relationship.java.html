@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?><!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd"><html xmlns="http://www.w3.org/1999/xhtml" lang="en"><head><meta http-equiv="Content-Type" content="text/html;charset=UTF-8"/><link rel="stylesheet" href="../jacoco-resources/report.css" type="text/css"/><link rel="shortcut icon" href="../jacoco-resources/report.gif" type="image/gif"/><title>Relationship.java</title><link rel="stylesheet" href="../jacoco-resources/prettify.css" type="text/css"/><script type="text/javascript" src="../jacoco-resources/prettify.js"></script></head><body onload="window['PR_TAB_WIDTH']=4;prettyPrint()"><div class="breadcrumb" id="breadcrumb"><span class="info"><a href="../jacoco-sessions.html" class="el_session">Sessions</a></span><a href="../index.html" class="el_report">CSCD211 Concept Map</a> &gt; <a href="index.source.html" class="el_package">edu.ewu.cscd211.conceptmap.model</a> &gt; <span class="el_source">Relationship.java</span></div><h1>Relationship.java</h1><pre class="source lang-java linenums">package edu.ewu.cscd211.conceptmap.model;
+
+import java.util.Objects;
+
+/**
+ * Represents a relationship between two concepts in the concept map.
+ * 
+ * This class demonstrates advanced Java principles for CSCD211 students:
+ * - Immutable object design (no setters after construction)
+ * - Composition (contains Concept objects)
+ * - Defensive programming with comprehensive validation
+ * - Proper equals() and hashCode() implementation for complex objects
+ * - Business logic methods (isRelatedTo)
+ * 
+ * @author Test Guardian Agent
+ * @version 1.0
+ * @since 1.0
+ */
+public class Relationship {
+    
+    /** The source concept in this relationship */
+    private final Concept source;
+    
+    /** The target concept in this relationship */
+    private final Concept target;
+    
+    /** The type of relationship between source and target */
+    private final RelationshipType type;
+    
+    /**
+     * Creates a new relationship between two concepts.
+     * 
+     * This constructor demonstrates comprehensive input validation
+     * and immutable design patterns for students.
+     * 
+     * @param source the source concept (cannot be null)
+     * @param target the target concept (cannot be null)
+     * @param type the type of relationship (cannot be null)
+     * @throws IllegalArgumentException if any parameter is null or if source equals target
+     */
+<span class="fc" id="L41">    public Relationship(Concept source, Concept target, RelationshipType type) {</span>
+        // Comprehensive input validation - defensive programming
+<span class="fc bfc" id="L43" title="All 2 branches covered.">        if (source == null) {</span>
+<span class="fc" id="L44">            throw new IllegalArgumentException(&quot;Source concept cannot be null&quot;);</span>
+        }
+<span class="fc bfc" id="L46" title="All 2 branches covered.">        if (target == null) {</span>
+<span class="fc" id="L47">            throw new IllegalArgumentException(&quot;Target concept cannot be null&quot;);</span>
+        }
+<span class="fc bfc" id="L49" title="All 2 branches covered.">        if (type == null) {</span>
+<span class="fc" id="L50">            throw new IllegalArgumentException(&quot;Relationship type cannot be null&quot;);</span>
+        }
+        
+        // Business rule: prevent self-referential relationships
+<span class="fc bfc" id="L54" title="All 2 branches covered.">        if (source.equals(target)) {</span>
+<span class="fc" id="L55">            throw new IllegalArgumentException(&quot;A concept cannot have relationship with itself&quot;);</span>
+        }
+        
+        // Assign to final fields (immutable design)
+<span class="fc" id="L59">        this.source = source;</span>
+<span class="fc" id="L60">        this.target = target;</span>
+<span class="fc" id="L61">        this.type = type;</span>
+<span class="fc" id="L62">    }</span>
+    
+    /**
+     * Gets the source concept of this relationship.
+     * 
+     * @return the source concept (never null)
+     */
+    public Concept getSource() {
+<span class="fc" id="L70">        return source;</span>
+    }
+    
+    /**
+     * Gets the target concept of this relationship.
+     * 
+     * @return the target concept (never null)
+     */
+    public Concept getTarget() {
+<span class="fc" id="L79">        return target;</span>
+    }
+    
+    /**
+     * Gets the type of this relationship.
+     * 
+     * @return the relationship type (never null)
+     */
+    public RelationshipType getType() {
+<span class="fc" id="L88">        return type;</span>
+    }
+    
+    /**
+     * Checks if this relationship involves the specified concept.
+     * 
+     * This method demonstrates business logic implementation
+     * and shows students how to create meaningful utility methods.
+     * 
+     * @param concept the concept to check
+     * @return true if the concept is either the source or target of this relationship
+     */
+    public boolean isRelatedTo(Concept concept) {
+<span class="pc bpc" id="L101" title="1 of 2 branches missed.">        if (concept == null) {</span>
+<span class="nc" id="L102">            return false;</span>
+        }
+<span class="fc bfc" id="L104" title="All 4 branches covered.">        return source.equals(concept) || target.equals(concept);</span>
+    }
+    
+    /**
+     * Compares this relationship with another object for equality.
+     * 
+     * Two relationships are considered equal if they have the same
+     * source, target, and type. This demonstrates proper equals()
+     * implementation for complex objects with multiple fields.
+     * 
+     * @param obj the object to compare with
+     * @return true if the objects are equal, false otherwise
+     */
+    @Override
+    public boolean equals(Object obj) {
+<span class="pc bpc" id="L119" title="1 of 2 branches missed.">        if (this == obj) {</span>
+<span class="nc" id="L120">            return true;</span>
+        }
+<span class="pc bpc" id="L122" title="2 of 4 branches missed.">        if (obj == null || getClass() != obj.getClass()) {</span>
+<span class="nc" id="L123">            return false;</span>
+        }
+<span class="fc" id="L125">        Relationship that = (Relationship) obj;</span>
+<span class="pc bpc" id="L126" title="1 of 2 branches missed.">        return Objects.equals(source, that.source) &amp;&amp;</span>
+<span class="pc bpc" id="L127" title="1 of 4 branches missed.">               Objects.equals(target, that.target) &amp;&amp;</span>
+               type == that.type;
+    }
+    
+    /**
+     * Returns a hash code for this relationship.
+     * 
+     * This implementation follows the contract that equal objects
+     * must have equal hash codes. Shows students how to properly
+     * implement hashCode() for multi-field objects.
+     * 
+     * @return the hash code
+     */
+    @Override
+    public int hashCode() {
+<span class="fc" id="L142">        return Objects.hash(source, target, type);</span>
+    }
+    
+    /**
+     * Returns a string representation of this relationship.
+     * 
+     * @return a string showing the source, target, and type of this relationship
+     */
+    @Override
+    public String toString() {
+<span class="fc" id="L152">        return String.format(&quot;Relationship{source=%s, target=%s, type=%s}&quot;, </span>
+<span class="fc" id="L153">                           source.getId(), target.getId(), type);</span>
+    }
+}
+</pre><div class="footer"><span class="right">Created with <a href="http://www.jacoco.org/jacoco">JaCoCo</a> 0.8.8.202204050719</span></div></body></html>
