@@ -1,0 +1,33 @@
+# OS
+.DS_Store
+
+# IDEs/editors
+.idea/
+*.iml
+.project
+.classpath
+.settings/
+.vscode/
+
+# Maven/Java
+target/
+!.mvn/
+
+# Logs & coverage
+*.log
+.coverage
+coverage/
+
+# Node/Vite (frontend)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+frontend/.eslintcache
+
+# Playwright artifacts
+frontend/playwright-report/
+frontend/test-results/
+
+# Misc
+Thumbs.db

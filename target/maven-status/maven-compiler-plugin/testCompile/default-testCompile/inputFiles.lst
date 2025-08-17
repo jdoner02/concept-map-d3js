@@ -1,3 +1,9 @@
-/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/model/RelationshipTest.java
-/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/service/GitHubDataServiceTest.java
-/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/model/ConceptTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/ConceptMapControllerServiceIntegrationTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/ConceptMapCorsTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/model/ConceptMapTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/model/LinkTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/model/MetadataTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/model/NodeTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/service/ConceptMapJsonDeserializationTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/util/JsonValidationUtilsTest.java
+/Users/jessicadoner/Projects/concept-map-d3js/src/test/java/edu/ewu/cscd211/conceptmap/visualization/VisualizationLoadingTest.java

@@ -1,0 +1,158 @@
+/* Concept Map Styles */
+.concept-map-container {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  font-family: 'Arial', sans-serif;
+}
+
+.concept-map-header {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
+  border-bottom: 1px solid #e0e0e0;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.concept-map-header h1 {
+  margin: 0 0 10px 0;
+  color: #333;
+  font-size: 2.5em;
+  font-weight: 300;
+}
+
+.concept-map-header p {
+  margin: 0 0 15px 0;
+  color: #666;
+  font-size: 1.1em;
+}
+
+.metadata {
+  display: inline-block;
+  background: #f8f9fa;
+  padding: 8px 16px;
+  border-radius: 20px;
+  font-size: 0.9em;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.metadata span {
+  margin: 0 5px;
+}
+
+/* Loading and Error States */
+.concept-map-loading,
+.concept-map-error {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  text-align: center;
+}
+
+.concept-map-loading h2,
+.concept-map-error h2 {
+  font-size: 2em;
+  margin-bottom: 10px;
+  font-weight: 300;
+}
+
+.concept-map-loading p,
+.concept-map-error p {
+  font-size: 1.2em;
+  margin: 5px 0;
+  opacity: 0.9;
+}
+
+.concept-map-error button {
+  margin-top: 20px;
+  padding: 12px 24px;
+  background: #fff;
+  color: #667eea;
+  border: none;
+  border-radius: 25px;
+  font-size: 1.1em;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+
+.concept-map-error button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* SVG Styles */
+svg {
+  flex: 1;
+  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  border-top: 1px solid #e0e0e0;
+  display: block;
+}
+
+/* D3 Node and Link Styles */
+
+/* Keep node styling simple to avoid flicker during simulation ticks */
+.node { outline: none; }
+
+.node:hover {
+  stroke-width: 4px !important;
+  filter: brightness(1.1);
+}
+
+.link { pointer-events: stroke; }
+
+.link:hover {
+  stroke-width: 4px !important;
+  stroke: #333 !important;
+}
+
+.link-label {
+  font-family: 'Arial', sans-serif;
+  text-shadow: 1px 1px 2px rgba(255, 255, 255, 0.8);
+}
+
+.node-label {
+  font-family: 'Arial', sans-serif;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.3);
+  user-select: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .concept-map-header h1 {
+    font-size: 2em;
+  }
+  
+  .concept-map-header p {
+    font-size: 1em;
+  }
+  
+  .metadata {
+    font-size: 0.8em;
+    padding: 6px 12px;
+  }
+  
+  .node-label {
+    font-size: 12px;
+  }
+  
+  .link-label {
+    font-size: 10px;
+  }
+}
+
+/* Avoid transform transitions that can cause instability with D3 positioning */
+.node-group { will-change: transform; }
+
+/* Tooltip styles */
+title {
+  font-family: 'Arial', sans-serif;
+}

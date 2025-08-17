@@ -1,0 +1,147 @@
+package edu.ewu.cscd211.conceptmap;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.util.StreamUtils;
+
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
+import java.nio.charset.StandardCharsets;
+
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.hamcrest.Matchers.containsString;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.head;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.options;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.ResourceLoader;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+import org.mockito.Mockito;
+
+@WebMvcTest(ConceptMapController.class)
+class ConceptMapControllerTest {
+
+    @Autowired
+    private MockMvc mockMvc;
+
+    // No mocked beans here; for mocking scenario we build a standalone MockMvc instance in-test
+
+    @Test
+    void shouldReturnConceptMapJson() throws Exception {
+        mockMvc.perform(get("/api/concept-map"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType("application/json"))
+                .andExpect(jsonPath("$.metadata.version").value("6.3"))
+                .andExpect(jsonPath("$.nodes").isArray())
+                .andExpect(jsonPath("$.links").isArray());
+    }
+
+    @Test
+    void shouldReturnExactConceptMapFileContent() throws Exception {
+        // Load the expected JSON from classpath to assert exact body match
+        try (InputStream in = getClass().getClassLoader().getResourceAsStream("concept-map.json")) {
+            assertNotNull(in, "concept-map.json should be on classpath");
+            String expected = StreamUtils.copyToString(in, StandardCharsets.UTF_8);
+
+            mockMvc.perform(get("/api/concept-map"))
+                    .andExpect(status().isOk())
+                    .andExpect(content().string(expected))
+                    .andExpect(header().string("Content-Type", "application/json"));
+        }
+    }
+
+    @Test
+    void postShouldBeMethodNotAllowed() throws Exception {
+        mockMvc.perform(org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post("/api/concept-map"))
+                .andExpect(status().isMethodNotAllowed());
+    }
+
+    @Test
+    void headShouldSucceedWithNoBody() throws Exception {
+        mockMvc.perform(head("/api/concept-map"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"));
+    }
+
+    @Test
+    void optionsShouldListAllowedMethods() throws Exception {
+        mockMvc.perform(options("/api/concept-map"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Allow", containsString("GET")))
+                .andExpect(header().string("Allow", containsString("HEAD")))
+                .andExpect(header().string("Allow", containsString("OPTIONS")))
+                .andExpect(header().doesNotExist("X-Unexpected"));
+    }
+
+    @Test
+    void shouldReturnJsonRegardlessOfAcceptHeader() throws Exception {
+        // Even if client requests text/plain, endpoint responds with JSON and correct Content-Type
+        mockMvc.perform(get("/api/concept-map").header("Accept", "text/plain"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(jsonPath("$.metadata.version").exists());
+    }
+
+    @Test
+    void shouldReturnContentFromMockedResourceLoader() throws Exception {
+        String expectedJson = "{\n  \"metadata\": { \"version\": \"test\" },\n  \"nodes\": [],\n  \"links\": []\n}";
+
+    ResourceLoader mockLoader = Mockito.mock(ResourceLoader.class);
+    Resource mockResource = Mockito.mock(Resource.class);
+    Mockito.when(mockLoader.getResource("classpath:concept-map.json")).thenReturn(mockResource);
+    Mockito.when(mockResource.exists()).thenReturn(true);
+    Mockito.when(mockResource.isReadable()).thenReturn(true);
+    Mockito.when(mockResource.getInputStream()).thenReturn(new ByteArrayInputStream(expectedJson.getBytes(StandardCharsets.UTF_8)));
+
+    // Build standalone MockMvc with a controller that uses our mocked ResourceLoader
+    ConceptMapController controller = new ConceptMapController(mockLoader);
+    MockMvc standaloneMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+    standaloneMvc.perform(get("/api/concept-map"))
+                .andExpect(status().isOk())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(content().string(expectedJson));
+    }
+
+    @Test
+    void shouldReturn500WhenResourceReadFails() throws Exception {
+        // Arrange a controller with a ResourceLoader that throws IOException on getInputStream
+        ResourceLoader mockLoader = Mockito.mock(ResourceLoader.class);
+        Resource mockResource = Mockito.mock(Resource.class);
+        Mockito.when(mockLoader.getResource("classpath:concept-map.json")).thenReturn(mockResource);
+    Mockito.when(mockResource.exists()).thenReturn(true);
+    Mockito.when(mockResource.isReadable()).thenReturn(true);
+        Mockito.when(mockResource.getInputStream()).thenThrow(new java.io.IOException("boom"));
+
+        ConceptMapController controller = new ConceptMapController(mockLoader);
+        MockMvc standaloneMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        // Expect deterministic 500 JSON error response
+        standaloneMvc.perform(get("/api/concept-map"))
+                .andExpect(status().isInternalServerError())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(content().string("{\"error\":\"failed to read concept map\"}"));
+    }
+
+    @Test
+    void shouldReturn404WhenResourceMissingOrUnreadable() throws Exception {
+        // Arrange a controller with a ResourceLoader that returns a non-existing/unreadable resource
+        ResourceLoader mockLoader = Mockito.mock(ResourceLoader.class);
+        Resource mockResource = Mockito.mock(Resource.class);
+        Mockito.when(mockLoader.getResource("classpath:concept-map.json")).thenReturn(mockResource);
+        Mockito.when(mockResource.exists()).thenReturn(false);
+        Mockito.when(mockResource.isReadable()).thenReturn(false);
+
+        ConceptMapController controller = new ConceptMapController(mockLoader);
+        MockMvc standaloneMvc = MockMvcBuilders.standaloneSetup(controller).build();
+
+        standaloneMvc.perform(get("/api/concept-map"))
+                .andExpect(status().isNotFound())
+                .andExpect(header().string("Content-Type", "application/json"))
+                .andExpect(content().string("{\"error\":\"concept map not found\"}"));
+    }
+
+}
