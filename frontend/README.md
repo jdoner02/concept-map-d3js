@@ -41,7 +41,7 @@ VITE_JSON_URL=https://raw.githubusercontent.com/<owner>/<repo>/path/to/concept-m
 # Direct raw JSON (ad-hoc via query param)
 npm run dev
 # then open in browser:
-# http://localhost:5173/?jsonUrl=https://raw.githubusercontent.com/<owner>/<repo>/path/to/concept-map.json
+# http://localhost:5173/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json
 ```
 
 Notes:
@@ -53,3 +53,5 @@ Notes:
 - This repository includes a GitHub Actions workflow that builds and deploys the frontend to Pages from `frontend/dist`.
 - Configure a raw JSON source via repository Variable `VITE_JSON_URL` (or set in the workflow env, or use query param).
 - For project pages, the site will be served at `https://<user>.github.io/<repo>/` and the Vite base path is set automatically by `vite.config.js`.
+- Live example with raw JSON override:
+	`https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json`

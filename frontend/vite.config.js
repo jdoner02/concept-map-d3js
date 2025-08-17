@@ -5,7 +5,7 @@ import react from '@vitejs/plugin-react'
 export default defineConfig({
   plugins: [react()],
   // Auto-detect GitHub Pages project base when building in CI
-  // For jdoner02/cscd211-concept-map-d3js, base becomes "/cscd211-concept-map-d3js/"
+  // For jdoner02/concept-map-d3js, base becomes "/concept-map-d3js/"
   base: process.env.GITHUB_REPOSITORY ? `/${process.env.GITHUB_REPOSITORY.split('/')[1]}/` : '/',
   server: {
     host: '127.0.0.1',

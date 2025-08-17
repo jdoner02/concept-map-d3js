@@ -62,7 +62,7 @@ This project bridges the gap between theoretical programming concepts and practi
 
 1. **Clone the repository**
    ```bash
-   git clone https://github.com/yourusername/concept-map-d3js.git
+  git clone https://github.com/jdoner02/concept-map-d3js.git
    cd concept-map-d3js
    ```
 
@@ -194,6 +194,9 @@ The frontend can be deployed as a static site to GitHub Pages:
 
 Note: On GitHub Pages you can direct the app to fetch from a public raw JSON without the backend by setting a repository variable `VITE_JSON_URL` (or by appending `?jsonUrl=` to the site URL). The frontend prioritizes this raw source and falls back to backend endpoints if needed.
 
+- Live (with explicit raw JSON override):
+  https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json
+
 ```bash
 # Build for production
 cd frontend
@@ -260,6 +263,6 @@ This project is licensed under the MIT License - see [LICENSE](LICENSE) file for
 
 ---
 
-**Live Demo**: [View on GitHub Pages](https://yourusername.github.io/concept-map-d3js/)  
+**Live Demo**: [View on GitHub Pages](https://jdoner02.github.io/concept-map-d3js/)  
 **API Documentation**: [OpenAPI Specification](docs/api.md)  
 **Development Guide**: [Contributing Guidelines](CONTRIBUTING.md)
