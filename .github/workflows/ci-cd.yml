@@ -63,6 +63,8 @@ jobs:
   frontend-tests:
     name: Frontend Tests (Node.js + React + Playwright)
     runs-on: ubuntu-latest
+    # Run heavy frontend E2E only on PRs (informational for development)
+    if: github.event_name == 'pull_request'
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -127,6 +129,8 @@ jobs:
   integration-tests:
     name: Full-Stack Integration Tests
     runs-on: ubuntu-latest
+    # Run full-stack integration checks on PRs only
+    if: github.event_name == 'pull_request'
     needs: [backend-tests, frontend-tests]
     steps:
       - name: Checkout repository
@@ -194,57 +198,8 @@ jobs:
             rm -f backend.pid
           fi
 
-  deploy:
-    name: Deploy to GitHub Pages
-    runs-on: ubuntu-latest
-    needs: [backend-tests, frontend-tests, integration-tests]
-    if: github.ref == 'refs/heads/main' && github.event_name == 'push'
-    permissions:
-      contents: read
-      pages: write
-      id-token: write
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-          cache: 'npm'
-          cache-dependency-path: frontend/package-lock.json
-
-      - name: Install dependencies
-        working-directory: ./frontend
-        run: npm ci
-
-      - name: Build for GitHub Pages
-        working-directory: ./frontend
-        env:
-          # Raw JSON URL used by the frontend at build time when running on GitHub Pages
-          VITE_JSON_URL: ${{ vars.VITE_JSON_URL }}
-        run: |
-          npm run build
-          # Copy backend JSON into the static site as a fallback data source
-          mkdir -p dist
-          cp -f ../src/main/resources/concept-map.json dist/concept-map.json
-          # Also publish the preview dataset for experimentation via ?jsonUrl
-          cp -f ../src/main/resources/concept-map-preview.json dist/concept-map-preview.json || true
-          # Ensure GitHub Pages serves assets without Jekyll processing
-          touch dist/.nojekyll
-          # echo "your-domain.com" > dist/CNAME  # Custom domain
-
-      - name: Setup Pages
-        uses: actions/configure-pages@v5
-
-      - name: Upload to GitHub Pages
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: frontend/dist
-
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+  # Deployment of GitHub Pages is now handled by .github/workflows/pages-fast-deploy.yml
+  # The former deploy job has been removed to avoid gating deployment on tests.
 
   quality-scan:
     name: Code Quality & Security Analysis

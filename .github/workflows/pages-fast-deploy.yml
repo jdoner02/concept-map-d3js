@@ -1,0 +1,178 @@
+name: Fast Pages Deploy with Post-Deploy Smoke Test and Rollback
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  build_and_deploy:
+    name: Build and Deploy Pages
+    runs-on: ubuntu-latest
+    outputs:
+      page_url: ${{ steps.deploy.outputs.page_url }}
+      had_prev: ${{ steps.prev_check.outputs.had_prev }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Prepare previous pages artifact (if any)
+        id: download_prev
+        uses: dawidd6/action-download-artifact@v3
+        continue-on-error: true
+        with:
+          workflow: pages-fast-deploy.yml
+          workflow_conclusion: success
+          name: github-pages
+          if_no_artifact_found: ignore
+          branch: main
+          path: prev_dist
+
+      - name: Mark whether previous artifact exists
+        id: prev_check
+        run: |
+          if [ -d "prev_dist" ] && [ "$(ls -A prev_dist || true)" ]; then
+            echo "had_prev=true" >> $GITHUB_OUTPUT
+          else
+            echo "had_prev=false" >> $GITHUB_OUTPUT
+          fi
+
+      - name: Install deps
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Build
+        working-directory: ./frontend
+        env:
+          VITE_JSON_URL: ${{ vars.VITE_JSON_URL }}
+        run: |
+          npm run build
+          mkdir -p dist
+          cp -f ../src/main/resources/concept-map.json dist/concept-map.json
+          cp -f ../src/main/resources/concept-map-preview.json dist/concept-map-preview.json || true
+          touch dist/.nojekyll
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload new Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: frontend/dist
+
+      - name: Deploy to GitHub Pages
+        id: deploy
+        uses: actions/deploy-pages@v4
+
+      - name: Stash previous dist for potential rollback
+        if: steps.prev_check.outputs.had_prev == 'true'
+        uses: actions/upload-artifact@v4
+        with:
+          name: previous-dist
+          path: prev_dist
+
+  post_deploy_smoke:
+    name: Post-Deploy Smoke Check
+    needs: build_and_deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: Verify site is reachable
+        env:
+          PAGE_URL: ${{ needs.build_and_deploy.outputs.page_url }}
+        run: |
+          echo "Checking $PAGE_URL"
+          for i in $(seq 1 10); do
+            if curl -sSfL "$PAGE_URL" > /dev/null; then
+              echo "Site is up."
+              exit 0
+            fi
+            echo "Retry $i/10: waiting for Pages to propagate..."
+            sleep 5
+          done
+          echo "Site did not become reachable in time." >&2
+          exit 1
+
+      - name: Check main bundle present
+        env:
+          PAGE_URL: ${{ needs.build_and_deploy.outputs.page_url }}
+        run: |
+          html=$(curl -sL "$PAGE_URL")
+          echo "$html" | grep -E "<script[^>]+src=\"/.*\.js\"" >/dev/null || {
+            echo "Could not find JS bundle reference in HTML" >&2
+            exit 1
+          }
+
+  post_deploy_e2e_informational:
+    name: Post-Deploy Playwright (informational)
+    needs: build_and_deploy
+    if: vars.RUN_PLAYWRIGHT_AFTER_DEPLOY == 'true'
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: frontend/package-lock.json
+
+      - name: Install deps
+        working-directory: ./frontend
+        run: npm ci
+
+      - name: Install Playwright browsers
+        working-directory: ./frontend
+        run: npx playwright install --with-deps
+
+      - name: Run E2E against deployed site (if tests support BASE_URL)
+        working-directory: ./frontend
+        env:
+          BASE_URL: ${{ needs.build_and_deploy.outputs.page_url }}
+        run: |
+          npm run test:e2e || echo "Playwright failed (informational)."
+
+  rollback:
+    name: Automatic Rollback (if smoke fails)
+    needs: [build_and_deploy, post_deploy_smoke]
+    if: needs.post_deploy_smoke.result == 'failure' && needs.build_and_deploy.outputs.had_prev == 'true'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    steps:
+      - name: Download previous dist
+        uses: actions/download-artifact@v4
+        with:
+          name: previous-dist
+          path: prev_dist
+
+      - name: Configure Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload previous artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: prev_dist
+
+      - name: Deploy rollback to GitHub Pages
+        uses: actions/deploy-pages@v4
