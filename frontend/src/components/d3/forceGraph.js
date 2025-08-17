@@ -5,7 +5,7 @@ const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 function baseRadius(node, MIN) {
   const size = Number(node?.size);
   if (Number.isFinite(size) && size > 0) {
-    // Much smaller scaling factor for JSON size values (300 -> 7 range)
+    // Much smaller scaling factor for JSON size values (300 -> ~7 range)
     return MIN + Math.sqrt(size) * 0.8;
   }
   const deg = typeof node?.degree === 'number' ? node.degree : 0;
@@ -29,7 +29,7 @@ function levelFactor(level) {
 // Accept a node object; use multi-factor sizing based on educational metadata
 export function computeNodeRadius(node) {
   const MIN = 8;  // Smaller minimum radius
-  const MAX = 35; // Smaller maximum radius 
+  const MAX = 35; // Smaller maximum radius
   if (!node) return 15;
 
   // Respect precomputed radius if provided by upstream (e.g., from dataset normalization)
@@ -42,66 +42,103 @@ export function computeNodeRadius(node) {
 
   // Educational metadata weighting factors
   radius *= metadataWeight(node);
-
-  // Decomposition clarity: deeper levels render slightly smaller than roots
-  radius *= levelFactor(node.level);
+  radius *= levelFactor(node?.level);
 
   return clamp(radius, MIN, MAX);
 }
 
-export function createSimulation(nodes, links, { width, height }) {
-  // Resolve an ID string for any node-like value
-  const getNodeId = (d) => (d && typeof d === 'object' ? d.id : String(d));
+// Small utility force to pull one specific node toward a target point
+function createAnchorForce(anchorId, targetX, targetY, strength = 0.15) {
+  let nodes = [];
+  let byId = new Map();
+  function force(alpha) {
+    if (!nodes.length || !anchorId) return;
+    const n = byId.get(anchorId);
+    if (!n) return;
+    const k = strength * alpha;
+    const dx = (targetX - (n.x || 0));
+    const dy = (targetY - (n.y || 0));
+    n.vx = (n.vx || 0) + dx * k;
+    n.vy = (n.vy || 0) + dy * k;
+  }
+  force.initialize = function(initNodes) {
+    nodes = initNodes || [];
+    byId = new Map(nodes.map(nd => [String(nd.id), nd]));
+  };
+  return force;
+}
+
+const getNodeId = (d) => (d && typeof d === 'object' ? String(d.id) : String(d));
+
+export function createSimulation(nodes, links, opts = {}) {
   const n = Array.isArray(nodes) ? nodes : [];
   const l = Array.isArray(links) ? links : [];
-  const w = Number.isFinite(width) && width > 0 ? width : 1200;
-  const h = Number.isFinite(height) && height > 0 ? height : 800;
+  const W = Number.isFinite(opts.width) && opts.width > 0 ? opts.width : 2000;
+  const H = Number.isFinite(opts.height) && opts.height > 0 ? opts.height : 1200;
+  const anchorId = opts.anchorId ? String(opts.anchorId) : null;
+  const anchorStrength = Number.isFinite(opts.anchorStrength) ? opts.anchorStrength : 0.15;
+
   const sim = d3.forceSimulation(n)
     .velocityDecay(0.25)
     .force('link', d3.forceLink(l)
       .id(getNodeId)
       .distance(link => {
-        if (typeof link?.distance === 'number') return link.distance;
-        // Longer distances for cross-level links to encourage spreading
-        const srcLevel = Number(link.source?.level ?? 0);
-        const tgtLevel = Number(link.target?.level ?? 0);
-        const levelDiff = Math.abs(srcLevel - tgtLevel);
-        return 100 + (levelDiff * 40); // Shorter base distance, less level scaling
+        const sLvl = Number(link?.source?.level ?? 0);
+        const tLvl = Number(link?.target?.level ?? 0);
+        const levelDiff = Math.abs(sLvl - tLvl);
+        return 200 + levelDiff * 80;
       })
-      .strength(0.3)) // Stronger link force
-    .force('charge', d3.forceManyBody().strength(-800).distanceMax(1200)) // Much stronger repulsion
-    .force('center', d3.forceCenter(w / 2, h / 2))
-    .force('collision', d3.forceCollide().radius(d => computeNodeRadius(d) + 12).strength(0.8)); // Stronger collision avoidance
+      .strength(0.3))
+    .force('charge', d3.forceManyBody().strength(-1200).distanceMax(2000))
+    .force('collision', d3.forceCollide().radius(d => computeNodeRadius(d) + 15).strength(0.9));
 
-  // Horizontal positioning by level for tree straightening
+  // Level-based horizontal positioning centered across the universe width
+  const levels = n.map(d => Number.isFinite(+d?.level) ? +d.level : 0);
+  const minLevel = levels.length ? Math.min(...levels) : 0;
+  const maxLevel = levels.length ? Math.max(...levels) : 0;
+  const spacing = 240;
+  const totalWidth = Math.max(spacing, (maxLevel - minLevel) * spacing);
+  const startX = (W - totalWidth) / 2;
   sim.force('x', d3.forceX()
     .x(d => {
-      const level = Number(d?.level ?? 0);
-      const spacing = Math.min(w * 0.12, 100); // More compact spacing
-      return w / 2 + (level * spacing) - (spacing * 2); // Offset so level 0 is left of center
+      const lvl = Number(d?.level ?? 0);
+      const idx = Math.max(0, lvl - minLevel);
+      return startX + idx * spacing;
     })
-    .strength(0.15)); // Stronger pull for clearer level separation
+    .strength(0.2));
 
-  // Vertical clustering by sibling level
+  // Organic vertical distribution centered around universe middle
   sim.force('y', d3.forceY()
     .y(d => {
-      const level = Number(d?.level ?? 0);
-      return h / 2 + ((level % 3) - 1) * 80; // Slightly more vertical spread
+      const nodeId = String(d?.id || '');
+      let hash = 0;
+      for (let i = 0; i < nodeId.length; i++) {
+        hash = ((hash << 5) - hash + nodeId.charCodeAt(i)) | 0;
+      }
+      const verticalOffset = ((Math.abs(hash) % 400) - 200); // ±200
+      return (H / 2) + verticalOffset;
     })
-    .strength(0.08)); // Stronger vertical organization
+    .strength(0.04));
 
-  // Soft diffusion: nudge unconnected nodes away within a local radius
-  sim.force('diffusion', diffusionForce(l, { radius: 200, strength: 0.04 })); // Stronger diffusion
-  // Gentle radial jitter to keep floaty motion alive when alpha is low
-  sim.force('jitter', () => {
+  // Enhanced diffusion: push away non-neighbors within a radius
+  sim.force('diffusion', diffusionForce(l, { radius: 320, strength: 0.1 }));
+
+  // Gentle Brownian motion for life-like movement
+  sim.force('brownian', () => {
     const a = Math.max(0.001, sim.alpha());
-    const k = 0.02 * a;
+    const k = 0.015 * a;
     for (const d of n) {
       const th = Math.random() * Math.PI * 2;
       d.vx = (d.vx || 0) + Math.cos(th) * k;
       d.vy = (d.vy || 0) + Math.sin(th) * k;
     }
   });
+
+  // Optional: anchor one node toward the universe center
+  if (anchorId) {
+    sim.force('anchor', createAnchorForce(anchorId, W / 2, H / 2, anchorStrength));
+  }
+
   return sim;
 }
 

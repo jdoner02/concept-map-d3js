@@ -85,7 +85,7 @@ const ConceptMapVisualization = () => {
       }
     };
     // Prefer a direct RAW JSON source when provided (query param takes precedence over env)
-    const resolveRawJsonOverride = () => {
+  const resolveRawJsonOverride = () => {
       try {
         const sp = new URLSearchParams(window.location.search || '');
         let q = (sp.get('jsonUrl') || '').toString().trim();
@@ -98,7 +98,7 @@ const ConceptMapVisualization = () => {
           q = q.replace(/([^:]\/)\/+/g, '$1');
           return q;
         }
-        let envRaw = (import.meta.env.VITE_JSON_URL ?? '').toString().trim();
+  let envRaw = (import.meta.env.VITE_JSON_URL ?? '').toString().trim();
         if (!envRaw) return '';
         envRaw = envRaw.replace(/^['"]/,'').replace(/['"]/,'').trim();
         if (!/^https?:\/\//i.test(envRaw) && !envRaw.startsWith('data:') && !envRaw.startsWith('file:')) {
@@ -128,6 +128,8 @@ const ConceptMapVisualization = () => {
   // Static JSON fallback served by GitHub Pages (copied into dist at deploy): respects Vite base
   try {
     const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+    // Prefer preview JSON first for local iteration
+    push(`${base}/concept-map-preview.json`);
     push(`${base}/concept-map.json`);
   } catch { /* no-op */ }
   // Configured API endpoint (env or default)
@@ -350,6 +352,8 @@ const ConceptMapVisualization = () => {
   const svg = d3.select(svgRef.current);
   const width = Math.max(1, viewSize.width || 1200);
   const height = Math.max(1, viewSize.height || 800);
+  // Universe: large hamburger (8x width, 4x height)
+  const universe = { W: width * 8, H: height * 4 };
     svg
       .attr('width', width)
       .attr('height', height)
@@ -363,8 +367,11 @@ const ConceptMapVisualization = () => {
     let container = svg.select('g.graph-container');
     if (container.empty()) {
       container = svg.append('g').attr('class', 'graph-container');
-  const zoom = d3.zoom()
-        .scaleExtent([0.1, 3])
+      const zoom = d3.zoom()
+        .scaleExtent([0.05, 6])
+        // allow very large panning area (effectively removes the box feel)
+        .translateExtent([[-1e6, -1e6], [1e6, 1e6]])
+        .extent([[0, 0], [width, height]])
         .on('zoom', (event) => { zoomRef.current = event.transform; container.attr('transform', event.transform); });
       svg.style('pointer-events', 'all').style('user-select', 'none').call(zoom);
       // Save the zoom behavior for later programmatic transforms
@@ -608,15 +615,81 @@ const ConceptMapVisualization = () => {
       return;
     }
 
+    // Utility: build undirected adjacency for diameter path
+    const buildAdj = (nodesArr, linksArr) => {
+      const adj = new Map();
+      const idSet = new Set(nodesArr.map(n => n.id));
+      nodesArr.forEach(n => adj.set(n.id, new Set()));
+      linksArr.forEach(l => {
+        const s = typeof l.source === 'object' ? l.source?.id : l.source;
+        const t = typeof l.target === 'object' ? l.target?.id : l.target;
+        if (!idSet.has(s) || !idSet.has(t)) return;
+        adj.get(s).add(t);
+        adj.get(t).add(s);
+      });
+      return adj;
+    };
+    const bfs = (startId, adj) => {
+      const q = [startId];
+      const dist = new Map([[startId, 0]]);
+      const parent = new Map([[startId, null]]);
+      let last = startId;
+      while (q.length) {
+        const u = q.shift();
+        last = u;
+        const nbrs = adj.get(u) || new Set();
+        for (const v of nbrs) {
+          if (!dist.has(v)) {
+            dist.set(v, dist.get(u) + 1);
+            parent.set(v, u);
+            q.push(v);
+          }
+        }
+      }
+      return { far: last, dist, parent };
+    };
+    const longestPathMiddle = (nodesArr, linksArr) => {
+      if (!nodesArr.length) return null;
+      const adj = buildAdj(nodesArr, linksArr);
+      const any = nodesArr[0].id;
+      const a = bfs(any, adj).far;
+      const bRun = bfs(a, adj);
+      const b = bRun.far;
+      // reconstruct path a..b
+      const path = [];
+      let cur = b;
+      while (cur != null) { path.push(cur); cur = bRun.parent.get(cur); }
+      // pick middle
+      const midIdx = Math.floor(path.length / 2);
+      const mid = path[midIdx] || a;
+      return nodesArr.find(n => n.id === mid) || null;
+    };
+
     // Initialize or update simulation
     let simulation = simRef.current;
     if (!simulation) {
-      // Set initial positions for a nicer appearance
-      filteredNodes.forEach(n => { if (n.x == null) { n.x = width / 2; n.y = height / 2; } });
-      simulation = createSimulation(filteredNodes, filteredLinks, { width, height });
+  // Set initial positions for a nicer appearance
+      filteredNodes.forEach(n => { if (n.x == null) { n.x = universe.W / 2; n.y = universe.H / 2; } });
+      // Choose anchor as middle of longest path
+      const mid = longestPathMiddle(filteredNodes, filteredLinks);
+      const anchorId = mid?.id;
+      simulation = createSimulation(filteredNodes, filteredLinks, { width: universe.W, height: universe.H, anchorId, anchorStrength: 0.25 });
       // Pre-warm only on first creation
       for (let i = 0; i < 60; i += 1) simulation.tick();
       simRef.current = simulation;
+      // Center view on anchor at current zoom level
+      if (anchorId && zoomBehaviorRef.current) {
+        const k = 0.6; // start slightly zoomed out to show more of the universe
+        const centerX = width / 2;
+        const centerY = height / 2;
+        const anchorNode = filteredNodes.find(n => n.id === anchorId);
+        const ax = anchorNode?.x ?? (universe.W / 2);
+        const ay = anchorNode?.y ?? (universe.H / 2);
+        const tx = d3.zoomIdentity.translate(centerX - ax * k, centerY - ay * k).scale(k);
+        svg.call(zoomBehaviorRef.current.transform, tx);
+        zoomRef.current = tx;
+        container.attr('transform', tx);
+      }
     } else {
       simulation.nodes(filteredNodes);
       const linkForce = simulation.force('link');
@@ -872,22 +945,32 @@ const ConceptMapVisualization = () => {
       .attr('opacity', 0)
       .call(d3.drag()
         .on('start', (event, d) => {
-          draggingRef.current = true;
-          // Temporarily disable zoom to prevent interference
-          if (zoomBehaviorRef.current && svg) svg.on('.zoom', null);
-          if (!simulation.alpha()) simulation.alpha(0.3).restart();
-          d.fx = d.x; d.fy = d.y; d.vx = 0; d.vy = 0;
+            draggingRef.current = true;
+            // Temporarily disable zoom to prevent interference
+            if (zoomBehaviorRef.current && svg) svg.on('.zoom', null);
+            // Kick the simulation harder to ensure visible motion in tests
+            simulation.alphaTarget(0.9);
+            if (simulation.alpha() < 0.6) simulation.alpha(0.6).restart();
+            const tr = zoomRef.current || d3.zoomIdentity;
+            const invX = (event.x - tr.x) / tr.k;
+            const invY = (event.y - tr.y) / tr.k;
+            d._dragDX = (d.x ?? 0) - invX;
+            d._dragDY = (d.y ?? 0) - invY;
+            d.fx = d.x; d.fy = d.y; d.vx = 0; d.vy = 0;
         })
         .on('drag', (event, d) => {
-          // Adjust for current zoom transform to keep dragging accurate when zoomed
-          const tr = zoomRef.current || d3.zoomIdentity;
-          const invX = (event.x - tr.x) / tr.k;
-          const invY = (event.y - tr.y) / tr.k;
-          d.fx = invX; d.fy = invY;
+            // Convert pointer to simulation coordinates by inverting zoom transform
+            const tr = zoomRef.current || d3.zoomIdentity;
+            const invX = (event.x - tr.x) / tr.k;
+            const invY = (event.y - tr.y) / tr.k;
+            const dx = typeof d._dragDX === 'number' ? d._dragDX : 0;
+            const dy = typeof d._dragDY === 'number' ? d._dragDY : 0;
+            d.fx = invX + dx;
+            d.fy = invY + dy;
         })
         .on('end', (event, d) => {
           simulation.alphaTarget(0);
-          d.fx = null; d.fy = null; draggingRef.current = false;
+            d.fx = null; d.fy = null; delete d._dragDX; delete d._dragDY; draggingRef.current = false;
           // Re-enable zoom after drag ends
           if (zoomBehaviorRef.current && svg) svg.call(zoomBehaviorRef.current);
         }));
@@ -1544,8 +1627,8 @@ const ConceptMapVisualization = () => {
       if (!nodeGroups.empty()) {
         nodeGroups.each(function(d) {
         const r = computeNodeRadius(d);
-        d.x = Math.max(r, Math.min(width - r, d.x ?? 0));
-        d.y = Math.max(r, Math.min(height - r, d.y ?? 0));
+        d.x = Math.max(r, Math.min(universe.W - r, d.x ?? 0));
+        d.y = Math.max(r, Math.min(universe.H - r, d.y ?? 0));
         });
       }
       // Curved path calculation (quadratic Bezier with perpendicular offset)
