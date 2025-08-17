@@ -48,10 +48,32 @@ Notes:
 - When `VITE_JSON_URL` or `?jsonUrl=` is set, the UI will fetch directly from that URL first, then fall back to the backend endpoints if it fails (CORS permitting).
 - GitHub Pages serves static files only. Either use the direct JSON override or host the backend separately when using Pages.
 
+## Visual encodings and forces
+
+- **Node size**: derived from `node.size` (sqrt scaling) with a small level-based downscale; roots are larger than deeper levels. A per-level cap enforces parent > child visually.
+- **Node color**: derived from `node.level` using a sequential scale (fallback ordinal for unknown). Legends and filters refer to "Levels."
+- **Tree straightening**: level-aware forceX positions nodes horizontally by depth; forceY provides subtle vertical clustering. Link distances scale with level differences to encourage spreading.
+- **Forces**: link (with level-aware distance), charge, collision (uses size), center, positional (x/y by level), diffusion force that gently pushes non-neighbors apart, and light jitter to keep motion "floaty," including at far zoom.
+
+## Testing
+
+- **E2E tests**: Playwright tests cover interaction patterns including:
+  - Basic loading and rendering
+  - Zoom-out dragging and persistent floaty motion
+  - Diffusion spreading of unconnected nodes
+  - Tree straightening (horizontal ordering by level)
+  - Raw JSON data source override
+  - Sims-like meta ring interactions
+- Run tests: `npm run test:e2e`
+- Tests are designed to be robust against timing variations and include retries for motion sampling.
+
 ## Deploy to GitHub Pages
 
 - This repository includes a GitHub Actions workflow that builds and deploys the frontend to Pages from `frontend/dist`.
+- **Fast deployment**: Pages deploy runs first, with post-deploy testing that can trigger automatic rollback on critical failures.
 - Configure a raw JSON source via repository Variable `VITE_JSON_URL` (or set in the workflow env, or use query param).
 - For project pages, the site will be served at `https://jdoner02.github.io/concept-map-d3js/` (your fork will use your username and repo name). The Vite base path is set automatically by `vite.config.js`.
-- Live example with raw JSON override:
-	`https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json`
+- Live examples:
+  - Default (with static fallback): `https://jdoner02.github.io/concept-map-d3js/`
+  - With raw JSON override: `https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json`
+  - Preview dataset: `https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://jdoner02.github.io/concept-map-d3js/concept-map-preview.json`

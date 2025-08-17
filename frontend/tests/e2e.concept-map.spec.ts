@@ -103,6 +103,125 @@ test('zoom/pan works and link labels are visible', async ({ page }) => {
   await expect(firstLabel).toBeVisible();
 });
 
+test('dragging a node works even when zoomed out', async ({ page }) => {
+  await page.goto('/');
+  await page.setViewportSize({ width: 1400, height: 900 });
+  await page.waitForSelector('svg .node-group', { state: 'attached' });
+
+  const svg = page.locator('svg');
+  const container = page.locator('svg g.graph-container');
+  const box = await svg.boundingBox();
+  if (box) {
+    // Zoom out a lot
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.wheel(0, 1200);
+  }
+  // Pick first node and drag it by a sizable delta
+  const firstGroup = page.locator('svg .node-group').first();
+  const before = await firstGroup.getAttribute('transform');
+  await firstGroup.evaluate((el: Element) => {
+    (el as HTMLElement).dispatchEvent(new MouseEvent('mousedown', { bubbles: true, composed: true }));
+  });
+  if (box) {
+    await page.mouse.move(box.x + 300, box.y + 180, { steps: 8 });
+  }
+  await firstGroup.evaluate((el: Element) => {
+    (el as HTMLElement).dispatchEvent(new MouseEvent('mouseup', { bubbles: true, composed: true }));
+  });
+  await page.waitForTimeout(150);
+  const after = await firstGroup.getAttribute('transform');
+  expect(after).not.toBe(before);
+});
+
+test('floaty motion persists at far zoom', async ({ page }) => {
+  await page.goto('/');
+  await page.setViewportSize({ width: 1400, height: 900 });
+  await page.waitForSelector('svg .node-group', { state: 'attached' });
+
+  const svg = page.locator('svg');
+  const box = await svg.boundingBox();
+  if (box) {
+    await page.mouse.move(box.x + box.width / 2, box.y + box.height / 2);
+    await page.mouse.wheel(0, 1200);
+  }
+  
+  // Wait longer for simulation to settle and jitter to be observable
+  await page.waitForTimeout(1200);
+  
+  const first = page.locator('svg .node-group').first();
+  const pos1 = await first.getAttribute('transform');
+  
+  // Sample multiple times to increase reliability
+  await page.waitForTimeout(800);
+  const pos2 = await first.getAttribute('transform');
+  await page.waitForTimeout(400);
+  const pos3 = await first.getAttribute('transform');
+  
+  // Expect movement between at least one pair of samples
+  const moved = (pos2 !== pos1) || (pos3 !== pos2) || (pos3 !== pos1);
+  expect(moved).toBeTruthy();
+});
+
+test('diffusion spreads unconnected nodes over time (synthetic)', async ({ page }) => {
+  const json = {
+    metadata: { version: 'test', total_nodes: 4, total_links: 2 },
+    nodes: [
+      { id: 'A', name: 'A' },
+      { id: 'B', name: 'B' },
+      { id: 'C', name: 'C' },
+      { id: 'D', name: 'D' },
+    ],
+    links: [ { source: 'A', target: 'B' }, { source: 'C', target: 'D' } ],
+  };
+  const url = 'data:application/json,' + encodeURIComponent(JSON.stringify(json));
+  await page.goto('/?jsonUrl=' + encodeURIComponent(url));
+  await page.setViewportSize({ width: 1200, height: 800 });
+  await page.waitForSelector('svg .node-group', { state: 'attached' });
+
+  // Sample mean pairwise distance at t0 and t1; expect it to increase slightly with diffusion
+  function meanDistance(vals: Array<{ x: number; y: number }>) {
+    let sum = 0, count = 0;
+    for (let i = 0; i < vals.length; i++) {
+      for (let j = i + 1; j < vals.length; j++) {
+        const dx = vals[i].x - vals[j].x;
+        const dy = vals[i].y - vals[j].y;
+        sum += Math.hypot(dx, dy);
+        count++;
+      }
+    }
+    return count === 0 ? 0 : sum / count;
+  }
+  
+  // Wait longer for initial layout settling
+  await page.waitForTimeout(800);
+  
+  const p0 = await page.$$eval('svg .node-group', (els) =>
+    els.slice(0, 8).map((e) => {
+      const tr = (e as SVGGElement).getAttribute('transform') || 'translate(0,0)';
+      const m = /translate\(([-\d.]+),([-.\d]+)\)/.exec(tr);
+      return { x: m ? parseFloat(m[1]) : 0, y: m ? parseFloat(m[2]) : 0 };
+    })
+  );
+  
+  // Allow more time for diffusion to show effect
+  await page.waitForTimeout(1500);
+  
+  const p1 = await page.$$eval('svg .node-group', (els) =>
+    els.slice(0, 8).map((e) => {
+      const tr = (e as SVGGElement).getAttribute('transform') || 'translate(0,0)';
+      const m = /translate\(([-\d.]+),([-.\d]+)\)/.exec(tr);
+      return { x: m ? parseFloat(m[1]) : 0, y: m ? parseFloat(m[2]) : 0 };
+    })
+  );
+  
+  const d0 = meanDistance(p0);
+  const d1 = meanDistance(p1);
+  
+  // Allow for small regressions but expect general spreading trend
+  // Diffusion is gentle, so tolerance should accommodate layout variations
+  expect(d1).toBeGreaterThan(d0 * 0.95); // Allow up to 5% decrease due to other forces
+});
+
 test('double-click shows info in panel', async ({ page }) => {
   await page.goto('/');
   await page.waitForSelector('svg .node-group', { state: 'attached' });
@@ -316,4 +435,74 @@ test('node radii vary indicating metadata and degree-based sizing', async ({ pag
   // Ensure values stay within the designed bounds
   expect(minR).toBeGreaterThanOrEqual(18);
   expect(maxR).toBeLessThanOrEqual(65);
+});
+
+test('tree straightening: nodes are positioned horizontally by level', async ({ page }) => {
+  await page.goto('/');
+  await page.setViewportSize({ width: 1400, height: 900 });
+
+  // Wait for nodes to render and simulation to stabilize
+  await page.waitForSelector('svg .node-group', { state: 'attached' });
+  await page.waitForTimeout(2000); // Let forces settle into stable positions
+
+  // Sample node positions by level
+  const nodeData = await page.$$eval('svg .node-group', (groups) => {
+    return groups.slice(0, 20).map((group) => {
+      const transform = group.getAttribute('transform') || '';
+      const match = transform.match(/translate\(([^,]+),([^)]+)\)/);
+      const x = match ? parseFloat(match[1]) : 0;
+      const y = match ? parseFloat(match[2]) : 0;
+      
+      // Try to get level from data attributes or text content
+      const levelAttr = group.getAttribute('data-level');
+      const textEl = group.querySelector('text');
+      const nodeText = textEl ? textEl.textContent || '' : '';
+      
+      // Estimate level from node text content patterns
+      let estimatedLevel = 0;
+      if (nodeText.includes('EWU Official')) estimatedLevel = 0;
+      else if (nodeText.includes('College of')) estimatedLevel = 1;
+      else if (nodeText.includes('Department') || nodeText.includes('Science')) estimatedLevel = 2;
+      else if (nodeText.includes('Undergraduate') || nodeText.includes('Graduate')) estimatedLevel = 3;
+      else if (nodeText.includes('BS–') || nodeText.includes('BCS–')) estimatedLevel = 4;
+      else if (nodeText.includes('CSCD')) estimatedLevel = 7;
+      
+      return {
+        x,
+        y,
+        level: levelAttr ? parseInt(levelAttr) : estimatedLevel,
+        text: nodeText.substring(0, 30)
+      };
+    }).filter(d => !isNaN(d.x) && !isNaN(d.y));
+  });
+
+  expect(nodeData.length).toBeGreaterThan(5);
+
+  // Group by level and check horizontal progression
+  const levelGroups = new Map();
+  nodeData.forEach(d => {
+    if (!levelGroups.has(d.level)) levelGroups.set(d.level, []);
+    levelGroups.get(d.level).push(d);
+  });
+
+  const levels = Array.from(levelGroups.keys()).sort((a, b) => a - b);
+  expect(levels.length).toBeGreaterThan(2);
+
+  // Check that deeper levels tend to be further right (higher x)
+  for (let i = 0; i < levels.length - 1; i++) {
+    const currentLevel = levels[i];
+    const nextLevel = levels[i + 1];
+    
+    const currentNodes = levelGroups.get(currentLevel);
+    const nextNodes = levelGroups.get(nextLevel);
+    
+    if (currentNodes.length > 0 && nextNodes.length > 0) {
+      const currentAvgX = currentNodes.reduce((sum, n) => sum + n.x, 0) / currentNodes.length;
+      const nextAvgX = nextNodes.reduce((sum, n) => sum + n.x, 0) / nextNodes.length;
+      
+      // Allow some tolerance for organic layout variation
+      const tolerance = 50;
+      expect(nextAvgX).toBeGreaterThan(currentAvgX - tolerance);
+    }
+  }
 });

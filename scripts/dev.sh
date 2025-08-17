@@ -94,9 +94,16 @@ done
 
 # Open browser to the detected frontend URL
 OPEN_URL="${FRONTEND_URL:-http://localhost:5173}"
+# Ensure static JSON files are directly served by the dev server
+mkdir -p frontend/public
+cp -f src/main/resources/concept-map.json frontend/public/concept-map.json
+cp -f src/main/resources/concept-map-preview.json frontend/public/concept-map-preview.json 2>/dev/null || true
+
 # If requested, append ?jsonUrl param for preview or env-provided override
 if [ "${PREVIEW:-0}" = "1" ]; then
-  OPEN_URL="$OPEN_URL/?jsonUrl=http://localhost:5173/concept-map-preview.json"
+  # Use the detected frontend origin to avoid mixed content and wrong hosts
+  FRONT_ORIGIN="${FRONTEND_URL%/}"
+  OPEN_URL="$OPEN_URL/?jsonUrl=${FRONT_ORIGIN}/concept-map-preview.json"
 elif [ -n "${JSON_URL:-}" ]; then
   OPEN_URL="$OPEN_URL/?jsonUrl=${JSON_URL}"
 fi

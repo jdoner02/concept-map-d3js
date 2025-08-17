@@ -42,6 +42,7 @@ const ConceptMapVisualization = () => {
   const activeMetaRef = useRef(null); // { ownerId, bubbles: [...], expandedKey?: string }
   const focusedRef = useRef(null); // { id }
   const draggingRef = useRef(false);
+  const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   // Enum-like color overrides to enforce specific mappings are defined at module scope
 
   // Fetch concept map data from Spring Boot backend (configurable base URL)
@@ -139,22 +140,46 @@ const ConceptMapVisualization = () => {
     push('http://localhost:8080/api/concept-map');
     push('http://127.0.0.1:8080/api/concept-map');
   }
-  let response = null;
-        let lastErr = null;
+  let lastErr = null;
         // eslint-disable-next-line no-console
         if (import.meta.env?.DEV) {
           console.info('[ConceptMap] fetch candidates:', Array.from(candidates));
         }
+        // Try each candidate and only accept if we can parse valid JSON
         for (const cand of candidates) {
+          setEndpointTried(cand);
           try {
-            setEndpointTried(cand);
-            // Primary attempt via fetch
+            // First, try fetch
             try {
-              response = await fetch(cand);
-              if (response && response.ok) break;
-              lastErr = new Error(`HTTP error! status: ${response ? response.status : 'unknown'}`);
+              const resp = await fetch(cand, { headers: { Accept: 'application/json' } });
+              if (resp && resp.ok) {
+                // Ensure it's JSON; some dev servers return HTML index.html with 200
+                const ct = (resp.headers.get('content-type') || '').toLowerCase();
+                let parsed = null;
+                if (ct.includes('application/json') || ct.endsWith('/json') || ct.includes('+json')) {
+                  parsed = await resp.json();
+                } else {
+                  const textBody = await resp.text();
+                  try {
+                    parsed = JSON.parse(textBody);
+                  } catch {
+                    // Not JSON, try next candidate
+                    lastErr = new Error('Received non-JSON response');
+                    continue;
+                  }
+                }
+                // Basic shape validation
+                if (parsed && typeof parsed === 'object' && Array.isArray(parsed.nodes) && Array.isArray(parsed.links)) {
+                  setData(parsed);
+                  return; // success
+                }
+                // If shape invalid, continue
+                lastErr = new Error('Response JSON missing expected nodes/links arrays');
+                continue;
+              }
+              lastErr = new Error(`HTTP error! status: ${resp ? resp.status : 'unknown'}`);
             } catch (fetchErr) {
-              // Safari fallback: try XHR if fetch throws SyntaxError/TypeError
+              // Safari or network fallback: XHR
               try {
                 const text = await new Promise((resolve, reject) => {
                   try {
@@ -176,25 +201,23 @@ const ConceptMapVisualization = () => {
                     reject(xhrErr);
                   }
                 });
-                // If XHR succeeds, parse and set data immediately
-                const conceptMapData = JSON.parse(text);
-                setData(conceptMapData);
-                return; // Done
+                // Parse
+                const parsed = JSON.parse(text);
+                if (parsed && typeof parsed === 'object' && Array.isArray(parsed.nodes) && Array.isArray(parsed.links)) {
+                  setData(parsed);
+                  return; // success
+                }
+                lastErr = new Error('Response JSON (XHR) missing expected nodes/links arrays');
               } catch (xhrErr) {
                 lastErr = fetchErr || xhrErr;
               }
             }
           } catch (err) {
             lastErr = err;
-            continue;
           }
         }
-        if (!response || !response.ok) throw lastErr || new Error('Failed to fetch concept map');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const conceptMapData = await response.json();
-        setData(conceptMapData);
+        // If we reach here, no candidates succeeded
+        throw lastErr || new Error('Failed to fetch concept map');
       } catch (e) {
         // eslint-disable-next-line no-console
         console.error('Failed to load concept map:', e);
@@ -206,19 +229,37 @@ const ConceptMapVisualization = () => {
     fetchConceptMap();
   }, []);
 
-  // Derive unique groups from data for filtering/legend
-  const groupValues = useMemo(() => (
-    Array.from(new Set((data?.nodes || []).map(n => n.group || 'unknown'))).sort()
-  ), [data]);
+  // Derive unique levels from data for filtering/legend (fallback to 'unknown')
+  const groupValues = useMemo(() => {
+    const vals = (data?.nodes || []).map(n => (Number.isFinite(+n?.level) ? +n.level : 'unknown'));
+    const uniq = Array.from(new Set(vals));
+    uniq.sort((a, b) => (typeof a === 'number' && typeof b === 'number')
+      ? a - b
+      : String(a).localeCompare(String(b)));
+    return uniq;
+  }, [data]);
   useEffect(() => { setGroups(groupValues); }, [groupValues]);
 
-  // Group color scale and accessor with overrides
+  // Level color scales (sequential for numeric levels, ordinal as fallback)
+  const numericLevels = useMemo(() => groupValues.filter(v => typeof v === 'number'), [groupValues]);
+  const levelSequential = useMemo(() => {
+    if (numericLevels.length >= 2) {
+      const min = Math.min(...numericLevels);
+      const max = Math.max(...numericLevels);
+      // Invert so level 0 (roots) are brighter/warmer than deeper levels
+      return d3.scaleSequential(d3.interpolateTurbo).domain([max, min]);
+    }
+    return null;
+  }, [numericLevels]);
   const groupScale = useMemo(() => (
     d3.scaleOrdinal(d3.schemeTableau10).domain(groupValues)
   ), [groupValues]);
   const getGroupColor = (g) => {
-    const key = (g || 'unknown').toString().toLowerCase();
-    return GROUP_COLOR_OVERRIDES[key] || groupScale(g || 'unknown');
+    const val = (g == null ? 'unknown' : g);
+    const key = String(val).toLowerCase();
+    if (GROUP_COLOR_OVERRIDES[key]) return GROUP_COLOR_OVERRIDES[key];
+    if (typeof val === 'number' && levelSequential) return levelSequential(val);
+    return groupScale(val);
   };
 
   // Relation key helper and color scale
@@ -259,7 +300,7 @@ const ConceptMapVisualization = () => {
     base.forEach(n => { if (n && n.id != null) byId.set(n.id, n); });
     const all = Array.from(byId.values());
     if (!selectedGroups || selectedGroups.size === 0) return all;
-    return all.filter(n => selectedGroups.has(n.group || 'unknown'));
+    return all.filter(n => selectedGroups.has(Number.isFinite(+n?.level) ? +n.level : 'unknown'));
   }, [data, augmentedNodes, selectedGroups]);
 
   const filteredLinks = useMemo(() => {
@@ -483,15 +524,49 @@ const ConceptMapVisualization = () => {
     });
     (filteredNodes || []).forEach(n => { n.degree = degreeMap.get(n.id) || 0; });
 
+    // Precompute per-level radii from JSON size with strict level caps so roots > children visually
+    (() => {
+      const byLevel = new Map();
+      (filteredNodes || []).forEach(n => {
+        const lv = Number(n?.level);
+        if (Number.isFinite(lv) && lv >= 0) {
+          if (!byLevel.has(lv)) byLevel.set(lv, []);
+          byLevel.get(lv).push(n);
+        } else {
+          n._radius = undefined; // leave for default computeNodeRadius
+        }
+      });
+      // Establish decreasing caps by level (MAX at level 0, reduce by delta per level)
+      const MAX_R = 60, MIN_R = 20, DELTA = 6;
+      byLevel.forEach((nodesAtLevel, lv) => {
+        const cap = Math.max(MIN_R, MAX_R - DELTA * lv); // hard upper bound for this level
+        const band = Math.max(3, Math.min(10, cap - MIN_R)); // room for within-level variation
+        // Determine size range for normalization
+        let minS = Infinity, maxS = -Infinity;
+        nodesAtLevel.forEach(n => {
+          const s = Number.isFinite(+n.size) && +n.size > 0 ? +n.size : (Number.isFinite(+n.degree) ? +n.degree : 0);
+          if (s < minS) minS = s;
+          if (s > maxS) maxS = s;
+        });
+        const range = Math.max(1e-6, maxS - minS);
+        nodesAtLevel.forEach(n => {
+          const s = Number.isFinite(+n.size) && +n.size > 0 ? +n.size : (Number.isFinite(+n.degree) ? +n.degree : 0);
+          const norm = (s - minS) / range; // 0..1
+          const r = (cap - band) + norm * band;
+          n._radius = Math.max(MIN_R, Math.min(MAX_R, r));
+        });
+      });
+    })();
+
     // Node radial gradients by group (soft center glow)
-    const slug = s => (s || 'unknown').toString().toLowerCase().replace(/[^a-z0-9]+/g, '-');
-    const groupKeys = Array.from(new Set((filteredNodes || []).map(n => n.group || 'unknown')));
+  const slug = s => (s == null ? 'unknown' : s).toString().toLowerCase().replace(/[^a-z0-9]+/g, '-');
+  const groupKeys = Array.from(new Set((filteredNodes || []).map(n => (Number.isFinite(+n?.level) ? +n.level : 'unknown'))));
     const gradSel = defs.selectAll('radialGradient.node-fill').data(groupKeys, d => d);
     gradSel.exit().remove();
     const gradEnter = gradSel.enter()
       .append('radialGradient')
       .attr('class', 'node-fill')
-      .attr('id', g => `node-fill-${slug(g)}`)
+  .attr('id', g => `node-fill-${slug(g)}`)
       .attr('cx', '50%')
       .attr('cy', '50%')
       .attr('r', '60%');
@@ -546,6 +621,8 @@ const ConceptMapVisualization = () => {
       simulation.nodes(filteredNodes);
       const linkForce = simulation.force('link');
       if (linkForce) linkForce.links(filteredLinks);
+  const diff = simulation.force('diffusion');
+  if (diff && typeof diff.updateLinks === 'function') diff.updateLinks(filteredLinks);
       simulation.alphaTarget(0.6).restart();
       setTimeout(() => simulation.alphaTarget(0), 350);
     }
@@ -796,11 +873,24 @@ const ConceptMapVisualization = () => {
       .call(d3.drag()
         .on('start', (event, d) => {
           draggingRef.current = true;
+          // Temporarily disable zoom to prevent interference
+          if (zoomBehaviorRef.current && svg) svg.on('.zoom', null);
           if (!simulation.alpha()) simulation.alpha(0.3).restart();
           d.fx = d.x; d.fy = d.y; d.vx = 0; d.vy = 0;
         })
-        .on('drag', (event, d) => { d.fx = event.x; d.fy = event.y; })
-        .on('end', (event, d) => { simulation.alphaTarget(0); d.fx = null; d.fy = null; draggingRef.current = false; }));
+        .on('drag', (event, d) => {
+          // Adjust for current zoom transform to keep dragging accurate when zoomed
+          const tr = zoomRef.current || d3.zoomIdentity;
+          const invX = (event.x - tr.x) / tr.k;
+          const invY = (event.y - tr.y) / tr.k;
+          d.fx = invX; d.fy = invY;
+        })
+        .on('end', (event, d) => {
+          simulation.alphaTarget(0);
+          d.fx = null; d.fy = null; draggingRef.current = false;
+          // Re-enable zoom after drag ends
+          if (zoomBehaviorRef.current && svg) svg.call(zoomBehaviorRef.current);
+        }));
 
   // Coloring by group/type with overrides; ID-hash colors not used anymore
 
@@ -809,7 +899,7 @@ const ConceptMapVisualization = () => {
       .attr('data-node-id', d => d.id)
       .attr('data-node-name', d => d.name || d.id)
       .attr('r', 0)
-      .attr('fill', d => `url(#node-fill-${slug(d.group || 'unknown')})`)
+  .attr('fill', d => `url(#node-fill-${slug(Number.isFinite(+d.level) ? +d.level : 'unknown')})`)
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .attr('filter', 'url(#node-glow)')
@@ -900,13 +990,13 @@ const ConceptMapVisualization = () => {
         key,
         value,
         angle: startAngle + i * step,
-        r: 20
+        r: (window.innerWidth <= 480 ? 16 : 20)
       }));
 
       activeMetaRef.current = { ownerId: d.id, bubbles, expandedKey: null };
 
   // Precompute colors used throughout to avoid TDZ issues when referenced below
-  const baseColor = d3.color(getGroupColor(d.group || 'unknown')) || d3.color('#9ca3af');
+  const baseColor = d3.color(getGroupColor(Number.isFinite(+d.level) ? +d.level : 'unknown')) || d3.color('#9ca3af');
   const bubbleFill = (() => { const h = d3.hsl(baseColor); h.l = Math.min(0.95, h.l + 0.35); return h.formatHex(); })();
 
       // Clear existing and create ring container
@@ -917,7 +1007,7 @@ const ConceptMapVisualization = () => {
       ring.append('circle')
         .attr('class', 'meta-ring-base')
         .attr('fill', 'none')
-        .attr('stroke', d3.color(getGroupColor(d.group || 'unknown'))?.copy({ opacity: 0.3 }) || '#9ca3af')
+  .attr('stroke', d3.color(getGroupColor(Number.isFinite(+d.level) ? +d.level : 'unknown'))?.copy({ opacity: 0.3 }) || '#9ca3af')
         .attr('stroke-dasharray', '2 6')
         .attr('stroke-width', 2)
         .attr('pointer-events', 'none');
@@ -1207,7 +1297,7 @@ const ConceptMapVisualization = () => {
 
       // Initial positioning so tests and UI have geometry before first tick
       const ownerX = d.x ?? 0, ownerY = d.y ?? 0;
-      const ringRadius = computeNodeRadius(d) + 70;
+  const ringRadius = computeNodeRadius(d) + (window.innerWidth <= 480 ? 52 : 70);
       activeMetaRef.current.ringRadius = ringRadius;
       ring.select('circle.meta-ring-base')
         .attr('cx', ownerX)
@@ -1420,7 +1510,7 @@ const ConceptMapVisualization = () => {
   zoomRef.current = targetTransform;
   container.interrupt().attr('transform', targetTransform);
       // Ripple flair
-      spawnRipple(nodeX, nodeY, getGroupColor(d.group || 'unknown'));
+  spawnRipple(nodeX, nodeY, getGroupColor(Number.isFinite(+d.level) ? +d.level : 'unknown'));
       
       toggleMetaRing(d);
   // Apply focus mode
@@ -1439,7 +1529,7 @@ const ConceptMapVisualization = () => {
 
   // On update, ensure circle radius and color update when data changes
     nodeGroups.select('circle')
-      .attr('fill', d => `url(#node-fill-${slug(d.group || 'unknown')})`)
+  .attr('fill', d => `url(#node-fill-${slug(Number.isFinite(+d.level) ? +d.level : 'unknown')})`)
       .transition(t)
       .attr('r', d => computeNodeRadius(d));
     // Reapply focus styling after updates
@@ -1491,7 +1581,7 @@ const ConceptMapVisualization = () => {
             // Zoom/length-aware opacity and halo thickness
             const k = (zoomRef.current && typeof zoomRef.current.k === 'number') ? zoomRef.current.k : 1;
             // Hide at far zoom; ramp in between 0.6 and 1.2
-            const zoomAlpha = Math.max(0, Math.min(1, (k - 0.6) / 0.6));
+            const zoomAlpha = Math.max(0, Math.min(1, (k - 0.5) / 0.7));
             const sx = d.source?.x ?? 0, sy = d.source?.y ?? 0;
             const tx = d.target?.x ?? 0, ty = d.target?.y ?? 0;
             const len = Math.hypot(tx - sx, ty - sy);
@@ -1875,50 +1965,47 @@ const ConceptMapVisualization = () => {
     <div className="concept-map-container" id="main" style={{ position: 'relative' }}>
       <div className="concept-map-header">
         <h1>Interactive Concept Map</h1>
-        <p>Drag nodes to explore relationships • Scroll to zoom</p>
+        <p className="desktop-only">Drag nodes to explore relationships • Scroll to zoom</p>
         {data?.metadata && (
-          <div className="metadata">
+          <div className="metadata desktop-only">
             <span>Version: {data.metadata.version}</span>
             <span> | <span data-testid="rendered-nodes">Rendered Nodes: {renderCounts.nodes}</span></span>
             <span> | <span data-testid="rendered-links">Rendered Links: {renderCounts.links}</span></span>
           </div>
         )}
-        {/* Color legends */}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center', marginTop: 8 }}>
-          {/* Node group legend */}
-    {groups.length > 0 && (
+        {/* Legends and Filters (desktop only) */}
+        <div className="desktop-only" style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center', marginTop: 8 }}>
+      {groups.length > 0 && (
             <div style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 8, padding: '6px 10px' }}>
-              <strong style={{ marginRight: 8 }}>Groups:</strong>
+        <strong style={{ marginRight: 8 }}>Levels:</strong>
               {groups.slice(0, 10).map(g => (
                 <span key={g} style={{ display: 'inline-flex', alignItems: 'center', marginRight: 10, fontSize: 12 }}>
-      <span style={{ width: 10, height: 10, borderRadius: '50%', background: getGroupColor(g || 'unknown'), display: 'inline-block', marginRight: 6 }} />
-                  {g}
+          <span style={{ width: 10, height: 10, borderRadius: '50%', background: getGroupColor(Number.isFinite(+g) ? +g : 'unknown'), display: 'inline-block', marginRight: 6 }} />
+          {String(g)}
                 </span>
               ))}
             </div>
           )}
-          {/* Relation type legend */}
           {topRelationLegend.length > 0 && (
             <div style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 8, padding: '6px 10px' }}>
               <strong style={{ marginRight: 8 }}>Relations:</strong>
-        {topRelationLegend.map(([k]) => (
+              {topRelationLegend.map(([k]) => (
                 <span key={k} style={{ display: 'inline-flex', alignItems: 'center', marginRight: 10, fontSize: 12 }}>
-          <span style={{ width: 12, height: 3, borderRadius: 2, background: getRelationColor(k), display: 'inline-block', marginRight: 6 }} />
+                  <span style={{ width: 12, height: 3, borderRadius: 2, background: getRelationColor(k), display: 'inline-block', marginRight: 6 }} />
                   {k}
                 </span>
               ))}
             </div>
           )}
         </div>
-        {/* Filters */}
-        {groups.length > 0 && (
-          <div className="filters" style={{ background: '#fff', padding: '8px 12px', borderTop: '1px solid #e0e0e0' }}>
-            <strong>Groups:</strong>{' '}
+    {groups.length > 0 && (
+          <div className="filters desktop-only" style={{ background: '#fff', padding: '8px 12px', borderTop: '1px solid #e0e0e0' }}>
+      <strong>Levels:</strong>{' '}
             {groups.map(g => (
               <label key={g} style={{ marginRight: 12 }}>
                 <input
                   type="checkbox"
-                  checked={selectedGroups.has(g)}
+          checked={selectedGroups.has(g)}
                   onChange={(e) => {
                     const next = new Set(selectedGroups);
                     if (e.target.checked) next.add(g); else next.delete(g);
@@ -1939,7 +2026,7 @@ const ConceptMapVisualization = () => {
       </div>
 
       {/* Quick search + surprise me */}
-      <div style={{ position: 'absolute', top: 10, right: 10, display: 'flex', gap: 8, zIndex: 15 }}>
+  <div className="desktop-only" style={{ position: 'absolute', top: 10, right: 10, display: 'flex', gap: 8, zIndex: 15 }}>
         <input
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -2006,6 +2093,83 @@ const ConceptMapVisualization = () => {
         >Surprise me</button>
       </div>
       <svg ref={svgRef}></svg>
+      {/* Mobile FAB and bottom sheet */}
+      <button className="fab mobile-only" aria-label="Open options" onClick={() => setMobilePanelOpen(true)}>☰</button>
+      {mobilePanelOpen && (
+        <>
+          <div className="mobile-panel-backdrop" onClick={() => setMobilePanelOpen(false)} aria-hidden="true" />
+          <div className="mobile-panel" role="dialog" aria-modal="true" aria-label="Options and filters" tabIndex={0} onKeyDown={(e)=>{ if(e.key==='Escape') setMobilePanelOpen(false); }}>
+            <div className="handle" />
+            <div className="content">
+              <div className="section">
+                <h3>Search</h3>
+                <div style={{ display: 'flex', gap: 8 }}>
+                  <input value={search} onChange={(e)=>setSearch(e.target.value)} placeholder="Search node…" aria-label="Search node" style={{ flex: 1, padding: '8px 10px', border: '1px solid #ddd', borderRadius: 8 }} />
+                  <button onClick={() => {
+                    const q = search.trim().toLowerCase();
+                    if (!q) return;
+                    const found = (filteredNodes || []).find(n => (n.name || n.id || '').toLowerCase().includes(q));
+                    if (!found) return;
+                    const svg = d3.select(svgRef.current);
+                    const width = viewSize.width || 1200;
+                    const height = viewSize.height || 800;
+                    const k = (zoomRef.current?.k) ?? 1;
+                    const centerX = width / 2;
+                    const centerY = height / 2;
+                    const tx = d3.zoomIdentity.translate(centerX - (found.x || 0) * k, centerY - (found.y || 0) * k).scale(k);
+                    if (zoomBehaviorRef.current) {
+                      svg.transition().duration(600).ease(d3.easeCubicOut)
+                        .call(zoomBehaviorRef.current.transform, tx)
+                        .on('end', () => setMobilePanelOpen(false));
+                    }
+                  }} style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ddd', background: '#fff' }}>Go</button>
+                </div>
+              </div>
+
+        {groups.length > 0 && (
+                <div className="section">
+          <h3>Levels</h3>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                    {groups.map(g => (
+                      <label key={g} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#f8f8f8', border: '1px solid #eee', padding: '4px 8px', borderRadius: 12 }}>
+                        <input
+                          type="checkbox"
+                          checked={selectedGroups.has(g)}
+                          onChange={(e) => {
+                            const next = new Set(selectedGroups);
+                            if (e.target.checked) next.add(g); else next.delete(g);
+                            setSelectedGroups(next);
+                          }}
+                        />
+            <span style={{ width: 10, height: 10, borderRadius: '50%', background: getGroupColor(Number.isFinite(+g) ? +g : 'unknown'), display: 'inline-block' }} />
+            <span style={{ fontSize: 13 }}>{String(g)}</span>
+                      </label>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              {topRelationLegend.length > 0 && (
+                <div className="section">
+                  <h3>Relations</h3>
+                  <div style={{ display: 'flex', flexWrap: 'wrap', gap: 10 }}>
+                    {topRelationLegend.map(([k]) => (
+                      <span key={k} style={{ display: 'inline-flex', alignItems: 'center', gap: 6, background: '#f8f8f8', border: '1px solid #eee', padding: '4px 8px', borderRadius: 12 }}>
+                        <span style={{ width: 12, height: 3, borderRadius: 2, background: getRelationColor(k), display: 'inline-block' }} />
+                        <span style={{ fontSize: 13 }}>{k}</span>
+                      </span>
+                    ))}
+                  </div>
+                </div>
+              )}
+
+              <div className="section" style={{ textAlign: 'right' }}>
+                <button onClick={() => setMobilePanelOpen(false)} style={{ padding: '10px 14px', borderRadius: 10, border: '1px solid #ddd', background: '#fff' }}>Close</button>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
       {/* Link tooltip on hover */}
       {linkTooltip.visible && linkTooltip.data && (
         <div

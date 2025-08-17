@@ -16,64 +16,64 @@
       "name": "EWU Official Course Catalog",
       "description": "Eastern Washington University's comprehensive academic catalog containing all officially offered courses across four colleges. Serves as the foundational source for degree requirements, course sequences, and academic standards for undergraduate and graduate programs.",
       "group": "university-root",
-    "level": 0,
-    "size": 300
+      "level": 0,
+      "size": 25
     },
     {
       "id": "ewu-cahss",
       "name": "College of Arts, Humanities & Social Sciences (CAHSS)",
       "description": "Academic college encompassing humanities, social sciences, and arts disciplines. Provides foundational liberal arts education and specialized programs in literature, history, psychology, and creative arts.",
       "group": "college",
-    "level": 1,
-    "size": 120
+      "level": 1,
+      "size": 15
     },
     {
       "id": "ewu-chsph",
       "name": "College of Health Science & Public Health (CHSPH)",
       "description": "Professional college focused on health sciences, public health, and medical education. Offers programs in nursing, health informatics, and community health with emphasis on evidence-based practice.",
       "group": "college",
-    "level": 1,
-    "size": 120
+      "level": 1,
+      "size": 15
     },
     {
       "id": "ewu-cpp",
       "name": "College of Professional Programs (CPP)",
       "description": "Career-focused college offering professional education in business, education, and applied fields. Emphasizes practical skills development and industry partnerships for career preparation.",
       "group": "college",
-    "level": 1,
-    "size": 120
+      "level": 1,
+      "size": 15
     },
     {
       "id": "ewu-cstem",
       "name": "College of Science, Technology, Engineering & Mathematics (CSTEM)",
       "description": "The College of Science, Technology, Engineering, & Mathematics prepares students to succeed in fields such as Biology, Chemistry, Computer Programming, Data Science, Geoscience, Web Design, and Computational Mathematics. Faculty actively engage in research providing students opportunities to participate in real-world projects.",
       "group": "college",
-    "level": 1,
-    "size": 120
+      "level": 1,
+      "size": 20
     },
     {
       "id": "cstem-biology",
       "name": "Biology",
       "description": "Department offering undergraduate and graduate programs in biological sciences, including pre-medical preparation, environmental biology, biotechnology, and human systems biology. Provides research opportunities from molecular to ecosystem levels.",
       "group": "department",
-    "level": 2,
-    "size": 70
+      "level": 2,
+      "size": 12
     },
     {
   "id": "cstem-chemistry-biochemistry",
   "name": "Chemistry, Biochemistry, & Physics Department",
   "description": "Department offering programs in chemistry, biochemistry, and physics with strong laboratory experiences and quantitative problem solving across the physical sciences.",
       "group": "department",
-  "level": 2,
-  "size": 70
+      "level": 2,
+      "size": 12
     },
     {
       "id": "cstem-csee",
       "name": "Computer Science & Electrical Engineering",
   "description": "Department offering programs in computer science, electrical engineering, cybersecurity, and related technologies, with emphasis on hands-on learning.",
       "group": "department",
-    "level": 2,
-    "size": 75
+      "level": 2,
+      "size": 18
     },
     
     {
@@ -81,112 +81,112 @@
       "name": "Design",
   "description": "Department focused on visual communication design, animation, user experience, and interactive media with emphasis on industry-relevant digital design skills.",
       "group": "department",
-    "level": 2,
-    "size": 70
+      "level": 2,
+      "size": 12
     },
     {
       "id": "cstem-geosciences",
   "name": "Geosciences Department",
       "description": "Earth and environmental sciences department offering programs in geology, geography, environmental science, and GIS. Emphasizes field-based learning and research in natural resource management and climate studies.",
       "group": "department",
-    "level": 2,
-    "size": 70
+      "level": 2,
+      "size": 12
     },
     {
       "id": "cstem-mathematics",
   "name": "Mathematics Department",
   "description": "Mathematical sciences department providing pure and applied mathematics programs, including secondary education preparation. Supports quantitative literacy across STEM disciplines and offers graduate study opportunities.",
       "group": "department",
-    "level": 2,
-    "size": 70
+      "level": 2,
+      "size": 12
     },
     {
       "id": "cstem-mechanical-engineering",
   "name": "Mechanical Engineering & Technology Department",
       "description": "Engineering and technology department offering mechanical engineering, manufacturing technology, construction management, and applied technology programs. Combines theoretical engineering with hands-on technical training.",
       "group": "department",
-    "level": 2,
-    "size": 70
+      "level": 2,
+      "size": 12
     },
     {
       "id": "csee-undergraduate",
       "name": "Undergraduate Programs",
       "description": "Bachelor's degree programs in computer science and electrical engineering. Provides foundational education for entry-level technical careers and preparation for graduate studies.",
       "group": "degree-level",
-  "level": 3,
-    "size": 50
+      "level": 3,
+      "size": 16
     },
     {
       "id": "csee-graduate",
       "name": "Graduate Programs",
       "description": "Master's and doctoral programs offering advanced study in computer science and electrical engineering. Emphasizes research, specialization, and professional development.",
       "group": "degree-level",
-  "level": 3,
-    "size": 50
+      "level": 3,
+      "size": 14
     },
     {
       "id": "csee-minor",
       "name": "Minor Programs",
       "description": "Supplementary programs allowing students to gain basic competency in computer science or electrical engineering while pursuing other majors.",
       "group": "degree-level",
-  "level": 3,
-    "size": 50
+      "level": 3,
+      "size": 12
     },
     {
       "id": "undergrad-bs-ece",
       "name": "BS–Electrical and Computer Engineering",
       "description": "Bachelor of Science in Electrical & Computer Engineering - integrated ABET-accredited program covering electrical engineering fundamentals and computer engineering applications. Offered in Spokane with comprehensive laboratory experiences and industry partnerships.",
       "group": "degree-program",
-  "level": 4,
-    "size": 34
+      "level": 4,
+      "size": 14
     },
     {
       "id": "undergrad-bcs-cs",
       "name": "BCS–Computer Science",
       "description": "Bachelor of Computer Science - specialized computing degree offered in Spokane emphasizing practical programming skills, software development methodologies, and computing applications across disciplines. Designed for students seeking comprehensive technical competency.",
       "group": "degree-program", 
-  "level": 4,
-    "size": 34
+      "level": 4,
+      "size": 14
     },
     {
       "id": "undergrad-bs-cs",
       "name": "BS–Computer Science",
       "description": "Bachelor of Science in Computer Science - comprehensive computing program offered in Spokane providing rigorous foundation in algorithms, data structures, software engineering, and theoretical computer science. Features advancement programming exam requirement and extensive laboratory components.",
       "group": "degree-program",
-  "level": 4,
-    "size": 34
+      "level": 4,
+      "size": 16
     },
     {
       "id": "undergrad-bs-cs-cyber",
       "name": "BS–Computer Science Cyber Operations",
       "description": "Bachelor of Science in Computer Science Cyber Operations - specialized cybersecurity program offered in Spokane combining traditional computer science foundations with advanced cyber operations, digital forensics, and information security methodologies.",
       "group": "degree-program",
-  "level": 4,
-    "size": 34
+      "level": 4,
+      "size": 14
     },
     {
       "id": "undergrad-bs-cyber",
       "name": "BS–Cyber Operations",
       "description": "Bachelor of Science in Cyber Operations - dedicated cybersecurity degree offered in Spokane emphasizing threat analysis, cyber defense strategies, incident response, and security operations. Designed for careers in information security and cyber defense operations.",
       "group": "degree-program",
-  "level": 4,
-    "size": 34
+      "level": 4,
+      "size": 14
     },
     {
       "id": "bs-cs-required-cs-courses",
       "name": "Required Computer Science Courses", 
       "description": "Core computer science curriculum providing foundational knowledge in programming, data structures, algorithms, and software engineering. Represents the essential technical content for CS degree completion.",
       "group": "course-category",
-  "level": 5,
-    "size": 24
+      "level": 5,
+      "size": 15
     },
     {
       "id": "cs-courses-200-level",
       "name": "200 Level Computer Science Courses",
       "description": "Intermediate computer science courses building upon programming fundamentals. Introduces object-oriented programming, system programming, and computer architecture concepts essential for advanced coursework.",
       "group": "course-level",
-  "level": 6,
-    "size": 20
+      "level": 6,
+      "size": 14
     },
     {
       "id": "cscd-202",
@@ -200,8 +200,8 @@
       "requirement-type": ["MAJOR", "BACR"],
       "official-catalog-description": "This course explores the uses of computing technologies from a socio-cultural and ethical perspective, including the impacts of information systems on individuals, organization, and society and future direction in which the forces of technology and computing are tending to move us.",
       "group": "course",
-  "level": 7,
-    "size": 14
+      "level": 7,
+      "size": 12
     },
     {
       "id": "cscd-210", 
@@ -215,8 +215,8 @@
       "requirement-type": ["MAJOR"],
       "official-catalog-description": "This course covers the concepts and practices of information representation, computer algorithms, hardware organization and computer program design and implementation. Students write, run, debug, analyze and evaluate computer programs. Topics include primitive data types, number systems, file I/O classes, control structures, method design and usage, array–sorting and searching algorithms. Programming projects are required.",
       "group": "course",
-  "level": 7,
-    "size": 14
+      "level": 7,
+      "size": 14
     },
     {
       "id": "cscd-211",
@@ -230,8 +230,8 @@
       "requirement-type": ["MAJOR"],
       "official-catalog-description": "This course continues coverage of concepts introduced in Programming Principles I. Topics include composition, recursion, data abstraction, polymorphism, inheritance, interfaces, inner classes, abstract classes, object cloning, array lists, linked lists, and exception handling. Programming projects are required.",
       "group": "course",
-  "level": 7,
-    "size": 16
+      "level": 7,
+      "size": 16
     },
     {
       "id": "cscd-240",
@@ -245,8 +245,8 @@
       "requirement-type": ["MAJOR"],
       "official-catalog-description": "This course includes program development tools of the UNIX operating system and syntax and programming techniques of the C language in that environment. UNIX topics include interactive shells, common text editors, utility programs, file system structure, libraries and operating system calls and system programming. C topics include data types, structures, pointers and pointer arithmetic, arrays, linked lists, and function design and use. Programming projects are required.",
       "group": "course",
-  "level": 7,
-    "size": 14
+      "level": 7,
+      "size": 14
     },
     {
       "id": "cscd-260",
@@ -260,8 +260,8 @@
       "requirement-type": ["MAJOR"],
       "official-catalog-description": "Covers fundamentals of digital computer design and microcomputer systems. Topics include number systems, Boolean algebra, basic digital circuits, and an instruction set for a microprocessor. Homework assignments will include use of current software for the design, analysis, and simulation of digital circuits, assembly language programming emphasizing I/O device access and features that support high level languages. Programming projects are required.",
       "group": "course",
-  "level": 7,
-    "size": 12
+      "level": 7,
+      "size": 12
     },
     {
       "id": "cscd211-oop-principles",
@@ -272,7 +272,7 @@
       "career_relevance": "Foundation for enterprise software development, design patterns, and software architecture",
       "group": "cscd211-domain",
       "level": 8,
-  "size": 10
+      "size": 14
     },
     {
       "id": "cscd211-data-structures",
@@ -283,7 +283,7 @@
       "career_relevance": "Essential for algorithm implementation, system design, and performance optimization",
       "group": "cscd211-domain", 
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd211-advanced-techniques",
@@ -293,8 +293,8 @@
       "pedagogical_purpose": "Expand problem-solving toolkit with advanced computational approaches",
       "career_relevance": "Critical for complex algorithm implementation and robust software development",
       "group": "cscd211-domain",
-  "level": 8, 
-  "size": 10
+      "level": 8, 
+      "size": 12
     },
     {
       "id": "cscd211-interfaces-contracts",
@@ -305,7 +305,7 @@
       "career_relevance": "Essential for API design, framework development, and large-scale software systems",
       "group": "cscd211-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd202-ethical-frameworks",
@@ -316,7 +316,7 @@
       "career_relevance": "Essential for ethical decision-making in software development, data management, and technology leadership roles",
       "group": "cscd202-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd202-technology-impact",
@@ -327,7 +327,7 @@
       "career_relevance": "Critical for product managers, system designers, and technology policy professionals",
       "group": "cscd202-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd202-sociocultural-perspectives",
@@ -338,7 +338,7 @@
       "career_relevance": "Important for user experience design, international development, and inclusive technology creation",
       "group": "cscd202-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd202-future-implications",
@@ -349,7 +349,7 @@
       "career_relevance": "Valuable for technology strategy, research and development, and policy work in emerging technology fields",
       "group": "cscd202-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd240-unix-environment",
@@ -360,7 +360,7 @@
       "career_relevance": "Essential for system administration, DevOps, server development, and most professional software development environments",
       "group": "cscd240-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd240-system-programming",
@@ -371,7 +371,7 @@
       "career_relevance": "Critical for systems programming, embedded development, performance optimization, and infrastructure software",
       "group": "cscd240-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd240-c-language-fundamentals",
@@ -382,7 +382,7 @@
       "career_relevance": "Foundation for systems programming, embedded development, operating systems, and performance-critical applications",
       "group": "cscd240-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd240-memory-data-structures",
@@ -393,7 +393,7 @@
       "career_relevance": "Essential for embedded systems, game development, high-performance computing, and systems-level software",
       "group": "cscd240-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd260-digital-foundations",
@@ -404,7 +404,7 @@
       "career_relevance": "Essential for computer engineering, embedded systems design, and understanding computer architecture fundamentals",
       "group": "cscd260-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd260-microprocessor-architecture",
@@ -415,7 +415,7 @@
       "career_relevance": "Important for embedded systems, computer architecture, and high-performance computing applications",
       "group": "cscd260-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd260-assembly-programming",
@@ -426,7 +426,7 @@
       "career_relevance": "Critical for embedded programming, system software development, and performance optimization",
       "group": "cscd260-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "cscd260-circuit-simulation",
@@ -437,7 +437,7 @@
       "career_relevance": "Essential for digital design, FPGA development, and hardware engineering roles",
       "group": "cscd260-domain",
       "level": 8,
-  "size": 10
+      "size": 12
     },
     {
       "id": "oop-data-abstraction-techniques",
@@ -448,7 +448,7 @@
       "prerequisite_skills": ["basic class definition", "method implementation", "variable scope understanding"],
       "group": "cscd211-atomic-skill",
       "level": 9,
-  "size": 7
+      "size": 8
     },
     {
       "id": "oop-polymorphic-behavior",
@@ -458,8 +458,8 @@
       "assessment_objectives": ["Implement method overriding correctly", "Demonstrate understanding of dynamic binding", "Create polymorphic object collections"],
       "prerequisite_skills": ["inheritance concepts", "method definition", "object instantiation"],
       "group": "cscd211-atomic-skill", 
-  "level": 9,
-  "size": 7
+      "level": 9,
+      "size": 8
     },
     {
       "id": "oop-inheritance-hierarchies",
@@ -469,8 +469,8 @@
       "assessment_objectives": ["Design logical inheritance hierarchies", "Implement proper super/subclass relationships", "Apply appropriate inheritance patterns"],
       "prerequisite_skills": ["class design", "method implementation", "object relationships"],
       "group": "cscd211-atomic-skill",
-  "level": 9, 
-  "size": 7
+      "level": 9, 
+      "size": 8
     },
     {
       "id": "oop-encapsulation-mechanisms",
@@ -481,7 +481,7 @@
       "prerequisite_skills": ["class structure understanding", "method definition", "variable scope"],
       "group": "cscd211-atomic-skill",
       "level": 9,
-  "size": 7
+      "size": 8
     }
   ],
   "links": [
