@@ -192,6 +192,8 @@ curl http://localhost:8080/api/concept-map
 
 The frontend can be deployed as a static site to GitHub Pages:
 
+Note: On GitHub Pages you can direct the app to fetch from a public raw JSON without the backend by setting a repository variable `VITE_JSON_URL` (or by appending `?jsonUrl=` to the site URL). The frontend prioritizes this raw source and falls back to backend endpoints if needed.
+
 ```bash
 # Build for production
 cd frontend

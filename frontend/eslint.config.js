@@ -26,4 +26,17 @@ export default defineConfig([
       'no-unused-vars': ['error', { varsIgnorePattern: '^[A-Z_]' }],
     },
   },
+  // Node env overrides for config/build scripts
+  {
+    files: ['vite.config.js', 'eslint.config.js', 'playwright.config.ts'],
+    languageOptions: {
+      globals: {
+        ...globals.node,
+      },
+    },
+    rules: {
+      // Allow use of process.env etc in Node context
+      'no-undef': 'off',
+    },
+  },
 ])

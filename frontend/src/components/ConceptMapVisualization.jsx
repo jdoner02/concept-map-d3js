@@ -703,8 +703,7 @@ const ConceptMapVisualization = () => {
         const words = String(raw).split(/\s+/).filter(Boolean).reverse();
         const maxWidth = 140;
         const lineHeight = 12;
-        let line = [];
-        let lineNumber = 0;
+  let line = [];
         let tspan = textSel.append('tspan').attr('x', 0).attr('dy', 0);
         let word = words.pop();
         while (word) {
@@ -716,7 +715,6 @@ const ConceptMapVisualization = () => {
             line.pop();
             tspan.text(line.join(' '));
             line = [word];
-            lineNumber += 1;
             tspan = textSel.append('tspan')
               .attr('x', 0)
               .attr('dy', lineHeight)
@@ -771,13 +769,13 @@ const ConceptMapVisualization = () => {
       .attr('stroke-width', 1)
       .attr('filter', 'url(#node-glow)')
       .style('cursor', 'grab')
-      .on('mouseenter', function(d) {
+  .on('mouseenter', function() {
         const c = d3.select(this);
         c.interrupt().transition().duration(120)
           .attr('stroke-width', 2)
           .attr('r', dd => computeNodeRadius(dd) + 3);
       })
-      .on('mouseleave', function(d) {
+  .on('mouseleave', function() {
         const c = d3.select(this);
         c.interrupt().transition().duration(120)
           .attr('stroke-width', 1)
@@ -889,7 +887,7 @@ const ConceptMapVisualization = () => {
         .attr('role', 'button')
         .attr('tabindex', 0)
         .attr('aria-label', b => `${b.key.replace(/_/g, ' ')} for ${d.name || d.id}`)
-        .on('keydown', (event, b) => {
+  .on('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
             d3.select(event.currentTarget).select('circle').dispatch('click', { bubbles: true });
@@ -1186,8 +1184,7 @@ const ConceptMapVisualization = () => {
         const ly = Math.sin(angleRad) * ((b.r || 20) + (b.spike || 14));
         sel.select('path.label-spike').attr('d', `M${sx},${sy} L${lx},${ly}`);
         // label at spike end + half height + small gap
-        const rect = sel.select('g.bubble-label rect');
-        const w = +rect.attr('width') || (b.labelW || 60);
+  const rect = sel.select('g.bubble-label rect');
         const h = +rect.attr('height') || (b.labelH || 20);
         const centerDist = (b.r || 20) + (b.spike || 14) + (h / 2) + 2 + (b.labelOffset || 0);
         const localCx = Math.cos(angleRad) * centerDist;
@@ -1671,7 +1668,7 @@ const ConceptMapVisualization = () => {
                   activeMetaRef.current = null;
                   // open ring via simulated toggle
                   // eslint-disable-next-line no-unused-expressions
-                  pick && (function(d){ const event = new Event('click', { bubbles: true }); svgRef.current?.dispatchEvent(event); })(pick);
+                  pick && (function(){ const event = new Event('click', { bubbles: true }); svgRef.current?.dispatchEvent(event); })();
                 });
             }
           }
