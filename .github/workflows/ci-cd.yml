@@ -220,8 +220,13 @@ jobs:
 
       - name: Build for GitHub Pages
         working-directory: ./frontend
+        env:
+          # Raw JSON URL used by the frontend at build time when running on GitHub Pages
+          VITE_JSON_URL: ${{ vars.VITE_JSON_URL }}
         run: |
           npm run build
+          # Ensure GitHub Pages serves assets without Jekyll processing
+          touch dist/.nojekyll
           # echo "your-domain.com" > dist/CNAME  # Custom domain
 
       - name: Setup Pages
