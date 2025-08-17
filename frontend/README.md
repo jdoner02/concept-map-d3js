@@ -36,7 +36,7 @@ VITE_API_URL=http://127.0.0.1:8080 npm run dev
 VITE_API_URL=http://127.0.0.1:8080 npm run test:e2e
 
 # Direct raw JSON (env)
-VITE_JSON_URL=https://raw.githubusercontent.com/<owner>/<repo>/path/to/concept-map.json npm run dev
+VITE_JSON_URL=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json npm run dev
 
 # Direct raw JSON (ad-hoc via query param)
 npm run dev
