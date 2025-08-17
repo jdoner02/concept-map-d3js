@@ -7,7 +7,9 @@
 .project
 .classpath
 .settings/
-.vscode/
+# VS Code: ignore all except tasks.json so workspace tasks are shared
+.vscode/*
+!.vscode/tasks.json
 
 # Maven/Java
 target/

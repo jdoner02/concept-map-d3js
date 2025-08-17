@@ -1,0 +1,68 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Dev: run backend + frontend",
+      "type": "shell",
+      "command": "bash",
+      "args": [
+        "-lc",
+        "chmod +x scripts/dev.sh && ./scripts/dev.sh"
+      ],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: run Spring Boot",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-lc", "./mvnw spring-boot:run"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Backend: test (JUnit)",
+      "type": "shell",
+      "command": "bash",
+      "args": ["-lc", "./mvnw test"],
+      "group": "test",
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: dev (Vite)",
+      "type": "shell",
+      "command": "bash",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "args": ["-lc", "npm run dev"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: preview (prod build)",
+      "type": "shell",
+      "command": "bash",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "args": ["-lc", "npm run preview"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: build",
+      "type": "shell",
+      "command": "bash",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "args": ["-lc", "npm run build"],
+      "group": "build",
+      "problemMatcher": []
+    },
+    {
+      "label": "Frontend: e2e (Playwright)",
+      "type": "shell",
+      "command": "bash",
+      "options": { "cwd": "${workspaceFolder}/frontend" },
+      "args": ["-lc", "npm run test:e2e"],
+      "group": "test",
+      "problemMatcher": []
+    }
+  ]
+}

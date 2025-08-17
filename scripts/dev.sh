@@ -3,6 +3,10 @@ set -euo pipefail
 
 # Start Spring Boot backend and Vite frontend concurrently, then open browser to frontend
 # macOS + zsh compatible
+# Optional usage:
+#   ./scripts/dev.sh                      # default (backend + frontend)
+#   JSON_URL=... ./scripts/dev.sh         # override data source
+#   PREVIEW=1 ./scripts/dev.sh            # quick-load preview dataset via ?jsonUrl
 
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
@@ -90,6 +94,12 @@ done
 
 # Open browser to the detected frontend URL
 OPEN_URL="${FRONTEND_URL:-http://localhost:5173}"
+# If requested, append ?jsonUrl param for preview or env-provided override
+if [ "${PREVIEW:-0}" = "1" ]; then
+  OPEN_URL="$OPEN_URL/?jsonUrl=http://localhost:5173/concept-map-preview.json"
+elif [ -n "${JSON_URL:-}" ]; then
+  OPEN_URL="$OPEN_URL/?jsonUrl=${JSON_URL}"
+fi
 echo "Opening $OPEN_URL"
 if command -v open >/dev/null 2>&1; then
   open "$OPEN_URL" || echo "Please navigate to $OPEN_URL"
