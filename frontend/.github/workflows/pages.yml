@@ -41,7 +41,11 @@ jobs:
         env:
           # Set your raw JSON URL here or in repo/environment secrets
           VITE_JSON_URL: ${{ vars.VITE_JSON_URL }}
-        run: npm run build
+        run: |
+          npm run build
+          # Copy backend JSON into the static site as a fallback data source
+          mkdir -p dist
+          cp -f ../src/main/resources/concept-map.json dist/concept-map.json
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3

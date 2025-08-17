@@ -120,12 +120,23 @@ const ConceptMapVisualization = () => {
         const tried = new Set();
   const candidates = [];
   const push = (u) => { const s = String(u); if (!tried.has(s)) { tried.add(s); candidates.push(s); } };
-  // Try explicit endpoints first (CORS is allowed), then relative path for Vite proxy fallback
+  // Try explicit raw JSON overrides first (query or env)
   if (rawJsonCandidate) push(rawJsonCandidate);
+  // Static JSON fallback served by GitHub Pages (copied into dist at deploy): respects Vite base
+  try {
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+    push(`${base}/concept-map.json`);
+  } catch { /* no-op */ }
+  // Configured API endpoint (env or default)
   push(endpoint);
-        push('http://localhost:8080/api/concept-map');
-        push('http://127.0.0.1:8080/api/concept-map');
+  // Relative API path for environments with reverse proxy
   push('/api/concept-map');
+  // Localhost fallbacks only when not on HTTPS to avoid mixed-content blocks
+  const isHttps = typeof window !== 'undefined' && window.location && window.location.protocol === 'https:';
+  if (!isHttps) {
+    push('http://localhost:8080/api/concept-map');
+    push('http://127.0.0.1:8080/api/concept-map');
+  }
   let response = null;
         let lastErr = null;
         // eslint-disable-next-line no-console
