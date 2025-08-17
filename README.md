@@ -197,6 +197,14 @@ Note: On GitHub Pages you can direct the app to fetch from a public raw JSON wit
 - Live (with explicit raw JSON override):
   https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json
 
+- Preview dataset (published with Pages artifact):
+  https://jdoner02.github.io/concept-map-d3js/?jsonUrl=https://jdoner02.github.io/concept-map-d3js/concept-map-preview.json
+
+Layout vision (preview JSON):
+- Center node: `ewu-root` with college nodes radiating outward (force-directed).
+- Each college decomposes into departments; CSEE then decomposes into degree levels and programs.
+- Courses decompose into domains and then atomic skills. The force parameters aim to push unrelated nodes apart to reveal natural sequences.
+
 ```bash
 # Build for production
 cd frontend

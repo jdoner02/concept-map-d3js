@@ -228,6 +228,8 @@ jobs:
           # Copy backend JSON into the static site as a fallback data source
           mkdir -p dist
           cp -f ../src/main/resources/concept-map.json dist/concept-map.json
+          # Also publish the preview dataset for experimentation via ?jsonUrl
+          cp -f ../src/main/resources/concept-map-preview.json dist/concept-map-preview.json || true
           # Ensure GitHub Pages serves assets without Jekyll processing
           touch dist/.nojekyll
           # echo "your-domain.com" > dist/CNAME  # Custom domain
