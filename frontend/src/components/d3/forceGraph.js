@@ -4,7 +4,10 @@ import * as d3 from 'd3';
 const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
 function baseRadius(node, MIN) {
   const size = Number(node?.size);
-  if (Number.isFinite(size) && size > 0) return MIN + 6 * Math.sqrt(size);
+  if (Number.isFinite(size) && size > 0) {
+    // Much smaller scaling factor for JSON size values (300 -> 7 range)
+    return MIN + Math.sqrt(size) * 0.8;
+  }
   const deg = typeof node?.degree === 'number' ? node.degree : 0;
   return MIN + 4 * Math.sqrt(Math.max(0, deg));
 }
@@ -25,9 +28,9 @@ function levelFactor(level) {
 
 // Accept a node object; use multi-factor sizing based on educational metadata
 export function computeNodeRadius(node) {
-  const MIN = 20;
-  const MAX = 60;
-  if (!node) return 25;
+  const MIN = 8;  // Smaller minimum radius
+  const MAX = 35; // Smaller maximum radius 
+  if (!node) return 15;
 
   // Respect precomputed radius if provided by upstream (e.g., from dataset normalization)
   if (Number.isFinite(node._radius)) {
@@ -63,32 +66,32 @@ export function createSimulation(nodes, links, { width, height }) {
         const srcLevel = Number(link.source?.level ?? 0);
         const tgtLevel = Number(link.target?.level ?? 0);
         const levelDiff = Math.abs(srcLevel - tgtLevel);
-        return 150 + (levelDiff * 50); // Base 150, +50 per level difference
+        return 100 + (levelDiff * 40); // Shorter base distance, less level scaling
       })
-      .strength(0.22))
-    .force('charge', d3.forceManyBody().strength(-380).distanceMax(800))
+      .strength(0.3)) // Stronger link force
+    .force('charge', d3.forceManyBody().strength(-800).distanceMax(1200)) // Much stronger repulsion
     .force('center', d3.forceCenter(w / 2, h / 2))
-    .force('collision', d3.forceCollide().radius(d => computeNodeRadius(d) + 8));
+    .force('collision', d3.forceCollide().radius(d => computeNodeRadius(d) + 12).strength(0.8)); // Stronger collision avoidance
 
   // Horizontal positioning by level for tree straightening
   sim.force('x', d3.forceX()
     .x(d => {
       const level = Number(d?.level ?? 0);
-      const spacing = Math.min(w * 0.15, 120); // Adaptive spacing based on width
+      const spacing = Math.min(w * 0.12, 100); // More compact spacing
       return w / 2 + (level * spacing) - (spacing * 2); // Offset so level 0 is left of center
     })
-    .strength(0.08)); // Gentle pull to avoid overriding organic layout
+    .strength(0.15)); // Stronger pull for clearer level separation
 
   // Vertical clustering by sibling level
   sim.force('y', d3.forceY()
     .y(d => {
       const level = Number(d?.level ?? 0);
-      return h / 2 + ((level % 3) - 1) * 60; // Slight vertical offset by level modulo
+      return h / 2 + ((level % 3) - 1) * 80; // Slightly more vertical spread
     })
-    .strength(0.04)); // Very gentle vertical organization
+    .strength(0.08)); // Stronger vertical organization
 
   // Soft diffusion: nudge unconnected nodes away within a local radius
-  sim.force('diffusion', diffusionForce(l, { radius: 260, strength: 0.02 }));
+  sim.force('diffusion', diffusionForce(l, { radius: 200, strength: 0.04 })); // Stronger diffusion
   // Gentle radial jitter to keep floaty motion alive when alpha is low
   sim.force('jitter', () => {
     const a = Math.max(0.001, sim.alpha());
