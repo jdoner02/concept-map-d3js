@@ -4,10 +4,10 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-  "dev": "vite --host localhost --port 5173 --strictPort",
+  "dev": "vite --host 127.0.0.1 --port 5173 --strictPort",
     "build": "vite build",
     "lint": "eslint .",
-  "preview": "vite preview --host localhost --port 5173 --strictPort",
+  "preview": "vite preview --host 127.0.0.1 --port 5174",
   "test:e2e": "playwright test",
   "test:e2e:headed": "playwright test --headed"
   },

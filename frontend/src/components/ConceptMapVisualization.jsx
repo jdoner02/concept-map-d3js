@@ -36,6 +36,8 @@ const ConceptMapVisualization = () => {
   const zoomBehaviorRef = useRef(null);
   // Actual rendered SVG size for precise centering and bounds
   const [viewSize, setViewSize] = useState({ width: 1200, height: 800 });
+  // Accessibility live region for screen readers
+  const liveStatusRef = useRef(null);
   // Click-activated Sims-like metadata UI
   const activeMetaRef = useRef(null); // { ownerId, bubbles: [...], expandedKey?: string }
   const focusedRef = useRef(null); // { id }
@@ -310,6 +312,10 @@ const ConceptMapVisualization = () => {
     svg
       .attr('width', width)
       .attr('height', height)
+      .attr('role', 'img')
+      .attr('aria-label', 'Interactive concept map graph. Use arrow keys to pan, plus and minus to zoom, and zero to reset view.')
+      .attr('tabindex', 0)
+      .attr('focusable', true)
       .style('background', '#1f2329'); // slightly dark for better text contrast
 
     // Ensure one-time container/zoom/defs setup
@@ -323,6 +329,31 @@ const ConceptMapVisualization = () => {
       // Save the zoom behavior for later programmatic transforms
       zoomBehaviorRef.current = zoom;
       svg.on('dblclick.zoom', null);
+      // Keyboard controls for zoom/pan/reset
+      svg.on('keydown', (event) => {
+        const key = event.key;
+        const step = 40; // pan step in px
+        const factor = 1.15; // zoom factor
+        const current = zoomRef.current || d3.zoomIdentity;
+        if (key === '+' || key === '=') {
+          event.preventDefault();
+          const k = Math.min(3, current.k * factor);
+          svg.transition().duration(150).call(zoomBehaviorRef.current.scaleTo, k);
+        } else if (key === '-' || key === '_') {
+          event.preventDefault();
+          const k = Math.max(0.1, current.k / factor);
+          svg.transition().duration(150).call(zoomBehaviorRef.current.scaleTo, k);
+        } else if (key === '0') {
+          event.preventDefault();
+          svg.transition().duration(150).call(zoomBehaviorRef.current.transform, d3.zoomIdentity);
+        } else if (key === 'ArrowLeft' || key === 'ArrowRight' || key === 'ArrowUp' || key === 'ArrowDown') {
+          event.preventDefault();
+          const dx = key === 'ArrowLeft' ? step : key === 'ArrowRight' ? -step : 0;
+          const dy = key === 'ArrowUp' ? step : key === 'ArrowDown' ? -step : 0;
+          const next = current.translate(dx, dy);
+          svg.transition().duration(120).call(zoomBehaviorRef.current.transform, next);
+        }
+      });
       const defsInit = svg.append('defs');
       addArrowhead(defsInit);
 
@@ -496,6 +527,9 @@ const ConceptMapVisualization = () => {
         sim.alpha(0);
       }
       setRenderCounts({ nodes: 0, links: 0 });
+      if (liveStatusRef.current) {
+        liveStatusRef.current.textContent = 'No nodes or links to display.';
+      }
       return;
     }
 
@@ -1632,6 +1666,9 @@ const ConceptMapVisualization = () => {
     });
 
     setRenderCounts({ nodes: filteredNodes.length, links: filteredLinks.length });
+    if (liveStatusRef.current) {
+      liveStatusRef.current.textContent = `${filteredNodes.length} nodes and ${filteredLinks.length} links rendered.`;
+    }
 
     // cleanup not removing container/zoom; simulation persists on svg property
     return () => {};
@@ -1835,7 +1872,7 @@ const ConceptMapVisualization = () => {
   }
 
   return (
-    <div className="concept-map-container" style={{ position: 'relative' }}>
+    <div className="concept-map-container" id="main" style={{ position: 'relative' }}>
       <div className="concept-map-header">
         <h1>Interactive Concept Map</h1>
         <p>Drag nodes to explore relationships • Scroll to zoom</p>
@@ -1893,6 +1930,14 @@ const ConceptMapVisualization = () => {
           </div>
         )}
       </div>
+      {/* Controls + live status for a11y */}
+      <div className="controls" aria-label="Display controls">
+        <button type="button" onClick={() => svgRef.current && d3.select(svgRef.current).call(zoomBehaviorRef.current.scaleBy, 1.15)} aria-label="Zoom in">＋</button>
+        <button type="button" onClick={() => svgRef.current && d3.select(svgRef.current).call(zoomBehaviorRef.current.scaleBy, 1/1.15)} aria-label="Zoom out">－</button>
+        <button type="button" onClick={() => svgRef.current && d3.select(svgRef.current).call(zoomBehaviorRef.current.transform, d3.zoomIdentity)} aria-label="Reset view">Reset</button>
+        <span aria-live="polite" aria-atomic="true" ref={liveStatusRef} className="visually-hidden" />
+      </div>
+
       {/* Quick search + surprise me */}
       <div style={{ position: 'absolute', top: 10, right: 10, display: 'flex', gap: 8, zIndex: 15 }}>
         <input
