@@ -31,6 +31,8 @@ const ConceptMapVisualization = () => {
   // Tooltip for link details on hover
   const [linkTooltip, setLinkTooltip] = useState({ visible: false, x: 0, y: 0, key: null, data: null });
   const linkTooltipDivRef = useRef(null);
+  // Lightweight tooltip for simple hover info (name + description)
+  const [hoverInfo, setHoverInfo] = useState({ visible: false, x: 0, y: 0, node: null });
   const zoomRef = useRef(d3.zoomIdentity);
   // Persist the zoom behavior instance so we can programmatically transform later
   const zoomBehaviorRef = useRef(null);
@@ -1007,10 +1009,12 @@ const ConceptMapVisualization = () => {
         return ai - bi;
       });
 
-      const MAX_BUBBLES = Math.min(8, entries.length);
-      const startAngle = -90;
-      const step = 360 / MAX_BUBBLES;
-      const bubbles = entries.slice(0, MAX_BUBBLES).map(([key, value], i) => ({
+      // One bubble per remaining metadata entry. We evenly space them
+      // around the circle so every fact gets a spot in the orbit.
+      const count = entries.length;
+      const startAngle = -90; // Start at top of the circle for aesthetic balance
+      const step = 360 / count;
+      const bubbles = entries.map(([key, value], i) => ({
         ownerId: d.id,
         key,
         value,
@@ -1460,9 +1464,25 @@ const ConceptMapVisualization = () => {
         buildMetaRing(d);
       }
     };
-    // Node double-click opens the tooltip with mini-tree
+    // Node hover displays a lightweight tooltip with just the name and description
+    nodeGroups.on('mouseover', (event, d) => {
+      const [mx, my] = d3.pointer(event, svg.node());
+      setHoverInfo({ visible: true, x: mx, y: my, node: { ...d } });
+    });
+    // Reposition tooltip as the pointer moves so it tracks the cursor
+    nodeGroups.on('mousemove', (event) => {
+      const [mx, my] = d3.pointer(event, svg.node());
+      setHoverInfo((prev) => (prev.visible ? { ...prev, x: mx, y: my } : prev));
+    });
+    // Hide tooltip when leaving the node
+    nodeGroups.on('mouseout', () => {
+      setHoverInfo({ visible: false, x: 0, y: 0, node: null });
+    });
+    // Node double-click opens the rich tooltip with mini-tree
     nodeGroups.on('dblclick', (event, d) => {
       const [mx, my] = d3.pointer(event, svg.node());
+      // Hide hover tooltip to avoid overlap with the detailed panel
+      setHoverInfo({ visible: false, x: 0, y: 0, node: null });
       setTooltip({ visible: true, x: mx, y: my, node: { ...d } });
       // Minimal legacy info-panel content to keep tests happy
       const info = document.getElementById('info-panel');
@@ -1491,7 +1511,9 @@ const ConceptMapVisualization = () => {
     // Click toggles Sims-like ring and centers the node smoothly
     nodeGroups.on('click', (event, d) => {
       event.stopPropagation();
-      
+      // Remove hover tooltip since the focus shifts to metadata bubbles
+      setHoverInfo({ visible: false, x: 0, y: 0, node: null });
+
       // Smooth zoom/pan to center the clicked node
       const nodeX = d.x || 0;
       const nodeY = d.y || 0;
@@ -2191,6 +2213,29 @@ const ConceptMapVisualization = () => {
             </div>
           </div>
         </>
+      )}
+      {/* Lightweight node tooltip that follows the cursor */}
+      {hoverInfo.visible && hoverInfo.node && (
+        <div
+          style={{
+            position: 'absolute',
+            left: hoverInfo.x + 12,
+            top: hoverInfo.y + 12,
+            background: 'rgba(255,255,255,0.95)',
+            border: '1px solid #e0e0e0',
+            borderRadius: 6,
+            padding: '6px 8px',
+            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+            pointerEvents: 'none', // let mouse events reach the SVG beneath
+            zIndex: 8
+          }}
+          role="tooltip"
+        >
+          <div style={{ fontWeight: 600, fontSize: 13 }}>{hoverInfo.node.name || hoverInfo.node.id}</div>
+          {hoverInfo.node.description && (
+            <div style={{ fontSize: 12, color: '#444', marginTop: 2 }}>{hoverInfo.node.description}</div>
+          )}
+        </div>
       )}
       {/* Link tooltip on hover */}
       {linkTooltip.visible && linkTooltip.data && (
