@@ -1047,106 +1047,124 @@ const ConceptMapVisualization = () => {
         .attr('role', 'button')
         .attr('tabindex', 0)
         .attr('aria-label', b => `${b.key.replace(/_/g, ' ')} for ${d.name || d.id}`)
-  .on('keydown', (event) => {
+        .style('cursor', 'pointer')
+        .on('keydown', (event) => {
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            d3.select(event.currentTarget).select('circle').dispatch('click', { bubbles: true });
+            d3.select(event.currentTarget).dispatch('click', { bubbles: true });
           }
         })
         .on('click', (event, b) => {
-          // Delegate to the same toggling logic as the circle
+          // Clicking a bubble toggles a small tooltip describing that metadata entry
           event.stopPropagation();
           if (activeMetaRef.current?.expandedKey === b.key) {
             activeMetaRef.current.expandedKey = null;
             annotationsLayer.selectAll('g.meta-panel').remove();
-          } else {
-            activeMetaRef.current.expandedKey = b.key;
-            annotationsLayer.selectAll('g.meta-panel').remove();
-            const panel = annotationsLayer.append('g').attr('class', 'meta-panel').attr('opacity', 0);
-            const padding = { x: 12, y: 10 };
-            const minWidth = 220, maxWidth = 360;
-            const initialW = maxWidth;
-            const bg = panel.append('rect')
-              .attr('class', 'panel-bg')
-              .attr('x', 0)
-              .attr('y', 0)
-              .attr('rx', 10)
-              .attr('ry', 10)
-              .attr('width', initialW)
-              .attr('height', 120)
-              .attr('fill', '#ffffff')
-              .attr('stroke', '#e5e7eb')
-              .attr('filter', 'url(#card-shadow)')
-              .attr('role', 'dialog')
-              .attr('tabindex', 0)
-              .on('keydown', (ev) => { if (ev.key === 'Escape') { destroyMetaUI(); } });
-            panel.append('rect')
-              .attr('class', 'panel-accent')
-              .attr('x', 0)
-              .attr('y', 0)
-              .attr('width', initialW)
-              .attr('height', 3)
-              .attr('fill', baseColor?.formatHex?.() || '#9ca3af');
-            const title = panel.append('text')
-              .attr('class', 'panel-title')
-              .attr('x', padding.x)
-              .attr('y', padding.y + 14)
-              .attr('font-weight', '700')
-              .attr('font-size', 13)
-              .attr('fill', '#111827')
-              .text(b.key.replace(/_/g, ' '));
-            const contentY = padding.y + 14 + 8;
-            const contentGroup = panel.append('g').attr('class', 'panel-content');
-            if (Array.isArray(b.value)) {
-              const items = b.value.slice(0, 8);
-              let y = contentY + 8;
-              items.forEach(item => {
-                const textLine = contentGroup.append('text')
-                  .attr('x', padding.x)
-                  .attr('y', y)
-                  .attr('font-size', 12)
-                  .attr('fill', '#374151');
-                wrapTspans(textLine, `• ${String(item)}`, maxWidth - (padding.x * 2), 14);
-                const tspans = textLine.selectAll('tspan').nodes();
-                const lines = Math.max(1, tspans.length);
-                y += lines * 14;
-              });
-              let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-              contentGroup.selectAll('text').each(function() {
-                const bb = this.getBBox();
-                minX = Math.min(minX, bb.x);
-                maxX = Math.max(maxX, bb.x + bb.width);
-                minY = Math.min(minY, bb.y);
-                maxY = Math.max(maxY, bb.y + bb.height);
-              });
-              const contentW = Math.max(0, maxX - minX) + padding.x;
-              const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max(contentW, title.node()?.getBBox?.().width + padding.x * 2)));
-              bg.attr('width', desiredW);
-              panel.select('rect.panel-accent').attr('width', desiredW);
-              const totalH = Math.max(110, (maxY - (padding.y - 2)) + padding.y);
-              panel.select('rect.panel-bg').attr('height', totalH);
-            } else {
+            return;
+          }
+          activeMetaRef.current.expandedKey = b.key;
+          annotationsLayer.selectAll('g.meta-panel').remove();
+          const panel = annotationsLayer.append('g').attr('class', 'meta-panel').attr('opacity', 0);
+          const padding = { x: 12, y: 10 };
+          const minWidth = 220, maxWidth = 360;
+          const initialW = maxWidth;
+          const bg = panel.append('rect')
+            .attr('class', 'panel-bg')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('rx', 10)
+            .attr('ry', 10)
+            .attr('width', initialW)
+            .attr('height', 120)
+            .attr('fill', '#ffffff')
+            .attr('stroke', '#e5e7eb')
+            .attr('filter', 'url(#card-shadow)')
+            .attr('role', 'dialog')
+            .attr('tabindex', 0)
+            .on('keydown', (ev) => { if (ev.key === 'Escape') { destroyMetaUI(); } });
+          panel.append('rect')
+            .attr('class', 'panel-accent')
+            .attr('x', 0)
+            .attr('y', 0)
+            .attr('width', initialW)
+            .attr('height', 3)
+            .attr('fill', baseColor?.formatHex?.() || '#9ca3af');
+          const title = panel.append('text')
+            .attr('class', 'panel-title')
+            .attr('x', padding.x)
+            .attr('y', padding.y + 14)
+            .attr('font-weight', '700')
+            .attr('font-size', 13)
+            .attr('fill', '#111827')
+            .text(b.key.replace(/_/g, ' '));
+          const contentY = padding.y + 14 + 8;
+          const contentGroup = panel.append('g').attr('class', 'panel-content');
+          if (Array.isArray(b.value)) {
+            const items = b.value.slice(0, 8);
+            let y = contentY + 8;
+            items.forEach(item => {
               const textLine = contentGroup.append('text')
                 .attr('x', padding.x)
-                .attr('y', contentY + 8)
+                .attr('y', y)
                 .attr('font-size', 12)
                 .attr('fill', '#374151');
-              wrapTspans(textLine, String(b.value), maxWidth - (padding.x * 2), 14);
-              const bb = contentGroup.node()?.getBBox?.();
-              const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max((bb?.width || 0) + padding.x * 2, title.node()?.getBBox?.().width + padding.x * 2)));
-              bg.attr('width', desiredW);
-              panel.select('rect.panel-accent').attr('width', desiredW);
-              const totalH = Math.max(110, ((bb?.height || 0) + padding.y * 2 + 18));
-              panel.select('rect.panel-bg').attr('height', totalH);
-            }
-            panel.append('path')
-              .attr('class', 'panel-connector')
-              .attr('stroke', '#d1d5db')
-              .attr('stroke-width', 1.5)
-              .attr('fill', 'none')
-              .attr('pointer-events', 'none');
-            panel.transition().duration(160).attr('opacity', 1);
+              wrapTspans(textLine, `• ${String(item)}`, maxWidth - (padding.x * 2), 14);
+              const tspans = textLine.selectAll('tspan').nodes();
+              const lines = Math.max(1, tspans.length);
+              y += lines * 14;
+            });
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+            contentGroup.selectAll('text').each(function() {
+              const bb = this.getBBox();
+              minX = Math.min(minX, bb.x);
+              maxX = Math.max(maxX, bb.x + bb.width);
+              minY = Math.min(minY, bb.y);
+              maxY = Math.max(maxY, bb.y + bb.height);
+            });
+            const contentW = Math.max(0, maxX - minX) + padding.x;
+            const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max(contentW, title.node()?.getBBox?.().width + padding.x * 2)));
+            bg.attr('width', desiredW);
+            panel.select('rect.panel-accent').attr('width', desiredW);
+            const totalH = Math.max(110, (maxY - (padding.y - 2)) + padding.y);
+            panel.select('rect.panel-bg').attr('height', totalH);
+          } else {
+            const textLine = contentGroup.append('text')
+              .attr('x', padding.x)
+              .attr('y', contentY + 8)
+              .attr('font-size', 12)
+              .attr('fill', '#374151');
+            wrapTspans(textLine, String(b.value), maxWidth - (padding.x * 2), 14);
+            const bb = contentGroup.node()?.getBBox?.();
+            const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max((bb?.width || 0) + padding.x * 2, title.node()?.getBBox?.().width + padding.x * 2)));
+            bg.attr('width', desiredW);
+            panel.select('rect.panel-accent').attr('width', desiredW);
+            const totalH = Math.max(110, ((bb?.height || 0) + padding.y * 2 + 18));
+            panel.select('rect.panel-bg').attr('height', totalH);
           }
+          panel.append('path')
+            .attr('class', 'panel-connector')
+            .attr('stroke', '#d1d5db')
+            .attr('stroke-width', 1.5)
+            .attr('fill', 'none')
+            .attr('pointer-events', 'none');
+          // Compute initial tooltip position relative to the bubble
+          const ownerX = d.x ?? 0, ownerY = d.y ?? 0;
+          const ringRadius = activeMetaRef.current.ringRadius || computeNodeRadius(d) + (window.innerWidth <= 480 ? 52 : 70);
+          const angleRad = (b.angle * Math.PI) / 180;
+          const bubbleX = ownerX + Math.cos(angleRad) * ringRadius;
+          const bubbleY = ownerY + Math.sin(angleRad) * ringRadius;
+          const dx = Math.sign(bubbleX - ownerX) || 1;
+          const dy = Math.sign(bubbleY - ownerY) || 1;
+          const panW = +bg.attr('width') || minWidth;
+          const panH = +panel.select('rect.panel-bg').attr('height') || 120;
+          const gap = 20;
+          const rawX = bubbleX + (dx > 0 ? gap : -(panW + gap));
+          const rawY = bubbleY + (dy > 0 ? gap : -(panH + gap));
+          panel.attr('transform', `translate(${rawX},${rawY})`);
+          const anchorX = rawX + (dx > 0 ? 0 : panW);
+          const anchorY = rawY + (dy > 0 ? 0 : panH);
+          panel.select('path.panel-connector').attr('d', `M${bubbleX - rawX},${bubbleY - rawY} L${anchorX - rawX},${anchorY - rawY}`);
+          panel.transition().duration(160).attr('opacity', 1);
         });
 
       bub.append('path')
@@ -1168,109 +1186,7 @@ const ConceptMapVisualization = () => {
         .attr('r', b => b.r)
         .attr('fill', bubbleFill)
         .attr('stroke', baseColor?.formatHex?.() || '#e5e7eb')
-        .attr('filter', 'url(#card-shadow)')
-        .style('cursor', 'pointer')
-        .on('click', (event, b) => {
-          event.stopPropagation();
-          // Toggle panel for this bubble
-          if (activeMetaRef.current?.expandedKey === b.key) {
-            activeMetaRef.current.expandedKey = null;
-            annotationsLayer.selectAll('g.meta-panel').remove();
-          } else {
-            activeMetaRef.current.expandedKey = b.key;
-            annotationsLayer.selectAll('g.meta-panel').remove();
-            const panel = annotationsLayer.append('g').attr('class', 'meta-panel').attr('opacity', 0);
-            const padding = { x: 12, y: 10 };
-            const minWidth = 220, maxWidth = 360;
-            const initialW = maxWidth;
-            const bg = panel.append('rect')
-              .attr('class', 'panel-bg')
-              .attr('x', 0)
-              .attr('y', 0)
-              .attr('rx', 10)
-              .attr('ry', 10)
-              .attr('width', initialW)
-              .attr('height', 120)
-              .attr('fill', '#ffffff')
-              .attr('stroke', '#e5e7eb')
-              .attr('filter', 'url(#card-shadow)')
-              .attr('role', 'dialog')
-              .attr('tabindex', 0)
-              .on('keydown', (event) => {
-                if (event.key === 'Escape') {
-                  destroyMetaUI();
-                }
-              });
-            // Accent bar
-            panel.append('rect')
-              .attr('class', 'panel-accent')
-              .attr('x', 0)
-              .attr('y', 0)
-              .attr('width', initialW)
-              .attr('height', 3)
-              .attr('fill', baseColor?.formatHex?.() || '#9ca3af');
-            const title = panel.append('text')
-              .attr('class', 'panel-title')
-              .attr('x', padding.x)
-              .attr('y', padding.y + 14)
-              .attr('font-weight', '700')
-              .attr('font-size', 13)
-              .attr('fill', '#111827')
-              .text(b.key.replace(/_/g, ' '));
-            const contentY = padding.y + 14 + 8;
-            const contentGroup = panel.append('g').attr('class', 'panel-content');
-            if (Array.isArray(b.value)) {
-              const items = b.value.slice(0, 8);
-              let y = contentY + 8;
-              items.forEach(item => {
-                const textLine = contentGroup.append('text')
-                  .attr('x', padding.x)
-                  .attr('y', y)
-                  .attr('font-size', 12)
-                  .attr('fill', '#374151');
-                wrapTspans(textLine, `• ${String(item)}`, maxWidth - (padding.x * 2), 14);
-                const tspans = textLine.selectAll('tspan').nodes();
-                const lines = Math.max(1, tspans.length);
-                y += lines * 14;
-              });
-              // measure to set width/height
-              let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
-              contentGroup.selectAll('text').each(function() {
-                const bb = this.getBBox();
-                minX = Math.min(minX, bb.x);
-                maxX = Math.max(maxX, bb.x + bb.width);
-                minY = Math.min(minY, bb.y);
-                maxY = Math.max(maxY, bb.y + bb.height);
-              });
-              const contentW = Math.max(0, maxX - minX) + padding.x;
-              const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max(contentW, title.node()?.getBBox?.().width + padding.x * 2)));
-              bg.attr('width', desiredW);
-              panel.select('rect.panel-accent').attr('width', desiredW);
-              const totalH = Math.max(110, (maxY - (padding.y - 2)) + padding.y);
-              panel.select('rect.panel-bg').attr('height', totalH);
-            } else {
-              const textLine = contentGroup.append('text')
-                .attr('x', padding.x)
-                .attr('y', contentY + 8)
-                .attr('font-size', 12)
-                .attr('fill', '#374151');
-              wrapTspans(textLine, String(b.value), maxWidth - (padding.x * 2), 14);
-              const bb = contentGroup.node()?.getBBox?.();
-              const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max((bb?.width || 0) + padding.x * 2, title.node()?.getBBox?.().width + padding.x * 2)));
-              bg.attr('width', desiredW);
-              panel.select('rect.panel-accent').attr('width', desiredW);
-              const totalH = Math.max(110, ((bb?.height || 0) + padding.y * 2 + 18));
-              panel.select('rect.panel-bg').attr('height', totalH);
-            }
-            panel.append('path')
-              .attr('class', 'panel-connector')
-              .attr('stroke', '#d1d5db')
-              .attr('stroke-width', 1.5)
-              .attr('fill', 'none')
-              .attr('pointer-events', 'none');
-            panel.transition().duration(160).attr('opacity', 1);
-          }
-        });
+        .attr('filter', 'url(#card-shadow)');
 
       // Label pill with text glow
   const lbl = bub.append('g').attr('class', 'bubble-label').attr('data-testid', 'bubble-label').attr('opacity', 0);
@@ -1279,7 +1195,7 @@ const ConceptMapVisualization = () => {
         .attr('dominant-baseline', 'middle')
         .attr('font-size', 12)
         .attr('font-weight', 600)
-        .attr('fill', '#0f172a')
+        .attr('fill', '#111827')
         .attr('filter', 'url(#text-shadow)')
         .text(b => {
           const t = b.key.replace(/_/g, ' ');
@@ -1351,6 +1267,41 @@ const ConceptMapVisualization = () => {
         const localCy = Math.sin(angleRad) * centerDist;
         sel.select('g.bubble-label').attr('transform', `translate(${localCx},${localCy})`);
       });
+
+      // Once all labels are positioned, nudge any overlapping ones apart.
+      // This quick pass avoids the common case where long labels stack on
+      // top of each other, which would otherwise obscure the text.
+      const labels = ring.selectAll('g.meta-bubble g.bubble-label');
+      const boxes = [];
+      labels.each(function(bb) {
+        const angleRad = (bb.angle * Math.PI) / 180;
+        const ux = Math.cos(angleRad), uy = Math.sin(angleRad);
+        const rect = d3.select(this).select('rect');
+        const w = +rect.attr('width') || (bb.labelW || 60);
+        const h = +rect.attr('height') || (bb.labelH || 20);
+        const centerDist = (bb.r || 20) + (bb.spike || 14) + (h / 2) + 2 + (bb.labelOffset || 0);
+        const localCx = ux * centerDist;
+        const localCy = uy * centerDist;
+        d3.select(this).attr('transform', `translate(${localCx},${localCy})`);
+        const absCx = ownerX + localCx;
+        const absCy = ownerY + localCy;
+        boxes.push({ sel: d3.select(this), data: bb, ux, uy, w, h, x: absCx - w / 2, y: absCy - h / 2 });
+      });
+      for (let i = 0; i < boxes.length; i++) {
+        for (let j = i + 1; j < boxes.length; j++) {
+          const A = boxes[i], B = boxes[j];
+          const ix = Math.max(0, Math.min(A.x + A.w, B.x + B.w) - Math.max(A.x, B.x));
+          const iy = Math.max(0, Math.min(A.y + A.h, B.y + B.h) - Math.max(A.y, B.y));
+          if (ix > 0 && iy > 0) {
+            const bdat = B.data;
+            bdat.labelOffset = Math.min(36, (bdat.labelOffset || 0) + 6);
+            const centerDist = (bdat.r || 20) + (bdat.spike || 14) + (B.h / 2) + 2 + (bdat.labelOffset || 0);
+            const localCx = B.ux * centerDist;
+            const localCy = B.uy * centerDist;
+            B.sel.attr('transform', `translate(${localCx},${localCy})`);
+          }
+        }
+      }
 
       // Freeze focus owner in place while ring is open to prevent jitter
       if (simulation && typeof d.x === 'number' && typeof d.y === 'number') {
