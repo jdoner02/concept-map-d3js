@@ -1103,12 +1103,22 @@ const ConceptMapVisualization = () => {
             const items = b.value.slice(0, 8);
             let y = contentY + 8;
             items.forEach(item => {
-              const textLine = contentGroup.append('text')
+              const str = String(item);
+              // Heuristic: treat plain URLs as links so they can be clicked.
+              const isUrl = /^https?:\/\//i.test(str.trim());
+              const parent = isUrl
+                ? contentGroup.append('a')
+                    .attr('href', str)
+                    .attr('target', '_blank')
+                    .attr('rel', 'noopener noreferrer')
+                : contentGroup;
+              const textLine = parent.append('text')
                 .attr('x', padding.x)
                 .attr('y', y)
                 .attr('font-size', 12)
-                .attr('fill', '#374151');
-              wrapTspans(textLine, `• ${String(item)}`, maxWidth - (padding.x * 2), 14);
+                .attr('fill', isUrl ? '#2563eb' : '#374151')
+                .style('text-decoration', isUrl ? 'underline' : null);
+              wrapTspans(textLine, `• ${str}`, maxWidth - (padding.x * 2), 14);
               const tspans = textLine.selectAll('tspan').nodes();
               const lines = Math.max(1, tspans.length);
               y += lines * 14;
@@ -1128,12 +1138,21 @@ const ConceptMapVisualization = () => {
             const totalH = Math.max(110, (maxY - (padding.y - 2)) + padding.y);
             panel.select('rect.panel-bg').attr('height', totalH);
           } else {
-            const textLine = contentGroup.append('text')
+            const val = String(b.value);
+            const isUrl = /^https?:\/\//i.test(val.trim());
+            const parent = isUrl
+              ? contentGroup.append('a')
+                  .attr('href', val)
+                  .attr('target', '_blank')
+                  .attr('rel', 'noopener noreferrer')
+              : contentGroup;
+            const textLine = parent.append('text')
               .attr('x', padding.x)
               .attr('y', contentY + 8)
               .attr('font-size', 12)
-              .attr('fill', '#374151');
-            wrapTspans(textLine, String(b.value), maxWidth - (padding.x * 2), 14);
+              .attr('fill', isUrl ? '#2563eb' : '#374151')
+              .style('text-decoration', isUrl ? 'underline' : null);
+            wrapTspans(textLine, val, maxWidth - (padding.x * 2), 14);
             const bb = contentGroup.node()?.getBBox?.();
             const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max((bb?.width || 0) + padding.x * 2, title.node()?.getBBox?.().width + padding.x * 2)));
             bg.attr('width', desiredW);
@@ -1147,7 +1166,10 @@ const ConceptMapVisualization = () => {
             .attr('stroke-width', 1.5)
             .attr('fill', 'none')
             .attr('pointer-events', 'none');
-          // Compute initial tooltip position relative to the bubble
+          // Compute initial tooltip position relative to the bubble. We work in
+          // screen-space first (taking current zoom/pan into account) and then
+          // convert back into graph coordinates. This avoids the panel jumping
+          // to the origin when the graph is heavily translated.
           const ownerX = d.x ?? 0, ownerY = d.y ?? 0;
           const ringRadius = activeMetaRef.current.ringRadius || computeNodeRadius(d) + (window.innerWidth <= 480 ? 52 : 70);
           const angleRad = (b.angle * Math.PI) / 180;
@@ -1158,11 +1180,15 @@ const ConceptMapVisualization = () => {
           const panW = +bg.attr('width') || minWidth;
           const panH = +panel.select('rect.panel-bg').attr('height') || 120;
           const gap = 20;
-          const rawX = bubbleX + (dx > 0 ? gap : -(panW + gap));
-          const rawY = bubbleY + (dy > 0 ? gap : -(panH + gap));
+          const t = zoomRef.current || d3.zoomIdentity; // current screen transform
+          const [sbx, sby] = t.apply([bubbleX, bubbleY]); // bubble in screen coords
+          const rawSX = sbx + (dx > 0 ? gap : -(panW + gap));
+          const rawSY = sby + (dy > 0 ? gap : -(panH + gap));
+          const [rawX, rawY] = t.invert([rawSX, rawSY]);
           panel.attr('transform', `translate(${rawX},${rawY})`);
-          const anchorX = rawX + (dx > 0 ? 0 : panW);
-          const anchorY = rawY + (dy > 0 ? 0 : panH);
+          const anchorSX = rawSX + (dx > 0 ? 0 : panW);
+          const anchorSY = rawSY + (dy > 0 ? 0 : panH);
+          const [anchorX, anchorY] = t.invert([anchorSX, anchorSY]);
           panel.select('path.panel-connector').attr('d', `M${bubbleX - rawX},${bubbleY - rawY} L${anchorX - rawX},${anchorY - rawY}`);
           panel.transition().duration(160).attr('opacity', 1);
         });
@@ -1657,27 +1683,32 @@ const ConceptMapVisualization = () => {
           if (!panel.empty() && activeMetaRef.current.expandedKey) {
             const sel = (activeMetaRef.current.bubbles || []).find(b => b.key === activeMetaRef.current.expandedKey);
             if (sel) {
-              const k = (zoomRef.current && typeof zoomRef.current.k === 'number') ? zoomRef.current.k : 1;
               const bubbleX = sel.cx ?? ((owner.x ?? 0) + Math.cos((sel.angle * Math.PI)/180) * (activeMetaRef.current.ringRadius || (computeNodeRadius(owner) + 70)));
               const bubbleY = sel.cy ?? ((owner.y ?? 0) + Math.sin((sel.angle * Math.PI)/180) * (activeMetaRef.current.ringRadius || (computeNodeRadius(owner) + 70)));
-              // desired panel anchor corner based on quadrant
+              // Move the panel by working in screen space first so clamping is
+              // intuitive for users regardless of pan/zoom level.
+              // desired panel anchor corner based on quadrant (graph coords)
               const dx = Math.sign(bubbleX - (owner.x ?? 0)) || 1;
               const dy = Math.sign(bubbleY - (owner.y ?? 0)) || 1;
               const panW = +panel.select('rect.panel-bg').attr('width') || 220;
               const panH = +panel.select('rect.panel-bg').attr('height') || 120;
               const gap = 20;
-              const rawX = bubbleX + (dx > 0 ? gap : -(panW + gap));
-              const rawY = bubbleY + (dy > 0 ? gap : -(panH + gap));
-              // clamp to visible viewport in graph coords (inverse zoom)
-              const vw = (typeof width === 'number' ? width : viewSize.width || 1200) / k;
-              const vh = (typeof height === 'number' ? height : viewSize.height || 800) / k;
+              const t = zoomRef.current || d3.zoomIdentity;
+              // bubble in screen coordinates
+              const [sbx, sby] = t.apply([bubbleX, bubbleY]);
+              // proposed panel location in screen space
+              let psx = sbx + (dx > 0 ? gap : -(panW + gap));
+              let psy = sby + (dy > 0 ? gap : -(panH + gap));
+              // clamp within viewport in screen coordinates
               const pad = 16;
-              const clampedX = Math.max(-vw/2 + pad, Math.min(rawX, vw/2 - panW - pad));
-              const clampedY = Math.max(-vh/2 + pad, Math.min(rawY, vh/2 - panH - pad));
+              psx = Math.max(pad, Math.min(psx, width - panW - pad));
+              psy = Math.max(pad, Math.min(psy, height - panH - pad));
+              const [clampedX, clampedY] = t.invert([psx, psy]);
               panel.attr('transform', `translate(${clampedX},${clampedY})`);
               // connector from bubble to nearest panel corner
-              const anchorX = clampedX + (dx > 0 ? 0 : panW);
-              const anchorY = clampedY + (dy > 0 ? 0 : panH);
+              const anchorSX = psx + (dx > 0 ? 0 : panW);
+              const anchorSY = psy + (dy > 0 ? 0 : panH);
+              const [anchorX, anchorY] = t.invert([anchorSX, anchorSY]);
               panel.select('path.panel-connector').attr('d', `M${bubbleX - clampedX},${bubbleY - clampedY} L${anchorX - clampedX},${anchorY - clampedY}`);
             }
           }
