@@ -88,45 +88,72 @@ const ConceptMapVisualization = () => {
     setData({ ...rawJson, nodes, links });
   };
 
-  // Load the manifest once when the component mounts. If a ?jsonUrl query
-  // parameter or VITE_JSON_URL environment variable is supplied we bypass the
-  // manifest and load that URL directly.
+  // Load the manifest once on mount. We first honour an override JSON URL
+  // supplied via query string or environment variable. If that fails we fall
+  // back to the manifest, and finally to the legacy single dataset. This makes
+  // the app tolerant to stale overrides and lets local filenames like
+  // "ewu-course-catalog.json" just work.
   useEffect(() => {
-    const sp = new URLSearchParams(window.location.search || '');
-    const overrideUrl = sp.get('jsonUrl') || import.meta.env.VITE_JSON_URL;
-    if (overrideUrl) {
-      setLoading(true);
-      fetch(overrideUrl)
-        .then((r) => (r.ok ? r.json() : Promise.reject(r.statusText)))
-        .then((json) => { loadGraphData(json); setError(null); })
-        .catch((err) => {
+    const loadInitial = async () => {
+      const sp = new URLSearchParams(window.location.search || '');
+      const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+
+      /**
+       * Resolve an override string to an actual URL. Absolute URLs are used as
+       * is. Bare filenames are assumed to live in our static `data/` folder so
+       * users can simply pass `?jsonUrl=foo.json`.
+       */
+      const resolveUrl = (raw) => {
+        if (!raw) return null;
+        if (/^https?:/i.test(raw)) return raw;
+        // ensure a leading `data/` when a plain filename is provided
+        return `${base}/${raw.startsWith('data/') ? raw : `data/${raw}`}`;
+      };
+
+      // Try an explicit override first
+      const overrideUrl = resolveUrl(sp.get('jsonUrl') || import.meta.env.VITE_JSON_URL);
+      if (overrideUrl) {
+        try {
+          setLoading(true);
+          const r = await fetch(overrideUrl);
+          if (!r.ok) throw new Error(r.statusText);
+          loadGraphData(await r.json());
+          setError(null);
+          return; // Success, we're done
+        } catch (err) {
           console.error('Failed to load override dataset:', err);
           setError(`Failed to load ${overrideUrl}`);
           setEndpointTried(overrideUrl);
-        })
-        .finally(() => setLoading(false));
-      return;
-    }
+          // Intentionally fall through to manifest attempt
+        }
+      }
 
-    setLoading(true);
-    const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
-    fetch(`${base}/data/manifest.json`)
-      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-      .then((list) => {
+      try {
+        setLoading(true);
+        const res = await fetch(`${base}/data/manifest.json`);
+        if (!res.ok) throw new Error(res.status);
+        const list = await res.json();
         setDatasets(list);
         if (list.length > 0) setSelectedDataset(list[0].file);
-      })
-      .catch((err) => {
+        setError(null);
+      } catch (err) {
         console.warn('No manifest available, falling back to default dataset.', err);
-        fetch(`${base}/concept-map.json`)
-          .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
-          .then((json) => { loadGraphData(json); setError(null); })
-          .catch(() => {
-            setError('Failed to load default dataset');
-            setEndpointTried(`${base}/concept-map.json`);
-          })
-          .finally(() => setLoading(false));
-      });
+        try {
+          const res = await fetch(`${base}/concept-map.json`);
+          if (!res.ok) throw new Error(res.statusText);
+          loadGraphData(await res.json());
+          setError(null);
+        } catch (err2) {
+          console.error('Failed to load default dataset:', err2);
+          setError('Failed to load default dataset');
+          setEndpointTried(`${base}/concept-map.json`);
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadInitial();
   }, []);
 
   // Whenever the user picks a dataset from the dropdown we fetch it on demand.

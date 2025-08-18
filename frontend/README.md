@@ -42,10 +42,13 @@ VITE_JSON_URL=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/h
 npm run dev
 # then open in browser:
 # http://localhost:5173/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json
+# or simply reference a bundled file by name:
+# http://localhost:5173/?jsonUrl=hrv-research-nodes-v1.json
 ```
 
 Notes:
 - When `VITE_JSON_URL` or `?jsonUrl=` is set, the UI will fetch directly from that URL first, then fall back to the backend endpoints if it fails (CORS permitting).
+- Plain filenames point to the built-in `/data/` folder, so `?jsonUrl=my.json` looks for `/data/my.json` within the site.
 - GitHub Pages serves static files only. Either use the direct JSON override or host the backend separately when using Pages.
 
 ## Visual encodings and forces
