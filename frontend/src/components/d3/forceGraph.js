@@ -86,39 +86,50 @@ export function createSimulation(nodes, links, opts = {}) {
         const sLvl = Number(link?.source?.level ?? 0);
         const tLvl = Number(link?.target?.level ?? 0);
         const levelDiff = Math.abs(sLvl - tLvl);
+        // spring length grows with difference in "academic level"
         return 200 + levelDiff * 80;
       })
       .strength(0.3))
-    .force('charge', d3.forceManyBody().strength(-1200).distanceMax(2000))
+    // Coulomb‑style repulsion keeps nodes from piling up. We scale the
+    // strength by each node's radius so larger concepts push a little harder.
+    .force('charge', d3.forceManyBody()
+      .strength(d => -40 * computeNodeRadius(d))
+      .distanceMin(20)
+      .distanceMax(2000))
+    // Prevent literal overlaps by giving every node a personal space bubble.
     .force('collision', d3.forceCollide().radius(d => computeNodeRadius(d) + 15).strength(0.9));
 
-  // Level-based horizontal positioning centered across the universe width
-  const levels = n.map(d => Number.isFinite(+d?.level) ? +d.level : 0);
-  const minLevel = levels.length ? Math.min(...levels) : 0;
-  const maxLevel = levels.length ? Math.max(...levels) : 0;
-  const spacing = 240;
-  const totalWidth = Math.max(spacing, (maxLevel - minLevel) * spacing);
-  const startX = (W - totalWidth) / 2;
-  sim.force('x', d3.forceX()
-    .x(d => {
-      const lvl = Number(d?.level ?? 0);
-      const idx = Math.max(0, lvl - minLevel);
-      return startX + idx * spacing;
-    })
-    .strength(0.2));
+  // --- Orbital layout ----------------------------------------------------
+  // Instead of locking nodes to grid-like X/Y bands, we place them on
+  // concentric "orbits" around the root. This feels similar to planets
+  // or electrons settling into shells and gives a more even radial spread.
+  sim.force('radial', d3.forceRadial(d => {
+    const lvl = Number(d?.level ?? 0);
+    // Each successive level sits on a larger orbit.
+    return 120 + lvl * 160;
+  }, W / 2, H / 2).strength(0.06));
 
-  // Organic vertical distribution centered around universe middle
-  sim.force('y', d3.forceY()
-    .y(d => {
-      const nodeId = String(d?.id || '');
-      let hash = 0;
-      for (let i = 0; i < nodeId.length; i++) {
-        hash = ((hash << 5) - hash + nodeId.charCodeAt(i)) | 0;
+  // A gentle universal gravity pulls everything toward the centre. The
+  // 1/r^2 falloff mirrors Newtonian gravity: twice as far means a quarter
+  // of the pull. Combined with the repulsive charge above, the system tends
+  // to settle into a natural looking equilibrium.
+  sim.force('gravity', (() => {
+    let nodes = [];
+    function force(alpha) {
+      const G = 0.08; // tiny gravitational constant tuned for stability
+      for (const d of nodes) {
+        const dx = (W / 2) - (d.x || 0);
+        const dy = (H / 2) - (d.y || 0);
+        const dist2 = Math.max(dx * dx + dy * dy, 1); // avoid division by zero
+        const f = G * alpha / dist2;
+        d.vx = (d.vx || 0) + dx * f;
+        d.vy = (d.vy || 0) + dy * f;
       }
-      const verticalOffset = ((Math.abs(hash) % 400) - 200); // ±200
-      return (H / 2) + verticalOffset;
-    })
-    .strength(0.04));
+    }
+    force.initialize = function(initNodes) { nodes = initNodes || []; };
+    return force;
+  })());
+
 
   // Enhanced diffusion: push away non-neighbors within a radius
   sim.force('diffusion', diffusionForce(l, { radius: 320, strength: 0.1 }));
