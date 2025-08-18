@@ -9,41 +9,56 @@
 }
 
 .concept-map-header {
-  background: rgba(255, 255, 255, 0.95);
-  padding: 20px;
-  border-bottom: 1px solid #e0e0e0;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  text-align: center;
-  position: sticky;
-  top: 0;
+  /* Float a translucent control strip so the map owns the stage */
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #e0e0e0;
+  border-radius: 6px;
+  font-size: 0.9em;
   z-index: 12;
 }
 
-.concept-map-header h1 {
-  margin: 0 0 10px 0;
-  color: #333;
-  font-size: 2.5em;
-  font-weight: 300;
-}
-
-.concept-map-header p {
-  margin: 0 0 15px 0;
-  color: #666;
-  font-size: 1.1em;
+.concept-map-header select {
+  /* Small, unobtrusive dataset picker */
+  padding: 2px 4px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: #fff;
+  font-size: 0.9em;
 }
 
 .metadata {
-  display: inline-block;
-  background: #f8f9fa;
-  padding: 8px 16px;
-  border-radius: 20px;
-  font-size: 0.9em;
-  color: #495057;
-  border: 1px solid #dee2e6;
+  /* Counts sit inline so they don't hog screen real-estate */
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: none;
+  padding: 0;
+  font-size: 0.85em;
+  color: #333;
 }
 
-.metadata span {
-  margin: 0 5px;
+.legend-bar {
+  /* Compact legend anchored to the lower-left corner */
+  position: absolute;
+  bottom: 8px;
+  left: 8px;
+  display: flex;
+  gap: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 6px 10px;
+  font-size: 12px;
+  z-index: 11;
 }
 
 /* Loading and Error States */
@@ -135,24 +150,15 @@ svg {
 }
 
 /* Responsive Design */
-@media (max-width: 768px) {
-  /* Mobile-first: remove space-hungry header */
-  .concept-map-header { display: none; }
-  .desktop-only { display: none !important; }
-  .mobile-only { display: initial !important; }
-
-  .concept-map-header h1 {
-    font-size: 2em;
-  }
-  
-  .concept-map-header p {
-    font-size: 1em;
-  }
-  
-  .metadata {
-    font-size: 0.8em;
-    padding: 6px 12px;
-  }
+  @media (max-width: 768px) {
+    /* Mobile-first: remove space-hungry header */
+    .concept-map-header { display: none; }
+    .desktop-only { display: none !important; }
+    .mobile-only { display: initial !important; }
+    .metadata {
+      font-size: 0.8em;
+      padding: 0;
+    }
   
   .node-label {
   font-size: 13px;

@@ -1988,57 +1988,58 @@ const ConceptMapVisualization = () => {
 
   return (
     <div className="concept-map-container" id="main" style={{ position: 'relative' }}>
-      {/* Dataset selection dropdown populated from manifest.json */}
-      {datasets.length > 0 && (
-        <div className="dataset-selector" style={{ textAlign: 'center', marginBottom: '8px' }}>
-          <label htmlFor="dataset-select"><strong>Dataset:</strong></label>
-          <select
-            id="dataset-select"
-            value={selectedDataset || ''}
-            onChange={(e) => setSelectedDataset(e.target.value)}
-          >
-            {datasets.map((ds) => (
-              <option key={ds.file} value={ds.file}>{ds.name}</option>
-            ))}
-          </select>
+        {/* The slim header floats above the canvas so the map remains the focus. */}
+        <div className="concept-map-header">
+          {/* Dropdown to swap datasets without dominating the viewport */}
+          {datasets.length > 0 && (
+            <select
+              id="dataset-select"
+              aria-label="Dataset"
+              value={selectedDataset || ''}
+              onChange={(e) => setSelectedDataset(e.target.value)}
+            >
+              {datasets.map((ds) => (
+                <option key={ds.file} value={ds.file}>{ds.name}</option>
+              ))}
+            </select>
+          )}
+          {/* Real-time counts reassure users about the rendered graph size */}
+          {data?.metadata && (
+            <div className="metadata">
+              <span data-testid="rendered-nodes">Nodes: {renderCounts.nodes}</span>
+              <span>•</span>
+              <span data-testid="rendered-links">Links: {renderCounts.links}</span>
+            </div>
+          )}
         </div>
-      )}
-      <div className="concept-map-header">
-        <h1>Interactive Concept Map</h1>
-        <p className="desktop-only">Drag nodes to explore relationships • Scroll to zoom</p>
-        {data?.metadata && (
-          <div className="metadata desktop-only">
-            <span>Version: {data.metadata.version}</span>
-            <span> | <span data-testid="rendered-nodes">Rendered Nodes: {renderCounts.nodes}</span></span>
-            <span> | <span data-testid="rendered-links">Rendered Links: {renderCounts.links}</span></span>
+        {/* Context legend stays subtle yet informative */}
+        {(groups.length > 0 || topRelationLegend.length > 0) && (
+          <div className="legend-bar desktop-only">
+            {groups.length > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <strong style={{ marginRight: 4 }}>Levels:</strong>
+                {groups.slice(0, 10).map(g => (
+                  <span key={g} style={{ display: 'inline-flex', alignItems: 'center', marginRight: 10, fontSize: 12 }}>
+                    <span style={{ width: 10, height: 10, borderRadius: '50%', background: getGroupColor(Number.isFinite(+g) ? +g : 'unknown'), display: 'inline-block', marginRight: 4 }} />
+                    {String(g)}
+                  </span>
+                ))}
+              </div>
+            )}
+            {topRelationLegend.length > 0 && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
+                <strong style={{ marginRight: 4 }}>Relations:</strong>
+                {topRelationLegend.map(([k]) => (
+                  <span key={k} style={{ display: 'inline-flex', alignItems: 'center', marginRight: 10, fontSize: 12 }}>
+                    <span style={{ width: 12, height: 3, borderRadius: 2, background: getRelationColor(k), display: 'inline-block', marginRight: 4 }} />
+                    {k}
+                  </span>
+                ))}
+              </div>
+            )}
           </div>
         )}
-        {/* Legends and Filters (desktop only) */}
-        <div className="desktop-only" style={{ display: 'flex', flexWrap: 'wrap', gap: 16, justifyContent: 'center', marginTop: 8 }}>
-      {groups.length > 0 && (
-            <div style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 8, padding: '6px 10px' }}>
-        <strong style={{ marginRight: 8 }}>Levels:</strong>
-              {groups.slice(0, 10).map(g => (
-                <span key={g} style={{ display: 'inline-flex', alignItems: 'center', marginRight: 10, fontSize: 12 }}>
-          <span style={{ width: 10, height: 10, borderRadius: '50%', background: getGroupColor(Number.isFinite(+g) ? +g : 'unknown'), display: 'inline-block', marginRight: 6 }} />
-          {String(g)}
-                </span>
-              ))}
-            </div>
-          )}
-          {topRelationLegend.length > 0 && (
-            <div style={{ background: '#fff', border: '1px solid #e0e0e0', borderRadius: 8, padding: '6px 10px' }}>
-              <strong style={{ marginRight: 8 }}>Relations:</strong>
-              {topRelationLegend.map(([k]) => (
-                <span key={k} style={{ display: 'inline-flex', alignItems: 'center', marginRight: 10, fontSize: 12 }}>
-                  <span style={{ width: 12, height: 3, borderRadius: 2, background: getRelationColor(k), display: 'inline-block', marginRight: 6 }} />
-                  {k}
-                </span>
-              ))}
-            </div>
-          )}
-        </div>
-    {groups.length > 0 && (
+        {groups.length > 0 && (
           <div className="filters desktop-only" style={{ background: '#fff', padding: '8px 12px', borderTop: '1px solid #e0e0e0' }}>
       <strong>Levels:</strong>{' '}
             {groups.map(g => (
@@ -2056,7 +2057,6 @@ const ConceptMapVisualization = () => {
             ))}
           </div>
         )}
-      </div>
       {/* Controls + live status for a11y */}
       <div className="controls" aria-label="Display controls">
         <button type="button" onClick={() => svgRef.current && d3.select(svgRef.current).call(zoomBehaviorRef.current.scaleBy, 1.15)} aria-label="Zoom in">＋</button>
