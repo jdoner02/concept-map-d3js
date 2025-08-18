@@ -1,3 +1,5 @@
+Click here to go to the interactive concept map (WIP): https://jdoner02.github.io/concept-map-d3js/
+
 # Interactive Concept Map Visualization
 
 A full-stack web application that transforms abstract programming concepts into interactive visual networks, making complex computer science topics more accessible through dynamic graph visualization.
