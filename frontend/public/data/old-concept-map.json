@@ -2,7 +2,7 @@
   "metadata": {
     "version": "1.0",
     "created": "2025-08-18T23:15:15Z",
-    "last_updated": "2025-08-18T23:15:15Z",
+    "last_updated": "2025-08-18T23:31:15.297634Z",
     "description": "Concept map for CSCD211 with prerequisite CSCD210 review and detailed topic breakdown.",
     "author": "Documentation Curator Agent",
     "audience": [
@@ -41,7 +41,7 @@
     {
       "id": "getters-and-setters",
       "name": "Getters and Setters",
-      "description": "Getters and Setters as part of Encapsulation.",
+      "description": "Accessor methods that read or update private fields while preserving encapsulation.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -49,7 +49,7 @@
     {
       "id": "information-hiding",
       "name": "Information Hiding",
-      "description": "Information Hiding as part of Encapsulation.",
+      "description": "Keeping implementation details private so other classes interact only through a public interface.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -57,7 +57,7 @@
     {
       "id": "immutability",
       "name": "Immutability",
-      "description": "Immutability as part of Encapsulation.",
+      "description": "Designing objects whose state cannot change after construction, avoiding unexpected side effects.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -73,7 +73,7 @@
     {
       "id": "has-a-relationships",
       "name": "Has-a Relationships",
-      "description": "Has-a Relationships as part of Composition.",
+      "description": "Expresses ownership by embedding objects within others rather than inheriting from them.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -81,7 +81,7 @@
     {
       "id": "delegation",
       "name": "Delegation",
-      "description": "Delegation as part of Composition.",
+      "description": "Passing work to a contained object to reuse its behavior instead of duplicating code.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -89,7 +89,7 @@
     {
       "id": "reusable-components",
       "name": "Reusable Components",
-      "description": "Reusable Components as part of Composition.",
+      "description": "Small pieces of code designed to be combined into larger programs with minimal modification.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -105,7 +105,7 @@
     {
       "id": "fields",
       "name": "Fields",
-      "description": "Fields as part of Class Design.",
+      "description": "Variables declared inside a class that store each object's state.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -113,7 +113,7 @@
     {
       "id": "constructors",
       "name": "Constructors",
-      "description": "Constructors as part of Class Design.",
+      "description": "Special methods that initialize new objects, often overloading parameters to set starting values.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -121,7 +121,7 @@
     {
       "id": "methods",
       "name": "Methods",
-      "description": "Methods as part of Class Design.",
+      "description": "Named blocks of code that perform actions or compute results when called.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -137,7 +137,7 @@
     {
       "id": "public",
       "name": "public",
-      "description": "public as part of Access Modifiers.",
+      "description": "Member access modifier allowing use from any other class.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -145,7 +145,7 @@
     {
       "id": "private",
       "name": "private",
-      "description": "private as part of Access Modifiers.",
+      "description": "Member access modifier restricting use to within the defining class.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -153,7 +153,7 @@
     {
       "id": "protected",
       "name": "protected",
-      "description": "protected as part of Access Modifiers.",
+      "description": "Member access modifier allowing use within the package and subclasses.",
       "group": "object-oriented-foundations",
       "level": 3,
       "size": 6
@@ -177,7 +177,7 @@
     {
       "id": "base-class",
       "name": "Base Class",
-      "description": "Base Class as part of Inheritance Hierarchies.",
+      "description": "Parent type that provides common fields and behaviors for subclasses to inherit.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -185,7 +185,7 @@
     {
       "id": "subclass",
       "name": "Subclass",
-      "description": "Subclass as part of Inheritance Hierarchies.",
+      "description": "Derived type that extends a base class, adding or customizing features.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -193,7 +193,7 @@
     {
       "id": "extends-keyword",
       "name": "extends Keyword",
-      "description": "extends Keyword as part of Inheritance Hierarchies.",
+      "description": "Java keyword in a class declaration that indicates inheritance from a base class.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -209,7 +209,7 @@
     {
       "id": "override-annotation",
       "name": "@Override Annotation",
-      "description": "@Override Annotation as part of Method Overriding.",
+      "description": "Compiler hint showing a subclass method is intended to replace a superclass version.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -217,7 +217,7 @@
     {
       "id": "runtime-binding",
       "name": "Runtime Binding",
-      "description": "Runtime Binding as part of Method Overriding.",
+      "description": "Selecting which overridden method to run based on the actual object's type at runtime.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -225,7 +225,7 @@
     {
       "id": "super-keyword",
       "name": "super Keyword",
-      "description": "super Keyword as part of Method Overriding.",
+      "description": "Reference to the immediate superclass used to call its constructors or methods.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -241,7 +241,7 @@
     {
       "id": "dynamic-dispatch",
       "name": "Dynamic Dispatch",
-      "description": "Dynamic Dispatch as part of Polymorphism.",
+      "description": "Mechanism that chooses an overridden method implementation when the program executes.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -249,7 +249,7 @@
     {
       "id": "interface-implementation",
       "name": "Interface Implementation",
-      "description": "Interface Implementation as part of Polymorphism.",
+      "description": "Using the implements clause so a class promises to provide all interface methods.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -257,7 +257,7 @@
     {
       "id": "polymorphic-collections",
       "name": "Polymorphic Collections",
-      "description": "Polymorphic Collections as part of Polymorphism.",
+      "description": "Containers that hold base-type references so elements of many subtypes can coexist.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -273,7 +273,7 @@
     {
       "id": "behavioral-contracts",
       "name": "Behavioral Contracts",
-      "description": "Behavioral Contracts as part of Liskov Substitution Principle.",
+      "description": "Rules that define how a subtype must behave to remain a valid substitute for its base type.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -281,7 +281,7 @@
     {
       "id": "substitution-safety",
       "name": "Substitution Safety",
-      "description": "Substitution Safety as part of Liskov Substitution Principle.",
+      "description": "Guaranteeing that replacing a base type with a subtype will not break expected behavior.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -289,7 +289,7 @@
     {
       "id": "type-hierarchies",
       "name": "Type Hierarchies",
-      "description": "Type Hierarchies as part of Liskov Substitution Principle.",
+      "description": "Layered arrangement of types where lower levels inherit characteristics from higher ones.",
       "group": "inheritance-and-polymorphism",
       "level": 3,
       "size": 6
@@ -313,7 +313,7 @@
     {
       "id": "termination-condition",
       "name": "Termination Condition",
-      "description": "Termination Condition as part of Base Case.",
+      "description": "Specific situation that signals a recursive function to stop calling itself.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -321,7 +321,7 @@
     {
       "id": "simplest-input",
       "name": "Simplest Input",
-      "description": "Simplest Input as part of Base Case.",
+      "description": "The smallest or easiest case a recursive method can solve directly.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -329,7 +329,7 @@
     {
       "id": "no-further-calls",
       "name": "No Further Calls",
-      "description": "No Further Calls as part of Base Case.",
+      "description": "Base case action that returns a result without making additional recursive calls.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -345,7 +345,7 @@
     {
       "id": "problem-reduction",
       "name": "Problem Reduction",
-      "description": "Problem Reduction as part of Recursive Case.",
+      "description": "Transforming a problem into a smaller instance that recursion can solve.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -353,7 +353,7 @@
     {
       "id": "self-call",
       "name": "Self Call",
-      "description": "Self Call as part of Recursive Case.",
+      "description": "A recursive method invoking itself with modified arguments to work toward a solution.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -361,7 +361,7 @@
     {
       "id": "progress-toward-base",
       "name": "Progress Toward Base",
-      "description": "Progress Toward Base as part of Recursive Case.",
+      "description": "Ensuring each recursive step moves closer to the base case to avoid infinite recursion.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -377,7 +377,7 @@
     {
       "id": "call-stack-growth",
       "name": "Call Stack Growth",
-      "description": "Call Stack Growth as part of Stack Frames.",
+      "description": "Accumulation of stack frames as recursive calls build upon one another.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -385,7 +385,7 @@
     {
       "id": "parameter-preservation",
       "name": "Parameter Preservation",
-      "description": "Parameter Preservation as part of Stack Frames.",
+      "description": "Retention of parameter values in each stack frame so returning calls have necessary context.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -393,7 +393,7 @@
     {
       "id": "unwinding",
       "name": "Unwinding",
-      "description": "Unwinding as part of Stack Frames.",
+      "description": "Phase where completed recursive calls return results back through the call stack.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -409,7 +409,7 @@
     {
       "id": "factorial",
       "name": "Factorial",
-      "description": "Factorial as part of Recursive Algorithms.",
+      "description": "Recursive computation multiplying a number by every positive integer below it.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -417,7 +417,7 @@
     {
       "id": "fibonacci",
       "name": "Fibonacci",
-      "description": "Fibonacci as part of Recursive Algorithms.",
+      "description": "Sequence where each number is the sum of the two preceding numbers, often implemented recursively.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -425,7 +425,7 @@
     {
       "id": "binary-search",
       "name": "Binary Search",
-      "description": "Binary Search as part of Recursive Algorithms.",
+      "description": "Algorithm that repeatedly divides a sorted list to locate a target value efficiently.",
       "group": "recursion",
       "level": 3,
       "size": 6
@@ -449,7 +449,7 @@
     {
       "id": "dynamic-array",
       "name": "Dynamic Array",
-      "description": "Dynamic Array as part of ArrayList Usage.",
+      "description": "Array-like structure that automatically expands when more capacity is needed.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -457,7 +457,7 @@
     {
       "id": "index-access",
       "name": "Index Access",
-      "description": "Index Access as part of ArrayList Usage.",
+      "description": "Retrieving or updating an element directly by its numeric position.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -465,7 +465,7 @@
     {
       "id": "resizing",
       "name": "Resizing",
-      "description": "Resizing as part of ArrayList Usage.",
+      "description": "Allocating a new underlying array and copying elements when capacity is exceeded.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -481,7 +481,7 @@
     {
       "id": "node-structure",
       "name": "Node Structure",
-      "description": "Node Structure as part of LinkedList Mechanics.",
+      "description": "Fundamental linked-list element holding data and references to the next or previous nodes.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -489,7 +489,7 @@
     {
       "id": "head-and-tail",
       "name": "Head and Tail",
-      "description": "Head and Tail as part of LinkedList Mechanics.",
+      "description": "Pointers to the first and last nodes that enable efficient insertion or traversal.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -497,7 +497,7 @@
     {
       "id": "traversal",
       "name": "Traversal",
-      "description": "Traversal as part of LinkedList Mechanics.",
+      "description": "Visiting each node in a data structure in sequence to inspect or modify it.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -513,7 +513,7 @@
     {
       "id": "hasnext-and-next",
       "name": "hasNext and next",
-      "description": "hasNext and next as part of Iterators.",
+      "description": "Iterator methods that check for remaining elements and return them one at a time.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -521,7 +521,7 @@
     {
       "id": "for-each-loop",
       "name": "For-Each Loop",
-      "description": "For-Each Loop as part of Iterators.",
+      "description": "Enhanced loop syntax that uses an iterator behind the scenes to visit each element once.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -529,7 +529,7 @@
     {
       "id": "fail-fast-behavior",
       "name": "Fail-Fast Behavior",
-      "description": "Fail-Fast Behavior as part of Iterators.",
+      "description": "Iterator feature that throws an exception if the underlying collection changes during iteration.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -545,7 +545,7 @@
     {
       "id": "type-parameters",
       "name": "Type Parameters",
-      "description": "Type Parameters as part of Generics.",
+      "description": "Generic placeholders like <T> that let code work with any object type.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -553,7 +553,7 @@
     {
       "id": "compile-time-safety",
       "name": "Compile-Time Safety",
-      "description": "Compile-Time Safety as part of Generics.",
+      "description": "Generics allow the compiler to catch type mismatches before running the program.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -561,7 +561,7 @@
     {
       "id": "diamond-operator",
       "name": "Diamond Operator",
-      "description": "Diamond Operator as part of Generics.",
+      "description": "<> syntax that lets the compiler infer generic types from assignment context.",
       "group": "data-structures-with-collections",
       "level": 3,
       "size": 6
@@ -585,7 +585,7 @@
     {
       "id": "public-methods",
       "name": "Public Methods",
-      "description": "Public Methods as part of Interface Design.",
+      "description": "Interface methods are implicitly public so implementing classes can be used interchangeably.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -593,7 +593,7 @@
     {
       "id": "no-state",
       "name": "No State",
-      "description": "No State as part of Interface Design.",
+      "description": "Interfaces cannot store instance data, focusing solely on required method signatures.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -601,7 +601,7 @@
     {
       "id": "implementation-requirement",
       "name": "Implementation Requirement",
-      "description": "Implementation Requirement as part of Interface Design.",
+      "description": "Classes implementing an interface must provide concrete bodies for its methods.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -617,7 +617,7 @@
     {
       "id": "partial-implementation",
       "name": "Partial Implementation",
-      "description": "Partial Implementation as part of Abstract Class Usage.",
+      "description": "Abstract classes supply reusable code while deferring some methods to subclasses.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -625,7 +625,7 @@
     {
       "id": "abstract-methods",
       "name": "Abstract Methods",
-      "description": "Abstract Methods as part of Abstract Class Usage.",
+      "description": "Method declarations without bodies that force subclasses to define specific behavior.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -633,7 +633,7 @@
     {
       "id": "extends",
       "name": "extends",
-      "description": "extends as part of Abstract Class Usage.",
+      "description": "Keyword used so an abstract class inherits from another class or abstract parent.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -649,7 +649,7 @@
     {
       "id": "implementing-multiple-interfaces",
       "name": "Implementing Multiple Interfaces",
-      "description": "Implementing Multiple Interfaces as part of Multiple Inheritance via Interfaces.",
+      "description": "Listing several interfaces after implements so a class adopts multiple contracts.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -657,7 +657,7 @@
     {
       "id": "method-conflict-resolution",
       "name": "Method Conflict Resolution",
-      "description": "Method Conflict Resolution as part of Multiple Inheritance via Interfaces.",
+      "description": "Techniques for choosing which default method to inherit when interfaces define the same signature.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -665,7 +665,7 @@
     {
       "id": "marker-interfaces",
       "name": "Marker Interfaces",
-      "description": "Marker Interfaces as part of Multiple Inheritance via Interfaces.",
+      "description": "Empty interfaces used to tag classes for special processing or capabilities.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -681,7 +681,7 @@
     {
       "id": "default-keyword",
       "name": "default Keyword",
-      "description": "default Keyword as part of Default Methods.",
+      "description": "Allows an interface to provide a method body that implementers may inherit.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -689,7 +689,7 @@
     {
       "id": "backward-compatibility",
       "name": "Backward Compatibility",
-      "description": "Backward Compatibility as part of Default Methods.",
+      "description": "Default methods let interfaces evolve without forcing existing implementations to change.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -697,7 +697,7 @@
     {
       "id": "override-option",
       "name": "Override Option",
-      "description": "Override Option as part of Default Methods.",
+      "description": "Implementing classes may still provide their own version of an interface's default method.",
       "group": "interfaces-and-abstract-classes",
       "level": 3,
       "size": 6
@@ -721,7 +721,7 @@
     {
       "id": "throwable",
       "name": "Throwable",
-      "description": "Throwable as part of Exception Hierarchy.",
+      "description": "Superclass for all objects that can be thrown and potentially caught.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -729,7 +729,7 @@
     {
       "id": "exception",
       "name": "Exception",
-      "description": "Exception as part of Exception Hierarchy.",
+      "description": "Checked throwable indicating conditions a program might anticipate and handle.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -737,7 +737,7 @@
     {
       "id": "runtimeexception",
       "name": "RuntimeException",
-      "description": "RuntimeException as part of Exception Hierarchy.",
+      "description": "Unchecked throwable representing programming errors that may escape compilation checks.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -753,7 +753,7 @@
     {
       "id": "catch-blocks",
       "name": "Catch Blocks",
-      "description": "Catch Blocks as part of Try-Catch-Finally.",
+      "description": "Handles specific exceptions thrown in the try block to recover or react.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -761,7 +761,7 @@
     {
       "id": "finally-cleanup",
       "name": "Finally Cleanup",
-      "description": "Finally Cleanup as part of Try-Catch-Finally.",
+      "description": "Section that always runs after try/catch to release resources or perform cleanup.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -769,7 +769,7 @@
     {
       "id": "resource-management",
       "name": "Resource Management",
-      "description": "Resource Management as part of Try-Catch-Finally.",
+      "description": "Practices that ensure files, streams, or other resources are closed even when errors occur.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -785,7 +785,7 @@
     {
       "id": "compile-time-checking",
       "name": "Compile-Time Checking",
-      "description": "Compile-Time Checking as part of Checked vs Unchecked Exceptions.",
+      "description": "Requirement that checked exceptions are either caught or declared in the method signature.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -793,7 +793,7 @@
     {
       "id": "runtime-errors",
       "name": "Runtime Errors",
-      "description": "Runtime Errors as part of Checked vs Unchecked Exceptions.",
+      "description": "Issues that arise while the program is running, often leading to exceptions.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -801,7 +801,7 @@
     {
       "id": "best-practices",
       "name": "Best Practices",
-      "description": "Best Practices as part of Checked vs Unchecked Exceptions.",
+      "description": "Guidelines like catching specific exceptions and avoiding empty catch blocks.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -817,7 +817,7 @@
     {
       "id": "extending-exception",
       "name": "Extending Exception",
-      "description": "Extending Exception as part of Custom Exceptions.",
+      "description": "Creating a new exception class by inheriting from an existing exception type.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -825,7 +825,7 @@
     {
       "id": "constructors",
       "name": "Constructors",
-      "description": "Constructors as part of Custom Exceptions.",
+      "description": "Special methods that initialize new objects, often overloading parameters to set starting values.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -833,7 +833,7 @@
     {
       "id": "meaningful-messages",
       "name": "Meaningful Messages",
-      "description": "Meaningful Messages as part of Custom Exceptions.",
+      "description": "Supplying descriptive text in custom exceptions to aid debugging.",
       "group": "error-and-exception-handling",
       "level": 3,
       "size": 6
@@ -855,9 +855,33 @@
       "size": 12
     },
     {
-      "id": "int-double-boolean",
-      "name": "int double boolean",
-      "description": "int double boolean as part of Primitive Data Types.",
+      "id": "int-type",
+      "name": "int",
+      "description": "Stores whole numbers such as -3, 0, or 42 without decimal points.",
+      "group": "prerequisite-review",
+      "level": 3,
+      "size": 6
+    },
+    {
+      "id": "double-type",
+      "name": "double",
+      "description": "Represents decimal numbers using double precision (e.g., 3.14).",
+      "group": "prerequisite-review",
+      "level": 3,
+      "size": 6
+    },
+    {
+      "id": "boolean-type",
+      "name": "boolean",
+      "description": "Holds a true or false value to guide conditional logic.",
+      "group": "prerequisite-review",
+      "level": 3,
+      "size": 6
+    },
+    {
+      "id": "char-type",
+      "name": "char",
+      "description": "Stores a single Unicode character like 'a' or '$'.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -865,7 +889,7 @@
     {
       "id": "type-conversion",
       "name": "Type Conversion",
-      "description": "Type Conversion as part of Primitive Data Types.",
+      "description": "Changing data from one primitive type to another, such as casting an int to a double.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -873,7 +897,7 @@
     {
       "id": "variable-declaration",
       "name": "Variable Declaration",
-      "description": "Variable Declaration as part of Primitive Data Types.",
+      "description": "Introducing a named storage slot with a type and optional initial value.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -889,7 +913,7 @@
     {
       "id": "if-else",
       "name": "if-else",
-      "description": "if-else as part of Control Structures.",
+      "description": "Branching structure that executes different blocks depending on a boolean condition.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -897,7 +921,7 @@
     {
       "id": "for-and-while-loops",
       "name": "for and while loops",
-      "description": "for and while loops as part of Control Structures.",
+      "description": "Repeated execution of code while a condition holds or for a set number of iterations.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -905,7 +929,7 @@
     {
       "id": "boolean-expressions",
       "name": "Boolean Expressions",
-      "description": "Boolean Expressions as part of Control Structures.",
+      "description": "Statements that evaluate to true or false and direct control flow.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -921,7 +945,7 @@
     {
       "id": "declaration",
       "name": "Declaration",
-      "description": "Declaration as part of Arrays.",
+      "description": "Statement that sets an array's type and name before allocation.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -929,7 +953,7 @@
     {
       "id": "indexing",
       "name": "Indexing",
-      "description": "Indexing as part of Arrays.",
+      "description": "Accessing array elements via zero-based numeric positions.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -937,7 +961,7 @@
     {
       "id": "iteration",
       "name": "Iteration",
-      "description": "Iteration as part of Arrays.",
+      "description": "Processing each element in sequence using loops or enhanced for statements.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -953,7 +977,7 @@
     {
       "id": "parameters",
       "name": "Parameters",
-      "description": "Parameters as part of Method Design.",
+      "description": "Values provided to a method so it can operate on external data.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -961,7 +985,7 @@
     {
       "id": "return-values",
       "name": "Return Values",
-      "description": "Return Values as part of Method Design.",
+      "description": "Data a method sends back to its caller after completing execution.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -969,7 +993,7 @@
     {
       "id": "scope",
       "name": "Scope",
-      "description": "Scope as part of Method Design.",
+      "description": "Region in code where a declared name is valid and accessible.",
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
@@ -1602,9 +1626,27 @@
     },
     {
       "source": "primitive-data-types",
-      "target": "int-double-boolean",
+      "target": "int-type",
       "type": "contains",
-      "description": "Primitive Data Types relies on int double boolean."
+      "description": "Primitive Data Types includes the int type for whole numbers."
+    },
+    {
+      "source": "primitive-data-types",
+      "target": "double-type",
+      "type": "contains",
+      "description": "Primitive Data Types includes the double type for decimal values."
+    },
+    {
+      "source": "primitive-data-types",
+      "target": "boolean-type",
+      "type": "contains",
+      "description": "Primitive Data Types includes the boolean type for logic."
+    },
+    {
+      "source": "primitive-data-types",
+      "target": "char-type",
+      "type": "contains",
+      "description": "Primitive Data Types includes the char type for single characters."
     },
     {
       "source": "primitive-data-types",
