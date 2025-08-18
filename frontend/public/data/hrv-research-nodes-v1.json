@@ -1,9 +1,366 @@
 {
+  "metadata": {
+    "total_links": 47,
+    "total_nodes": 15,
+    "version": "1.0-generated"
+  },
   "nodes": [
-    { "id": "hrv1", "name": "HRV Root" },
-    { "id": "hrv2", "name": "HRV Study" }
+    {
+      "size": 400,
+      "level": 0,
+      "name": "Consumer Wearable-Based Autonomic Monitoring for Neuropsychiatric Stress Response Detection",
+      "description": "Development and validation of accessible, consumer-grade wearable sensor technologies for real-time detection of acute stress responses and agitation episodes in individuals with post-traumatic stress disorder (PTSD) and traumatic brain injury (TBI). This research addresses the critical gap between clinical-grade physiological monitoring capabilities and the practical need for continuous, unobtrusive stress monitoring in vulnerable neuropsychiatric populations.",
+      "id": "neuropsychiatric-wearable-monitoring",
+      "group": "research-root"
+    },
+    {
+      "size": 80,
+      "level": 1,
+      "name": "Clinical Accessibility and Implementation Framework",
+      "description": "Translation of validated stress detection technology into clinically accessible tools that can be effectively deployed in real-world healthcare settings, with consideration of regulatory requirements, clinical workflow integration, user experience design, and scalable implementation strategies for neuropsychiatric care.",
+      "id": "accessibility-implementation",
+      "group": "clinical-translation"
+    },
+    {
+      "size": 80,
+      "level": 1,
+      "name": "Neuropsychiatric Population Stress Response Characterization",
+      "description": "Comprehensive characterization of autonomic nervous system dysfunction and stress response patterns specific to PTSD and TBI populations, establishing baseline physiological profiles and defining measurable endpoints for agitation and stress episodes using validated clinical assessment tools.",
+      "id": "clinical-population-characterization",
+      "group": "clinical-research"
+    },
+    {
+      "size": 20,
+      "level": 2,
+      "name": "Stress Response Phenotype Classification",
+      "description": "Development of individualized stress response profiles that capture the heterogeneity of autonomic responses within PTSD and TBI populations, enabling personalized detection algorithms and treatment approaches based on physiological phenotypes.",
+      "id": "stress-response-phenotyping",
+      "group": "clinical-validation"
+    },
+    {
+      "size": 20,
+      "level": 2,
+      "name": "Traumatic Brain Injury Physiological Biomarkers",
+      "description": "Identification and validation of physiological markers detectable through consumer wearables that correlate with TBI severity, cognitive dysfunction, and recovery progress. Focus on autonomic dysfunction patterns unique to brain injury populations.",
+      "id": "tbi-physiological-markers",
+      "group": "clinical-validation"
+    },
+    {
+      "size": 20,
+      "level": 2,
+      "name": "PTSD-Specific Autonomic Dysfunction Patterns",
+      "description": "Characterization of autonomic nervous system alterations in PTSD populations, including baseline heart rate variability differences, hypervigilance indicators, and stress response patterns that distinguish PTSD patients from healthy controls and other psychiatric conditions.",
+      "id": "ptsd-autonomic-profiles",
+      "group": "clinical-validation"
+    },
+    {
+      "size": 20,
+      "level": 2,
+      "name": "Agitation Episode Operational Definition",
+      "description": "Development of precise, measurable definitions for agitation events in PTSD and TBI populations that can be reliably detected through wearable sensors while maintaining clinical relevance and actionability for healthcare providers.",
+      "id": "agitation-event-definition",
+      "group": "clinical-validation"
+    },
+    {
+      "size": 80,
+      "level": 1,
+      "name": "Consumer Wearable Sensor Validation Against Clinical Standards",
+      "description": "Systematic validation of consumer-grade wearable devices (primarily Apple Watch) against clinical-grade ECG monitoring for physiological signal acquisition, processing accuracy, and reliability in detecting autonomic nervous system dynamics relevant to stress response assessment.",
+      "id": "consumer-wearable-validation",
+      "group": "technical-validation"
+    },
+    {
+      "size": 5,
+      "level": 3,
+      "name": "Individual Beat Detection Precision Analysis",
+      "description": "Atomic research question evaluating the precision of individual heartbeat detection from photoplethysmography compared to ECG R-peak detection.",
+      "id": "beat-detection-precision",
+      "group": "atomic-validation"
+    },
+    {
+      "size": 5,
+      "level": 3,
+      "name": "Signal-to-Noise Ratio Impact on Physiological Metrics",
+      "description": "Atomic research question quantifying how signal quality degradation affects the reliability of derived autonomic nervous system metrics from consumer wearable devices.",
+      "id": "signal-noise-characterization",
+      "group": "atomic-validation"
+    },
+    {
+      "size": 20,
+      "level": 2,
+      "name": "Heart Rate Signal Acquisition Fidelity Assessment",
+      "description": "Quantitative assessment of how accurately consumer wearable devices capture physiological heart rate signals compared to clinical ECG gold standards, focusing on measurement precision, beat detection accuracy, and signal quality metrics.",
+      "id": "signal-acquisition-fidelity",
+      "group": "signal-validation"
+    },
+    {
+      "size": 5,
+      "level": 3,
+      "name": "Heart Rate Measurement Accuracy Quantification",
+      "description": "Atomic research question determining the statistical accuracy of consumer wearable heart rate measurements against clinical ECG gold standard.",
+      "id": "hr-measurement-accuracy",
+      "group": "atomic-validation"
+    },
+    {
+      "size": 5,
+      "level": 3,
+      "name": "Effective Sampling Rate for HRV Feature Extraction",
+      "description": "Atomic research question determining the minimum effective sampling rate required for meaningful heart rate variability analysis from consumer wearable data.",
+      "id": "sampling-rate-validation",
+      "group": "atomic-validation"
+    },
+    {
+      "size": 80,
+      "level": 1,
+      "name": "Multimodal Autonomic Feature Engineering and Signal Processing",
+      "description": "Development of novel computational methods to extract clinically meaningful autonomic nervous system indicators from consumer wearable sensor data, including heart rate variability proxy metrics, motion-compensated physiological features, and multimodal sensor fusion techniques for robust stress response detection.",
+      "id": "autonomic-feature-engineering",
+      "group": "signal-processing"
+    },
+    {
+      "size": 80,
+      "level": 1,
+      "name": "Intelligent Stress Response Detection and Prediction Algorithms",
+      "description": "Development and validation of machine learning algorithms for real-time detection and prediction of stress responses and agitation episodes using consumer wearable data, with emphasis on clinical accuracy, minimal false positives, and personalized adaptation to individual physiological baselines.",
+      "id": "stress-response-detection",
+      "group": "machine-learning"
+    }
   ],
   "links": [
-    { "source": "hrv1", "target": "hrv2", "type": "investigates" }
+    {
+      "source": "neuropsychiatric-wearable-monitoring",
+      "type": "contains",
+      "target": "stress-response-detection"
+    },
+    {
+      "source": "neuropsychiatric-wearable-monitoring",
+      "type": "contains",
+      "target": "autonomic-feature-engineering"
+    },
+    {
+      "source": "neuropsychiatric-wearable-monitoring",
+      "type": "contains",
+      "target": "consumer-wearable-validation"
+    },
+    {
+      "source": "neuropsychiatric-wearable-monitoring",
+      "type": "contains",
+      "target": "clinical-population-characterization"
+    },
+    {
+      "source": "neuropsychiatric-wearable-monitoring",
+      "type": "contains",
+      "target": "accessibility-implementation"
+    },
+    {
+      "source": "accessibility-implementation",
+      "type": "contains",
+      "target": "user-experience-design"
+    },
+    {
+      "source": "accessibility-implementation",
+      "type": "contains",
+      "target": "deployment-scalability"
+    },
+    {
+      "source": "accessibility-implementation",
+      "type": "contains",
+      "target": "regulatory-validation-framework"
+    },
+    {
+      "source": "accessibility-implementation",
+      "type": "contains",
+      "target": "clinical-integration-pathways"
+    },
+    {
+      "source": "clinical-population-characterization",
+      "type": "contains",
+      "target": "agitation-event-definition"
+    },
+    {
+      "source": "clinical-population-characterization",
+      "type": "contains",
+      "target": "ptsd-autonomic-profiles"
+    },
+    {
+      "source": "clinical-population-characterization",
+      "type": "contains",
+      "target": "tbi-physiological-markers"
+    },
+    {
+      "source": "clinical-population-characterization",
+      "type": "contains",
+      "target": "stress-response-phenotyping"
+    },
+    {
+      "source": "stress-response-phenotyping",
+      "type": "contains",
+      "target": "stress-recovery-profiling"
+    },
+    {
+      "source": "stress-response-phenotyping",
+      "type": "contains",
+      "target": "acute-stress-signatures"
+    },
+    {
+      "source": "stress-response-phenotyping",
+      "type": "contains",
+      "target": "individual-variability-patterns"
+    },
+    {
+      "source": "stress-response-phenotyping",
+      "type": "contains",
+      "target": "chronic-stress-indicators"
+    },
+    {
+      "source": "tbi-physiological-markers",
+      "type": "contains",
+      "target": "tbi-autonomic-dysregulation"
+    },
+    {
+      "source": "tbi-physiological-markers",
+      "type": "contains",
+      "target": "tbi-cognitive-load-indicators"
+    },
+    {
+      "source": "tbi-physiological-markers",
+      "type": "contains",
+      "target": "tbi-fatigue-detection"
+    },
+    {
+      "source": "tbi-physiological-markers",
+      "type": "contains",
+      "target": "tbi-recovery-trajectories"
+    },
+    {
+      "source": "ptsd-autonomic-profiles",
+      "type": "contains",
+      "target": "ptsd-hrv-baseline-differences"
+    },
+    {
+      "source": "ptsd-autonomic-profiles",
+      "type": "contains",
+      "target": "ptsd-stress-reactivity-patterns"
+    },
+    {
+      "source": "ptsd-autonomic-profiles",
+      "type": "contains",
+      "target": "ptsd-comorbidity-impacts"
+    },
+    {
+      "source": "ptsd-autonomic-profiles",
+      "type": "contains",
+      "target": "ptsd-recovery-dynamics"
+    },
+    {
+      "source": "agitation-event-definition",
+      "type": "contains",
+      "target": "severity-grading-system"
+    },
+    {
+      "source": "agitation-event-definition",
+      "type": "contains",
+      "target": "behavioral-physiological-correlation"
+    },
+    {
+      "source": "agitation-event-definition",
+      "type": "contains",
+      "target": "clinical-agitation-criteria"
+    },
+    {
+      "source": "agitation-event-definition",
+      "type": "contains",
+      "target": "temporal-pattern-analysis"
+    },
+    {
+      "source": "consumer-wearable-validation",
+      "type": "contains",
+      "target": "sampling-rate-validation"
+    },
+    {
+      "source": "consumer-wearable-validation",
+      "type": "contains",
+      "target": "hr-measurement-accuracy"
+    },
+    {
+      "source": "consumer-wearable-validation",
+      "type": "contains",
+      "target": "signal-acquisition-fidelity"
+    },
+    {
+      "source": "consumer-wearable-validation",
+      "type": "contains",
+      "target": "ecg-signal-validation"
+    },
+    {
+      "source": "consumer-wearable-validation",
+      "type": "contains",
+      "target": "signal-noise-characterization"
+    },
+    {
+      "source": "consumer-wearable-validation",
+      "type": "contains",
+      "target": "beat-detection-precision"
+    },
+    {
+      "source": "signal-acquisition-fidelity",
+      "type": "contains",
+      "target": "sampling-rate-validation"
+    },
+    {
+      "source": "signal-acquisition-fidelity",
+      "type": "contains",
+      "target": "hr-measurement-accuracy"
+    },
+    {
+      "source": "signal-acquisition-fidelity",
+      "type": "contains",
+      "target": "signal-noise-characterization"
+    },
+    {
+      "source": "signal-acquisition-fidelity",
+      "type": "contains",
+      "target": "beat-detection-precision"
+    },
+    {
+      "source": "autonomic-feature-engineering",
+      "type": "contains",
+      "target": "activity-state-normalization"
+    },
+    {
+      "source": "autonomic-feature-engineering",
+      "type": "contains",
+      "target": "temporal-dynamics-analysis"
+    },
+    {
+      "source": "autonomic-feature-engineering",
+      "type": "contains",
+      "target": "multimodal-sensor-fusion"
+    },
+    {
+      "source": "autonomic-feature-engineering",
+      "type": "contains",
+      "target": "hrv-proxy-metrics"
+    },
+    {
+      "source": "stress-response-detection",
+      "type": "contains",
+      "target": "false-positive-minimization"
+    },
+    {
+      "source": "stress-response-detection",
+      "type": "contains",
+      "target": "real-time-classification"
+    },
+    {
+      "source": "stress-response-detection",
+      "type": "contains",
+      "target": "personalization-adaptation"
+    },
+    {
+      "source": "stress-response-detection",
+      "type": "contains",
+      "target": "predictive-algorithm-development"
+    }
   ]
 }

@@ -1,0 +1,128 @@
+{
+  "atomic_metadata": {
+    "node_id": "term_bland-altman-ibi-agreement",
+    "decomposition_level": 1,
+    "parent_id": "neuropsychiatric-research-root",
+    "children_ids": [
+      "paper_10.3390_s25082380",
+      "paper_10.3390_s18082619",
+      "paper_10.1016_j.ijpsycho.2022.10.003",
+      "paper_10.1042_CS19990062",
+      "paper_10.3390_s22052032",
+      "paper_10.3390_s25041261",
+      "paper_10.3390_s24144658",
+      "paper_10.1109_lsens.2024.3398251",
+      "paper_10.3390_s23135847",
+      "paper_10.3390_ecsa-9-13346",
+      "paper_10.3390_s22197156",
+      "paper_10.3390_s21196413",
+      "paper_10.3390_s20205963",
+      "paper_10.3390_jcm14165637",
+      "paper_10.1097_sla.0000000000006872",
+      "paper_10.3390_jcm14155334",
+      "paper_10.1177_19322968251358830",
+      "paper_10.1016_j.jacep.2025.05.015"
+    ],
+    "file_path": "bland-altman-ibi-agreement-node.json",
+    "validation_status": "complete"
+  },
+  "node_data": {
+    "id": "term_bland-altman-ibi-agreement",
+    "name": "Bland Altman Ibi Agreement",
+    "description": "Atomic search term for consumer wearable validation research",
+    "group": "technology-validation",
+    "level": 1
+  },
+  "search_metadata": {
+    "atomic_concept": "bland-altman-ibi-agreement",
+    "research_domain": "consumer-wearable-validation",
+    "connected_papers_count": 18,
+    "top_papers": [
+      {
+        "paper_id": "paper_10.3390_s25082380",
+        "title": "Validity of Heart Rate Variability Measured with Apple Watch Series 6 Compare...",
+        "doi": "10.3390/s25082380",
+        "url": "https://doi.org/10.3390/s25082380",
+        "frequency": 2,
+        "relevance_score": 2.5
+      },
+      {
+        "paper_id": "paper_10.3390_s18082619",
+        "title": "Validation of the Apple Watch for Heart Rate Variability Measurements during ...",
+        "doi": "10.3390/s18082619",
+        "url": "https://doi.org/10.3390/s18082619",
+        "frequency": 2,
+        "relevance_score": 2.5
+      },
+      {
+        "paper_id": "paper_10.1016_j.ijpsycho.2022.10.003",
+        "title": "Validity of the Empatica E4 wristband to estimate resting-state heart rate an...",
+        "doi": "10.1016/j.ijpsycho.2022.10.003",
+        "url": "https://doi.org/10.1016/j.ijpsycho.2022.10.003",
+        "frequency": 2,
+        "relevance_score": 2.5
+      },
+      {
+        "paper_id": "paper_10.1042_CS19990062",
+        "title": "Pulse rate variability is not a surrogate for heart rate variability",
+        "doi": "10.1042/CS19990062",
+        "url": "https://doi.org/10.1042/CS19990062",
+        "frequency": 2,
+        "relevance_score": 2.5
+      },
+      {
+        "paper_id": "paper_10.3390_s22052032",
+        "title": "The Movesense Medical Sensor Chest Belt Device as Single Channel ECG for RR I...",
+        "doi": "10.3390/s22052032",
+        "url": "https://doi.org/10.3390/s22052032",
+        "frequency": 2,
+        "relevance_score": 2.5
+      },
+      {
+        "paper_id": "paper_10.3390_s25041261",
+        "title": "Physical Activity in Pre-Ambulatory Children with Cerebral Palsy: An Explorat...",
+        "doi": "10.3390/s25041261",
+        "url": "https://doi.org/10.3390/s25041261",
+        "frequency": 1,
+        "relevance_score": 1.5
+      },
+      {
+        "paper_id": "paper_10.3390_s24144658",
+        "title": "Apple Watch 6 vs. Galaxy Watch 4: A Validity Study of Step-Count Estimation i...",
+        "doi": "10.3390/s24144658",
+        "url": "https://doi.org/10.3390/s24144658",
+        "frequency": 1,
+        "relevance_score": 1.5
+      },
+      {
+        "paper_id": "paper_10.1109_lsens.2024.3398251",
+        "title": "Lightweight and High Accurate RR Interval Compensation for Signals From Weara...",
+        "doi": "10.1109/lsens.2024.3398251",
+        "url": "https://doi.org/10.1109/lsens.2024.3398251",
+        "frequency": 1,
+        "relevance_score": 1.5
+      },
+      {
+        "paper_id": "paper_10.3390_s23135847",
+        "title": "Wearable Technologies for Electrodermal and Cardiac Activity Measurements: A ...",
+        "doi": "10.3390/s23135847",
+        "url": "https://doi.org/10.3390/s23135847",
+        "frequency": 1,
+        "relevance_score": 1.5
+      },
+      {
+        "paper_id": "paper_10.3390_ecsa-9-13346",
+        "title": "Validation of the Polar H10 Accelerometer in a Sports-Based Environment",
+        "doi": "10.3390/ecsa-9-13346",
+        "url": "https://doi.org/10.3390/ecsa-9-13346",
+        "frequency": 1,
+        "relevance_score": 1.5
+      }
+    ]
+  },
+  "reconstruction_hints": {
+    "assembly_order": 3,
+    "required_children": 18,
+    "expected_total_descendants": 18
+  }
+}
