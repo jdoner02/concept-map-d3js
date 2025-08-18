@@ -45,191 +45,106 @@ const ConceptMapVisualization = () => {
   const [mobilePanelOpen, setMobilePanelOpen] = useState(false);
   // Enum-like color overrides to enforce specific mappings are defined at module scope
 
-  // Fetch concept map data from Spring Boot backend (configurable base URL)
+  // ------------------------------------------------------------------------
+  // Dataset management
+  const [datasets, setDatasets] = useState([]);          // list of available datasets
+  const [selectedDataset, setSelectedDataset] = useState(null); // chosen dataset filename
+
+  /**
+   * Validate and normalise a raw JSON object before feeding it into the D3
+   * renderer. Missing required fields cause entries to be skipped while optional
+   * ones fall back to friendly defaults. This keeps the visualisation resilient
+   * to imperfect data.
+   */
+  const loadGraphData = (rawJson) => {
+    const nodes = [];
+    const nodeIds = new Set();
+    for (const n of rawJson.nodes || []) {
+      if (!n.id || !n.name) {
+        console.error('Skipping node with missing id or name:', n);
+        continue;
+      }
+      if (n.category && !n.group) n.group = n.category;
+      if (!n.group) n.group = 'default';
+      if (!n.size) n.size = 50;
+      nodeIds.add(n.id);
+      nodes.push(n);
+    }
+    const links = [];
+    for (const l of rawJson.links || []) {
+      if (!l.source || !l.target) {
+        console.error('Skipping link with missing source/target:', l);
+        continue;
+      }
+      if (!nodeIds.has(l.source) || !nodeIds.has(l.target)) {
+        console.warn(`Skipping link ${l.source}\u2192${l.target}: nodes not found`);
+        continue;
+      }
+      links.push(l);
+    }
+    setAugmentedNodes([]);
+    setAugmentedLinks([]);
+    simRef.current = null; // reset simulation so layout recomputes
+    setData({ ...rawJson, nodes, links });
+  };
+
+  // Load the manifest once when the component mounts. If a ?jsonUrl query
+  // parameter or VITE_JSON_URL environment variable is supplied we bypass the
+  // manifest and load that URL directly.
   useEffect(() => {
-    // Build the full endpoint robustly, sanitizing env and avoiding URL() SyntaxError across browsers
-    const resolveApiEndpoint = () => {
-  const DEFAULT_ENDPOINT = 'http://127.0.0.1:8080/api/concept-map';
-      try {
-  let raw = (import.meta.env.VITE_API_URL ?? '').toString();
-  // Trim and strip surrounding quotes safely
-  raw = raw.trim().replace(/^['"]/,'').replace(/['"]$/,'').trim();
-        if (!raw) return DEFAULT_ENDPOINT;
+    const sp = new URLSearchParams(window.location.search || '');
+    const overrideUrl = sp.get('jsonUrl') || import.meta.env.VITE_JSON_URL;
+    if (overrideUrl) {
+      setLoading(true);
+      fetch(overrideUrl)
+        .then((r) => (r.ok ? r.json() : Promise.reject(r.statusText)))
+        .then((json) => { loadGraphData(json); setError(null); })
+        .catch((err) => {
+          console.error('Failed to load override dataset:', err);
+          setError(`Failed to load ${overrideUrl}`);
+          setEndpointTried(overrideUrl);
+        })
+        .finally(() => setLoading(false));
+      return;
+    }
 
-        // If the env already points to the resource, use it as-is after normalizing (string only, no URL()).
-        if (/\/api\/concept-map\/?$/i.test(raw)) {
-          if (!/^https?:\/\//i.test(raw) && !raw.startsWith('/')) raw = `http://${raw}`;
-          return raw.replace(/\/$/, '');
-        }
-
-        // Relative forms like "/api" or "/api/" -> resolve from current origin
-        if (raw.startsWith('/')) {
-          const base = window.location.origin.replace(/\/$/, '');
-          const normalized = raw.replace(/\/$/, '');
-          if (/\/api\/?$/i.test(normalized)) return `${base}${normalized}/concept-map`;
-          return `${base}/api/concept-map`;
-        }
-
-        // Bare host:port -> add scheme
-        if (!/^https?:\/\//i.test(raw)) raw = `http://${raw}`;
-
-        // Avoid URL() in Safari; build strings directly
-        const trimmed = raw.replace(/\/$/, '');
-        // If path already ends with /api, extend to concept-map; otherwise use canonical /api/concept-map
-        if (/\/api\/?$/i.test(trimmed)) return `${trimmed}/concept-map`;
-        return `${trimmed}/api/concept-map`;
-      } catch (err) {
-        // eslint-disable-next-line no-console
-        console.warn('VITE_API_URL invalid, falling back to default endpoint:', err);
-        return DEFAULT_ENDPOINT;
-      }
-    };
-    // Prefer a direct RAW JSON source when provided (query param takes precedence over env)
-  const resolveRawJsonOverride = () => {
-      try {
-        const sp = new URLSearchParams(window.location.search || '');
-        let q = (sp.get('jsonUrl') || '').toString().trim();
-        if (q) {
-          q = q.replace(/^['"]/,'').replace(/['"]/,'').trim();
-          if (!/^https?:\/\//i.test(q) && !q.startsWith('data:') && !q.startsWith('file:')) {
-            q = `http://${q}`;
-          }
-          // Collapse duplicate slashes except after protocol
-          q = q.replace(/([^:]\/)\/+/g, '$1');
-          return q;
-        }
-  let envRaw = (import.meta.env.VITE_JSON_URL ?? '').toString().trim();
-        if (!envRaw) return '';
-        envRaw = envRaw.replace(/^['"]/,'').replace(/['"]/,'').trim();
-        if (!/^https?:\/\//i.test(envRaw) && !envRaw.startsWith('data:') && !envRaw.startsWith('file:')) {
-          envRaw = `http://${envRaw}`;
-        }
-        envRaw = envRaw.replace(/([^:]\/)\/+/g, '$1');
-        return envRaw;
-      } catch {
-        return '';
-      }
-    };
-  const fetchConceptMap = async () => {
-      try {
-        setLoading(true);
-        // Resolve endpoint with robust fallbacks
-        let endpoint = resolveApiEndpoint();
-        const rawJsonCandidate = resolveRawJsonOverride();
-        // extra sanitization: strip quotes/whitespace and collapse duplicate slashes (excluding scheme)
-  endpoint = String(endpoint).trim().replace(/^['"]/,'').replace(/['"]/,'').replace(/\s+/g, '');
-  // Collapse duplicate slashes (excluding the protocol part)
-  endpoint = endpoint.replace(/([^:]\/)\/+/g, '$1');
-        const tried = new Set();
-  const candidates = [];
-  const push = (u) => { const s = String(u); if (!tried.has(s)) { tried.add(s); candidates.push(s); } };
-  // Try explicit raw JSON overrides first (query or env)
-  if (rawJsonCandidate) push(rawJsonCandidate);
-  // Static JSON fallback served by GitHub Pages (copied into dist at deploy): respects Vite base
-  try {
+    setLoading(true);
     const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
-    // Prefer preview JSON first for local iteration
-    push(`${base}/concept-map-preview.json`);
-    push(`${base}/concept-map.json`);
-  } catch { /* no-op */ }
-  // Configured API endpoint (env or default)
-  push(endpoint);
-  // Relative API path for environments with reverse proxy
-  push('/api/concept-map');
-  // Localhost fallbacks only when not on HTTPS to avoid mixed-content blocks
-  const isHttps = typeof window !== 'undefined' && window.location && window.location.protocol === 'https:';
-  if (!isHttps) {
-    push('http://localhost:8080/api/concept-map');
-    push('http://127.0.0.1:8080/api/concept-map');
-  }
-  let lastErr = null;
-        // eslint-disable-next-line no-console
-        if (import.meta.env?.DEV) {
-          console.info('[ConceptMap] fetch candidates:', Array.from(candidates));
-        }
-        // Try each candidate and only accept if we can parse valid JSON
-        for (const cand of candidates) {
-          setEndpointTried(cand);
-          try {
-            // First, try fetch
-            try {
-              const resp = await fetch(cand, { headers: { Accept: 'application/json' } });
-              if (resp && resp.ok) {
-                // Ensure it's JSON; some dev servers return HTML index.html with 200
-                const ct = (resp.headers.get('content-type') || '').toLowerCase();
-                let parsed = null;
-                if (ct.includes('application/json') || ct.endsWith('/json') || ct.includes('+json')) {
-                  parsed = await resp.json();
-                } else {
-                  const textBody = await resp.text();
-                  try {
-                    parsed = JSON.parse(textBody);
-                  } catch {
-                    // Not JSON, try next candidate
-                    lastErr = new Error('Received non-JSON response');
-                    continue;
-                  }
-                }
-                // Basic shape validation
-                if (parsed && typeof parsed === 'object' && Array.isArray(parsed.nodes) && Array.isArray(parsed.links)) {
-                  setData(parsed);
-                  return; // success
-                }
-                // If shape invalid, continue
-                lastErr = new Error('Response JSON missing expected nodes/links arrays');
-                continue;
-              }
-              lastErr = new Error(`HTTP error! status: ${resp ? resp.status : 'unknown'}`);
-            } catch (fetchErr) {
-              // Safari or network fallback: XHR
-              try {
-                const text = await new Promise((resolve, reject) => {
-                  try {
-                    const xhr = new XMLHttpRequest();
-                    xhr.open('GET', cand, true);
-                    xhr.setRequestHeader('Accept', 'application/json');
-                    xhr.onreadystatechange = () => {
-                      if (xhr.readyState === 4) {
-                        if (xhr.status >= 200 && xhr.status < 300) {
-                          resolve(xhr.responseText);
-                        } else {
-                          reject(new Error(`HTTP error! status: ${xhr.status}`));
-                        }
-                      }
-                    };
-                    xhr.onerror = () => reject(new Error('Network error'));
-                    xhr.send();
-                  } catch (xhrErr) {
-                    reject(xhrErr);
-                  }
-                });
-                // Parse
-                const parsed = JSON.parse(text);
-                if (parsed && typeof parsed === 'object' && Array.isArray(parsed.nodes) && Array.isArray(parsed.links)) {
-                  setData(parsed);
-                  return; // success
-                }
-                lastErr = new Error('Response JSON (XHR) missing expected nodes/links arrays');
-              } catch (xhrErr) {
-                lastErr = fetchErr || xhrErr;
-              }
-            }
-          } catch (err) {
-            lastErr = err;
-          }
-        }
-        // If we reach here, no candidates succeeded
-        throw lastErr || new Error('Failed to fetch concept map');
-      } catch (e) {
-        // eslint-disable-next-line no-console
-        console.error('Failed to load concept map:', e);
-        setError(e?.message || String(e));
-      } finally {
-        setLoading(false);
-      }
-    };
-    fetchConceptMap();
+    fetch(`${base}/data/manifest.json`)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+      .then((list) => {
+        setDatasets(list);
+        if (list.length > 0) setSelectedDataset(list[0].file);
+      })
+      .catch((err) => {
+        console.warn('No manifest available, falling back to default dataset.', err);
+        fetch(`${base}/concept-map.json`)
+          .then((res) => (res.ok ? res.json() : Promise.reject(res.status)))
+          .then((json) => { loadGraphData(json); setError(null); })
+          .catch(() => {
+            setError('Failed to load default dataset');
+            setEndpointTried(`${base}/concept-map.json`);
+          })
+          .finally(() => setLoading(false));
+      });
   }, []);
+
+  // Whenever the user picks a dataset from the dropdown we fetch it on demand.
+  useEffect(() => {
+    if (!selectedDataset) return;
+    setLoading(true);
+    const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
+    const url = `${base}/data/${selectedDataset}`;
+    fetch(url)
+      .then((res) => (res.ok ? res.json() : Promise.reject(res.statusText)))
+      .then((json) => { loadGraphData(json); setError(null); })
+      .catch((err) => {
+        console.error('Failed to load dataset:', err);
+        setError(`Failed to load ${selectedDataset}`);
+        setEndpointTried(url);
+      })
+      .finally(() => setLoading(false));
+  }, [selectedDataset]);
 
   // Derive unique levels from data for filtering/legend (fallback to 'unknown')
   const groupValues = useMemo(() => {
@@ -2046,6 +1961,21 @@ const ConceptMapVisualization = () => {
 
   return (
     <div className="concept-map-container" id="main" style={{ position: 'relative' }}>
+      {/* Dataset selection dropdown populated from manifest.json */}
+      {datasets.length > 0 && (
+        <div className="dataset-selector" style={{ textAlign: 'center', marginBottom: '8px' }}>
+          <label htmlFor="dataset-select"><strong>Dataset:</strong></label>
+          <select
+            id="dataset-select"
+            value={selectedDataset || ''}
+            onChange={(e) => setSelectedDataset(e.target.value)}
+          >
+            {datasets.map((ds) => (
+              <option key={ds.file} value={ds.file}>{ds.name}</option>
+            ))}
+          </select>
+        </div>
+      )}
       <div className="concept-map-header">
         <h1>Interactive Concept Map</h1>
         <p className="desktop-only">Drag nodes to explore relationships • Scroll to zoom</p>

@@ -1,0 +1,9 @@
+{
+  "nodes": [
+    { "id": "ewu1", "name": "Course Catalog" },
+    { "id": "ewu2", "name": "Sample Course" }
+  ],
+  "links": [
+    { "source": "ewu1", "target": "ewu2", "type": "offers" }
+  ]
+}
