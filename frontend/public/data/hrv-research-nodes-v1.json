@@ -1,0 +1,9 @@
+{
+  "nodes": [
+    { "id": "hrv1", "name": "HRV Root" },
+    { "id": "hrv2", "name": "HRV Study" }
+  ],
+  "links": [
+    { "source": "hrv1", "target": "hrv2", "type": "investigates" }
+  ]
+}

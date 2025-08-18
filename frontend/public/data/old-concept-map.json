@@ -1,0 +1,9 @@
+{
+  "nodes": [
+    { "id": "old1", "name": "Legacy Root" },
+    { "id": "old2", "name": "Legacy Child" }
+  ],
+  "links": [
+    { "source": "old1", "target": "old2", "type": "relates" }
+  ]
+}
