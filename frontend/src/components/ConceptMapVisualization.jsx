@@ -2298,6 +2298,37 @@ const ConceptMapVisualization = () => {
           <div className="mobile-panel" role="dialog" aria-modal="true" aria-label="Options and filters" tabIndex={0} onKeyDown={(e)=>{ if(e.key==='Escape') setMobilePanelOpen(false); }}>
             <div className="handle" />
             <div className="content">
+              {datasets.length > 0 && (
+                <div className="section">
+                  <h3>Dataset</h3>
+                  {/**
+                   * Reuse the same stateful dropdown as the desktop header but
+                   * style it for touch.  Constraining the width keeps long
+                   * dataset names readable without forcing sideways scrolling.
+                   */}
+                  <select
+                    id="dataset-select-mobile"
+                    aria-label="Dataset"
+                    value={selectedDataset || ''}
+                    onChange={(e) => setSelectedDataset(e.target.value)}
+                    style={{ width: '100%', padding: '8px 10px', border: '1px solid #ddd', borderRadius: 8 }}
+                  >
+                    {datasets.map((ds) => (
+                      <option key={ds.file} value={ds.file}>{ds.name}</option>
+                    ))}
+                  </select>
+                </div>
+              )}
+              {data?.metadata && (
+                <div className="section" style={{ fontSize: 14 }}>
+                  <h3>Rendered</h3>
+                  {/**
+                   * Mirror the live node/link counts so mobile users can gauge
+                   * graph size without hunting for the desktop-only header.
+                   */}
+                  <p>Nodes: {renderCounts.nodes} • Links: {renderCounts.links}</p>
+                </div>
+              )}
               <div className="section">
                 <h3>Search</h3>
                 <div style={{ display: 'flex', gap: 8 }}>
