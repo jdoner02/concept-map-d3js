@@ -2519,7 +2519,9 @@ const ConceptMapVisualization = () => {
             borderRadius: 8,
             padding: '12px 14px',
             boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-            maxWidth: 280,
+            maxWidth: '90vw', // let tooltip span most of the viewport on narrow screens
+            maxHeight: '80vh', // prevent the tooltip from covering the entire page vertically
+            overflowY: 'auto', // allow scrolling when content exceeds maxHeight
             zIndex: 10
           }}
           role="dialog"
@@ -2554,12 +2556,15 @@ const ConceptMapVisualization = () => {
             ×
           </button>
 
-          {/* Title: short and bold so it anchors the user's attention */}
+          {/*
+           * Title: short and bold so it anchors the user's attention.  Left
+           * alignment mirrors common reading patterns, especially on mobile.
+           */}
           <div
             style={{
-              textAlign: 'center',
+              textAlign: 'left',
               fontWeight: 'bold',
-              fontSize: 16,
+              fontSize: 18,
               marginBottom: 8,
               color: '#111'
             }}
@@ -2574,10 +2579,14 @@ const ConceptMapVisualization = () => {
            * readers.
            */}
           {tooltip.node.description && (
-            <div style={{ textAlign: 'center' }}>
+            <div
+              // left-align because western readers start scanning from the left edge
+              style={{ textAlign: 'left' }}
+            >
               <Markdown
                 text={tooltip.node.description}
                 style={{
+                  fontSize: 14, // bump legibility for paragraph text
                   margin: 0,
                   color: '#444',
                   overflow: 'hidden',
@@ -2592,8 +2601,8 @@ const ConceptMapVisualization = () => {
                   aria-expanded={descExpanded}
                   style={{
                     marginTop: 8,
-                    padding: '6px 12px',
-                    fontSize: 13,
+                    padding: '8px 12px', // easier tap target on touch devices
+                    fontSize: 14,
                     borderRadius: 6,
                     border: '1px solid #d1d5db',
                     background: '#fff',
