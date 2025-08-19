@@ -1807,14 +1807,11 @@ const ConceptMapVisualization = () => {
 
     // TICK handler (set once)
   simulation.on('tick', () => {
-      // Clamp node positions
-      if (!nodeGroups.empty()) {
-        nodeGroups.each(function(d) {
-        const r = computeNodeRadius(d);
-        d.x = Math.max(r, Math.min(universe.W - r, d.x ?? 0));
-        d.y = Math.max(r, Math.min(universe.H - r, d.y ?? 0));
-        });
-      }
+      // Let the simulation push nodes wherever the physics demands.
+      // Earlier versions hemmed every node inside the SVG's width and height,
+      // a form of invisible wall.  By omitting that clamp here we allow
+      // positions to wander beyond the initial viewport, illustrating that
+      // force‑directed layouts have no inherent edges.
       // Curved path calculation (quadratic Bezier with perpendicular offset)
       const qPath = (sx, sy, tx, ty) => {
         const dx = tx - sx;
