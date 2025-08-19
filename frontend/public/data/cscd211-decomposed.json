@@ -1,0 +1,935 @@
+{
+  "metadata": {
+    "version": "3.0-comprehensive",
+    "created": "2025-08-18T23:15:15Z",
+  "last_updated": "2025-08-19T00:15:00Z",
+    "description": "Comprehensive atomic concept map for CSCD211 with explosively decomposed learning units, research-based skill progressions, and common misconception remediation strategies.",
+    "author": "Documentation Curator Agent",
+    "audience": [
+      "CSCD211 students",
+      "Computer Science instructors", 
+      "Curriculum designers",
+      "Academic researchers in CS education"
+    ],
+    "pedagogical_purpose": "Provides unit-testable atomic concepts with evidence-based skill progression from novice to mastery, enabling personalized learning pathways and targeted misconception remediation.",
+    "decomposition_methodology": "Explosive Recursive Decomposition (ERD) ensuring each concept is irreducible, measurable, and pedagogically sound based on cognitive load theory and expertise research.",
+    "total_nodes": 25,
+    "total_links": 37,
+    "domains_completed": [
+      "Object-Oriented Design Fundamentals",
+      "Inheritance and Polymorphism", 
+      "Collections and Data Structures",
+      "Recursion and Algorithm Design",
+      "Exception Handling and Error Recovery",
+      "Abstract Classes and Interfaces"
+    ],
+    "common_misconceptions_addressed": [
+      "Class vs object identity confusion",
+      "Reference semantics vs value semantics", 
+      "Inheritance for code reuse vs type relationships",
+      "ArrayList vs array performance assumptions",
+  "Recursion stack depth misconceptions", 
+      "Exception handling as error suppression",
+      "Abstract classes as 'broken' concrete classes",
+      "Interfaces as 'public method containers'"
+    ],
+    "assessment_framework": "Six-level progression (novice → basic → developing → proficient → advanced → mastery) with specific behavioral indicators and common error patterns at each level.",
+    "remediation_strategies": {
+      "reference_semantics": "Draw memory diagrams showing variables as boxes containing addresses pointing to object boxes",
+      "recursion_fear": "Start with mathematical induction proofs before recursive code implementation",
+      "exception_understanding": "Use file I/O examples where exceptions represent real external system failures",
+      "abstraction_contracts": "Implement familiar interfaces like Comparable before designing custom interfaces"
+    }
+  },
+  "nodes": [
+    {
+      "id": "cscd211",
+      "name": "CSCD 211: Programming Principles II",
+      "description": "Intermediate Java course emphasizing composition, recursion, data abstraction, polymorphism, inheritance, interfaces, inner classes, abstract classes, object cloning, ArrayList, LinkedList, and exception handling.",
+      "group": "course",
+      "level": 0,
+      "size": 24,
+      "skillLevels": {
+  "novice": "**Procedural mindset persistence**: Still thinks in terms of 'functions that do things to data' rather than 'objects that encapsulate behavior and state'. **ArrayList confusion**: Treats ArrayList<String> like String[] array, doesn't understand dynamic resizing or object references stored in collections. **NullPointerException handling**: Responds by adding scattered null checks instead of reasoning about object lifecycle and invariants. **Recursion misconceptions**: Defaults to iterative solutions and rewrites recursive problems with loops, missing the problem decomposition insight.",
+        
+        "basic": "**Class creation by tutorial**: Can follow lab instructions to create Vehicle or Student classes but cannot design a new class from problem description alone. **Inheritance syntax without semantics**: Uses 'extends' correctly but creates inheritance for convenience rather than genuine 'is-a' relationships (like Lab6 Engine->CarEngine->TruckEngine makes sense, but Student extends ArrayList doesn't). **LinkedList implementation struggles**: Understands concept but gets lost in pointer manipulation - forgets to update size counter, creates infinite loops by not advancing pointers. **Shallow recursion**: Writes working recursive methods but cannot explain why base case prevents infinite recursion.",
+        
+        "developing": "**Design pattern recognition**: Recognizes when to use inheritance vs composition but implementation details get messy (creates circular references, violates encapsulation under time pressure). **Collection choice reasoning**: Understands ArrayList vs LinkedList performance differences but doesn't consider real-world usage patterns when choosing. **Exception handling mechanical**: Catches exceptions but doesn't understand when to recover vs propagate - catches Exception at every method boundary. **Recursive complexity**: Can implement factorial or fibonacci but struggles with more complex decomposition like tree traversal or backtracking.",
+        
+        "proficient": "**Problem-to-object mapping**: Given a real-world problem, can identify appropriate objects, responsibilities, and relationships without following a template. **Data structure optimization**: Chooses appropriate collection types based on access patterns and performance requirements (HashMap for lookups, TreeSet for sorted iteration). **Robust error handling**: Designs exception hierarchies that allow callers to handle different error conditions appropriately. **Recursive problem decomposition**: Identifies subproblems in complex scenarios and designs recursive solutions with appropriate base cases and progress toward termination.",
+        
+        "advanced": "**Architecture decisions**: Balances competing design concerns like performance vs maintainability, flexibility vs simplicity based on actual requirements rather than theoretical ideals. **Memory and performance conscious**: Profiles code to identify bottlenecks and chooses algorithms based on Big-O analysis for actual data sizes. **Exception strategy**: Designs comprehensive error handling policies that balance user experience, debugging information, and system stability. **Algorithm innovation**: Modifies standard algorithms for specific use cases or combines multiple approaches to solve novel problems efficiently.",
+        
+        "mastery": "**Teaching and mentoring**: Can diagnose why student code isn't working by recognizing common conceptual mistakes and guide students to correct understanding rather than just syntax fixes. **System design**: Architects multi-class systems with clear interfaces, appropriate coupling, and extension points that anticipate future requirements without over-engineering. **Open source contribution**: Writes production-quality code with comprehensive testing, clear documentation, and consideration for maintainers who will work with the code in the future. **Research application**: Stays current with programming language evolution and can evaluate new features for appropriateness in educational vs production contexts."
+      }
+    },
+    {
+      "id": "oop-design-fundamentals",
+      "name": "Object-Oriented Design Fundamentals",
+      "description": "Core principles of organizing code into classes and objects with proper encapsulation, abstraction, and responsibility assignment.",
+      "group": "oop-design-fundamentals",
+      "level": 1,
+      "size": 18,
+      "skillLevels": {
+        "novice": "**Cannot trace object creation**: Confuses class definitions with object instances - thinks 'Student s1 = new Student();' creates 'a Student called s1' rather than a variable referencing a Student object. **Fundamental misconception**: Believes methods are 'attached to variables' so writes 'Student.getName()' expecting it to work on any Student. **Organization issues**: Puts all code in main() method because instantiation seems 'too complicated'.",
+        
+  "basic": "**Inconsistent syntax usage**: Understands that classes are blueprints but alternates between 'obj.method()' and 'Class.method()' syntax randomly. **Direct field access habit**: Creates public fields because 'student.name = \"John\"' seems simpler than calling setName(). **Constructor pattern copying**: Copies constructor code from examples without understanding that 'new' allocates memory and invokes initialization. **Access modifier confusion**: Makes everything public because 'private breaks my code when I try to test it'.",
+        
+        "developing": "**Mechanical encapsulation**: Writes getters/setters for every field without understanding information hiding purpose - creates getName()/setName() even for fields that should never change after construction. **Poor relationship modeling**: Creates bidirectional references (Student knows Course, Course knows Student) causing memory leaks and circular dependencies. **Composition vs inheritance confusion**: Creates inheritance ('Student extends Person') when composition would be clearer ('Student has ContactInfo').",
+        
+        "proficient": "**Thoughtful encapsulation**: Chooses access modifiers based on actual client needs - makes fields private, methods package-private when appropriate. **Validates invariants**: Ensures objects maintain valid state through constructor parameters and setter validation (e.g., age cannot be negative). **Appropriate abstraction**: Creates value objects like Money or Address rather than using primitive strings/integers everywhere. **Understanding object lifecycle**: Knows when objects should be immutable vs mutable based on domain requirements.",
+        
+  "advanced": "**Recognizes design smells**: Identifies when a class has too many responsibilities and refactors using composition or delegation. **Dependency management**: Passes dependencies through constructors rather than creating them internally, enabling testability and flexibility. **Interface design**: Creates method signatures that prevent misuse — prefers enums or constrained types over ad‑hoc string constants, and requires all parameters necessary for valid operations. **Behavioral compatibility**: Ensures subclass implementations don't violate parent class contracts (Liskov Substitution Principle).",
+        
+        "mastery": "**Domain-driven modeling**: Creates object hierarchies that mirror real-world relationships so code reads like domain expert language. **Defensive design**: Anticipates how classes might be misused and prevents it through type design (impossible states become unrepresentable). **Extensibility planning**: Identifies likely change points and creates extension mechanisms without over-engineering. **Teaching capability**: Can explain why specific design decisions were made and help novices understand the progression from procedural to object-oriented thinking."
+      }
+    },
+    {
+      "id": "class-definition-structure",
+      "name": "Class Definition and Structure",
+      "description": "Syntax and semantics of declaring classes with fields, constructors, and methods following Java conventions.",
+      "group": "oop-design-fundamentals",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Class keyword declares a new reference type",
+        "Fields store object state using appropriate data types", 
+        "Constructors initialize objects to valid states",
+        "Methods define object behavior through parameters and return values",
+        "Static members belong to the class, not individual instances"
+      ]
+    },
+    {
+      "id": "class-declaration-syntax",
+      "name": "Class Declaration Syntax",
+      "description": "public class ClassName {} structure with naming conventions, access modifiers, and placement rules.",
+      "group": "oop-design-fundamentals", 
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Class names must be PascalCase and match filename",
+        "Public classes require separate .java files",
+        "Package declaration must precede class declaration",
+        "Import statements follow package, precede class"
+      ]
+    },
+    {
+      "id": "field-declaration-initialization",
+      "name": "Field Declaration and Initialization", 
+      "description": "Instance variables that store object state, with proper types, access modifiers, and initialization patterns.",
+      "group": "oop-design-fundamentals",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Fields declared at class level store object state",
+        "Private fields enforce encapsulation boundaries", 
+  "Instance field initializers run before the constructor body (after super constructor)",
+        "Final fields must be initialized exactly once",
+        "Static fields belong to class, shared across instances"
+      ]
+    },
+    {
+      "id": "constructor-design-patterns",
+      "name": "Constructor Design Patterns",
+      "description": "Special methods that initialize objects with overloading, chaining, and validation patterns for robust object creation.",
+      "group": "oop-design-fundamentals",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+  "A no-argument constructor is provided only if no other constructors are declared",
+        "Parameterized constructors accept values for field initialization with type-safe parameters",
+        "Constructor overloading provides multiple initialization options with different parameter combinations",
+        "this() chains constructors to avoid code duplication and must be first statement",
+        "Constructor parameters should validate input before assignment to maintain object invariants",
+        "super() calls parent constructor and must be first statement in child constructor",
+        "Constructor execution order: parent constructor, instance initializers, child constructor body",
+        "Final fields must be initialized in constructor or declaration, cannot change after",
+        "Constructor visibility controls object creation access (private prevents external instantiation)"
+      ]
+    },
+    {
+      "id": "object-instantiation-lifecycle",
+      "name": "Object Instantiation and Lifecycle",
+      "description": "Process of creating objects with new operator, constructor execution, reference assignment, and garbage collection.",
+      "group": "oop-design-fundamentals",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "new operator allocates memory and calls constructor",
+  "Object variables hold references to objects, not the objects themselves",
+        "Multiple references can point to same object (aliasing)",
+        "Objects become eligible for garbage collection when unreachable",
+        "this keyword refers to current object instance"
+      ]
+    },
+    {
+      "id": "object-creation-new-operator",
+      "name": "Object Creation with new Operator",
+      "description": "Memory allocation and constructor invocation syntax: ClassName variable = new ClassName(arguments);",
+      "group": "oop-design-fundamentals",
+      "level": 3,  
+      "size": 6,
+      "atomicConcepts": [
+  "new allocates heap memory for object storage",
+        "Constructor arguments must match parameter types and order",
+  "After allocation, the constructor chain executes to initialize the object",
+        "Assignment stores object reference in variable"
+      ]
+    },
+    {
+      "id": "reference-semantics-aliasing",
+      "name": "Reference Semantics and Aliasing",
+      "description": "Object variables store references (addresses) not objects themselves, enabling multiple variables to reference same object.",
+      "group": "oop-design-fundamentals",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+  "Object variables hold references to objects, not the actual object data",
+        "Assignment like 'obj2 = obj1' copies the reference, creating two variables pointing to same object",
+        "Multiple variables can reference same object (aliasing), sharing all state changes",
+        "Changes through one reference immediately visible through all other references to same object",
+  "== operator compares references (object identity), not object contents",
+        ".equals() method compares object contents when properly overridden",
+        "null reference points to no object - dereferencing causes NullPointerException",
+        "Garbage collection occurs when no references point to an object",
+        "Parameter passing for objects passes reference copy, enabling methods to modify object state"
+      ]
+    },
+    {
+      "id": "encapsulation-mechanisms",
+      "name": "Encapsulation Mechanisms", 
+      "description": "Information hiding through access modifiers, getter/setter methods, and interface design to protect object integrity.",
+      "group": "oop-design-fundamentals",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "private restricts access to defining class only",
+        "public allows access from any other class",
+        "protected permits access within package and subclasses",
+        "Getter methods provide controlled read access to private fields",
+        "Setter methods validate input before modifying private fields"
+      ]
+    },
+    {
+      "id": "access-modifier-hierarchy",
+      "name": "Access Modifier Hierarchy",
+      "description": "Java's four access levels (private, package, protected, public) controlling visibility and encapsulation boundaries.",
+      "group": "oop-design-fundamentals",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "private: accessible only within declaring class",
+        "package (default): accessible within same package",
+        "protected: accessible within package and subclasses",
+        "public: accessible from anywhere in program",
+        "Most restrictive access level that meets requirements should be used"
+      ]
+    },
+    {
+      "id": "getter-setter-patterns",
+      "name": "Getter and Setter Patterns",
+      "description": "Accessor and mutator methods that provide controlled access to private fields while maintaining object invariants.",
+      "group": "oop-design-fundamentals", 
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Getters return private field values without exposing internal structure",
+        "Setters validate parameters before modifying private fields",
+        "Naming convention: getFieldName() and setFieldName(value)",
+        "Boolean getters use isFieldName() instead of getFieldName()",
+        "Setters should throw IllegalArgumentException for invalid inputs"
+      ]
+    },
+    {
+      "id": "inheritance-polymorphism",
+      "name": "Inheritance and Polymorphism",
+      "description": "Class hierarchies enabling code reuse through 'is-a' relationships, method overriding, and uniform treatment of related types.",
+      "group": "inheritance-polymorphism", 
+      "level": 1,
+      "size": 18,
+      "skillLevels": {
+  "novice": "**Code reuse misconception**: Creates inheritance solely to avoid retyping code - thinks 'Student extends Person' means 'copy all Person fields into Student class'. **Method confusion**: Forgets @Override annotation then can't understand why parent method runs instead of their version. **Syntax copying without understanding**: Uses 'extends' and 'super()' from examples without understanding memory allocation or constructor chaining. **Polymorphism misconceptions**: Doesn't understand that 'Animal a = new Dog()' allows a to reference any Animal subtype.",
+        
+        "basic": "**Inappropriate inheritance depth**: Creates hierarchies like Animal → Mammal → Carnivore → Feline → Cat → DomesticCat because 'inheritance means more specific'. **super() timing confusion**: Calls super() in middle of constructor rather than first line, causing compilation errors. **Method signature errors**: Tries to override but changes parameter types, accidentally creating overloads instead. **Interface substitutability**: Understands polymorphism conceptually but writes code that breaks when substituting parent references with child objects.",
+        
+        "developing": "**Inheritance overuse**: Uses inheritance when composition would be cleaner (Vehicle extends Engine rather than Vehicle has Engine). **Abstract method confusion**: Creates abstract classes but doesn't understand that subclasses MUST implement abstract methods - surprised by compilation errors. **Interface implementation gaps**: Implements interfaces but doesn't maintain behavioral contracts - violates method preconditions or postconditions. **Casting desperation**: Uses instanceof and casting everywhere rather than designing proper polymorphic methods.",
+        
+        "proficient": "**Appropriate inheritance design**: Correctly identifies 'is-a' vs 'has-a' relationships and chooses inheritance only for genuine subtyping. **Template method mastery**: Creates abstract base classes that define algorithm structure while letting subclasses customize specific steps. **Polymorphic collections**: Designs systems where ArrayList<Shape> can contain Circles, Rectangles, and Triangles, with proper method dispatch. **Interface segregation**: Creates focused interfaces rather than fat interfaces that force implementing classes to provide empty methods.",
+        
+        "advanced": "**Fragile base class awareness**: Recognizes when changing parent class might break all subclasses and designs for extensibility without brittleness. **Composition over inheritance**: Refactors deep inheritance hierarchies into composition-based designs when behavior combination is needed. **Visitor pattern application**: Implements external operations on object hierarchies without modifying existing classes. **Covariance/contravariance understanding**: Correctly handles parameter and return type variance in method overriding without breaking substitutability.",
+        
+        "mastery": "**Framework design**: Creates extensible frameworks using Template Method, Strategy, and Factory patterns that allow clients to extend behavior without modifying core code. **Type system leverage**: Designs inheritance hierarchies that make illegal program states unrepresentable through the type system. **Legacy migration**: Safely refactors existing inheritance-heavy codebases into cleaner designs without breaking client code. **Teaching polymorphism**: Can explain dynamic dispatch implementation details and help students debug inheritance-related runtime errors."
+      }
+    },
+    {
+      "id": "inheritance-hierarchies",
+      "name": "Inheritance Hierarchies",
+      "description": "Parent-child class relationships using extends keyword to share implementation and establish type compatibility.",
+      "group": "inheritance-polymorphism",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+  "extends keyword establishes is-a relationship between subclass and superclass",
+  "Subclasses inherit public and protected members; package-private members only when in the same package",
+        "Single inheritance: Java classes extend exactly one superclass",
+        "Inheritance creates type hierarchies enabling polymorphic behavior",
+        "super keyword accesses parent class constructors and methods"
+      ]
+    },
+    {
+      "id": "extends-keyword-semantics",
+      "name": "extends Keyword Semantics",
+      "description": "class Child extends Parent {} syntax establishing inheritance relationship and member accessibility rules.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "extends must appear after class name in class declaration",
+  "Subclass inherits public and protected members (package-private if same package)",
+  "private members are not inherited by subclasses (JLS §8.2)",
+        "Constructors are not inherited but can be called via super()",
+        "Java enforces single inheritance - one superclass per class"
+      ]
+    },
+    {
+      "id": "inheritance-member-access",
+      "name": "Inheritance Member Access",
+      "description": "Rules governing which inherited members are accessible in subclasses and how to access parent implementations.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Inherited public/protected members accessed directly by name",
+        "super.methodName() calls parent version of overridden method",
+  "private members are not inherited; access parent state via public/protected methods",
+        "Package-private members accessible if same package",
+        "static members accessed via ClassName.memberName syntax"
+      ]
+    },
+    {
+      "id": "method-overriding",
+      "name": "Method Overriding",
+      "description": "Redefining inherited methods to provide specialized behavior while maintaining method signature compatibility.",
+      "group": "inheritance-polymorphism", 
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "@Override annotation ensures correct overriding and compile-time verification",
+        "Overridden methods must have identical signature (name, parameters, return type)",
+  "Access modifier cannot be more restrictive than parent method (it may be more permissive)",
+  "Return type may be covariant (a subtype of the parent method's return type)",
+        "Method overriding enables runtime polymorphism through dynamic dispatch",
+        "super.methodName() calls parent implementation from overriding method"
+      ]
+    },
+    {
+      "id": "override-annotation-rules",
+      "name": "@Override Annotation Rules", 
+      "description": "Compiler annotation ensuring method correctly overrides parent method with signature verification.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "@Override placed immediately before method declaration",
+        "Compiler verifies method signature matches parent method exactly",
+        "Compilation fails if annotated method doesn't override anything",
+        "Prevents typos in method names that would hide instead of override",
+  "Improves code readability by explicitly indicating overridden methods"
+      ]
+    },
+    {
+      "id": "dynamic-dispatch-mechanism", 
+      "name": "Dynamic Dispatch Mechanism",
+      "description": "Runtime method selection based on actual object type rather than reference type, enabling polymorphic behavior.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "JVM selects method implementation based on object's actual class",
+        "Method resolution occurs at runtime, not compile time",
+        "Most specific (deepest in hierarchy) method implementation chosen",
+        "Only instance methods participate in dynamic dispatch",
+        "static methods resolved at compile time based on reference type"
+      ]
+    },
+    {
+      "id": "polymorphism-principles", 
+      "name": "Polymorphism Principles",
+      "description": "Treating objects of different types uniformly through shared interfaces or common base types.",
+      "group": "inheritance-polymorphism",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Same interface can invoke different implementations at runtime",
+        "Polymorphic variables can reference any subtype object",
+        "Method calls resolved to appropriate implementation dynamically",
+  "Enables writing code that works with future unknown subtypes",
+        "Supports Open/Closed Principle: open for extension, closed for modification"
+      ]
+    },
+    {
+      "id": "polymorphic-references",
+      "name": "Polymorphic References",
+      "description": "Variables of parent type that can reference child type objects, enabling uniform treatment of related types.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Parent reference can point to any child class object",
+        "Only parent-declared methods accessible through parent reference",
+        "Actual method implementation depends on object's real type",
+        "Casting required to access child-specific methods",
+  "The instanceof operator tests actual object type at runtime"
+      ]
+    },
+    {
+      "id": "liskov-substitution-principle",
+      "name": "Liskov Substitution Principle",
+      "description": "Objects of parent type should be replaceable with objects of child type without breaking program correctness.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Subtypes must be behaviorally compatible with base types",
+  "Overridden methods must not strengthen preconditions",
+  "Overridden methods must not weaken postconditions", 
+        "Child classes must honor parent class contracts",
+        "LSP violations break polymorphic code expectations"
+      ]
+    },
+    {
+      "id": "collections-data-structures",
+      "name": "Collections and Data Structures",
+      "description": "Dynamic data storage using ArrayList, LinkedList, and understanding performance trade-offs for different access patterns.",
+      "group": "collections-data-structures",
+      "level": 1,
+      "size": 18,
+      "skillLevels": {
+  "novice": "**Array vs collection syntax**: Treats ArrayList as a resizable array and uses 'list[0]' instead of 'list.get(0)'. **Indexing after removal**: Expects indices to remain stable after removals (e.g., still treating former index 3 as index 3). **Null handling**: Inserts nulls and later encounters failures when calling methods on retrieved elements.",
+        
+  "basic": "**API familiarity without cost model**: Uses ArrayList.add()/get() correctly but does not account for resizing overhead or generic type safety. **LinkedList performance model**: Assumes LinkedList is generally faster due to no array copies; overlooks O(n) random access. **Iteration strategy**: Uses index-based loops with LinkedList leading to O(n²) behavior instead of iterator-based traversal.",
+        
+        "developing": "**Performance awareness without context**: Knows ArrayList vs LinkedList performance differences theoretically but chooses based on micro-optimizations rather than actual usage patterns. **Generic type confusion**: Uses raw types or <?> wildcards inappropriately, doesn't understand when bounded generics are needed. **Modification during iteration**: Gets ConcurrentModificationException but doesn't understand why foreach loops can't safely remove elements.",
+        
+  "proficient": "**Appropriate collection choice**: Selects ArrayList for random access and iteration, LinkedList for frequent insertions/deletions via iterators or at the ends, based on actual access patterns. **Generic type design**: Uses generics effectively including bounded type parameters when creating reusable collection-based classes. **Safe iteration patterns**: Uses iterators properly for removal during iteration, understands enhanced for loop limitations and alternatives.",
+        
+        "advanced": "**Custom data structure implementation**: Can implement own linked list, stack, or queue with proper encapsulation and generic type support. **Big-O analysis application**: Profiles real code to identify performance bottlenecks and selects optimal data structures based on measured rather than theoretical performance. **Collection framework mastery**: Uses Set, Map, Queue interfaces appropriately and understands when TreeSet vs HashSet or HashMap vs TreeMap is appropriate.",
+        
+        "mastery": "**Framework design**: Creates collection-like APIs that are intuitive for other developers to use correctly and difficult to use incorrectly. **Memory-conscious programming**: Understands collection implementation details well enough to minimize object creation and garbage collection pressure in performance-critical code. **Teaching data structures**: Can help students debug complex collection problems by tracing through internal state and helping them develop mental models of different data structure behaviors."
+      }
+    },
+    {
+      "id": "arraylist-implementation",
+      "name": "ArrayList Implementation and Usage",
+      "description": "Dynamic array that automatically resizes, providing indexed access with O(1) retrieval and amortized O(1) insertion at end.",
+      "group": "collections-data-structures",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "ArrayList stores elements in internal array that grows automatically when capacity exceeded",
+        "get(index) provides O(1) random access to elements by index",
+        "add(element) appends to end in amortized O(1) time due to occasional array copying",
+        "add(index, element) requires O(n) time to shift existing elements right",
+        "remove(index) requires O(n) time to shift remaining elements left to fill gap",
+        "Generic type parameter <T> ensures type safety and eliminates casting",
+        "Enhanced for loop provides clean iteration syntax for read-only access",
+        "Traditional for loop with get(i) appropriate for ArrayList random access patterns"
+      ]
+    },
+    {
+      "id": "linkedlist-implementation", 
+      "name": "LinkedList Implementation and Usage",
+      "description": "Doubly-linked list providing O(1) insertion/deletion at known positions but O(n) access to arbitrary elements.",
+      "group": "collections-data-structures",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "LinkedList stores elements in nodes with references to previous and next nodes",
+        "get(index) requires O(n) traversal from head or tail to reach target position",
+        "add(index, element) is O(n) to find position plus O(1) to insert node",
+        "addFirst() and addLast() provide O(1) insertion at list endpoints",
+        "Iterator-based access provides O(n) total time for complete traversal",
+        "Enhanced for loop uses iterator internally, providing efficient LinkedList iteration",
+        "Traditional indexed for loop creates O(n²) performance for LinkedList",
+        "Node structure enables memory-efficient insertion without array copying overhead"
+      ]
+    },
+    {
+      "id": "generic-collections",
+      "name": "Generic Collections and Type Safety", 
+      "description": "Parameterized types ensuring compile-time type checking and eliminating need for casting in collection operations.",
+      "group": "collections-data-structures",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Generic type parameter <T> specifies element type at collection creation time",
+        "Compile-time type checking prevents ClassCastException at runtime",
+        "ArrayList<String> can only contain String objects, not mixed types",
+        "Raw types (ArrayList without <>) lose type safety and generate warnings",
+        "Diamond operator <> on right side infers type from left side declaration",
+        "Bounded generics like <T extends Comparable<T>> restrict allowable type parameters",
+  "Wildcard <?> accepts any type; you generally cannot add elements (except null) due to type safety",
+        "Generic methods can declare own type parameters independent of class generics"
+      ]
+    },
+    {
+      "id": "recursion-algorithms",
+      "name": "Recursion and Algorithm Design",
+  "description": "Problem-solving paradigm using self-referential methods with base cases and recursive decomposition to solve complex problems in a structured way.",
+      "group": "recursion-algorithms",
+      "level": 1,
+      "size": 18,
+      "skillLevels": {
+  "novice": "**Stack depth misconceptions**: Assumes recursion is unsafe and replaces recursive formulations with loops by default, missing the decomposition insight. **Base case confusion**: Omits base cases or places them after recursive calls, leading to non-termination. **Parameter update issues**: Modifies parameters in recursive calls (e.g., factorial(n--)) without considering evaluation order. **Tracing difficulty**: Struggles to step through call/return flow using debugger or hand traces.",
+        
+  "basic": "**Pattern replication**: Implements standard recursive patterns (e.g., factorial) but cannot yet determine when recursion is appropriate for novel problems. **Single recursion focus**: Understands direct recursion; struggles with mutual or helper-based recursion. **Return value propagation**: Unclear on how return values accumulate through the call stack. **Debugging approach**: Adds print statements without a systematic trace or breakpoint strategy.",
+        
+  "developing": "**Problem decomposition gaps**: Recognizes some problems as recursive (tree traversal, factorial) but misses others (string manipulation, array processing) that have recursive solutions. **Complexity awareness**: Implements naive recursive solutions like fibonacci(n) = fibonacci(n-1) + fibonacci(n-2) without yet accounting for exponential time complexity. **Helper method usage**: Attempts to solve with a single recursive method where helper methods with additional parameters would simplify the solution. **Induction linkage**: Can implement recursion but has not connected it to the proof techniques that validate correctness.",
+        
+  "proficient": "**Recursive insight recognition**: Identifies when problems have recursive structure and can decompose complex problems into similar subproblems with clear base cases. **Optimization awareness**: Recognizes when memoization or dynamic programming can optimize recursive solutions and implements appropriate caching strategies. **Tail-recursive design (with caveat)**: Understands tail-recursive formulations conceptually and when to convert to iterative loops in Java (since the JVM does not guarantee tail-call elimination). **Complexity analysis**: Can analyze recursive algorithms using recurrence relations and Master Theorem to determine time and space complexity.",
+        
+  "advanced": "**Algorithm design mastery**: Develops novel recursive solutions for complex problems like backtracking, divide-and-conquer algorithms, and tree-based data structure operations. **Space optimization**: Converts recursive algorithms to iterative implementations when stack space is constrained while maintaining clarity and correctness. **Mutual recursion expertise**: Designs systems where multiple functions call each other recursively to model complex state machines or parsers. **Proof technique integration**: Uses mathematical induction to prove recursive algorithm correctness, termination, and complexity bounds.",
+        
+        "mastery": "**Recursive paradigm teaching**: Can diagnose why students struggle with recursion and guide them through the conceptual shift from iterative to recursive thinking. **Advanced applications**: Implements sophisticated recursive algorithms like recursive descent parsers, tree balancing algorithms, or recursive data structure operations. **Performance optimization**: Chooses between recursion, iteration, and hybrid approaches based on real-world constraints like stack limits, cache performance, and maintainability. **Research application**: Applies recursive thinking to solve novel computational problems and can explain the mathematical foundations underlying recursive algorithm design."
+      }
+    },
+    {
+      "id": "recursive-method-design",
+      "name": "Recursive Method Design and Implementation",
+      "description": "Creating methods that call themselves with modified parameters, including base cases, recursive cases, and parameter progression.",
+      "group": "recursion-algorithms",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Base case provides termination condition that stops recursive calls",
+        "Recursive case breaks problem into smaller identical subproblems", 
+        "Parameters must progress toward base case with each recursive call",
+        "Method signature determines how subproblems receive and return data",
+        "Return value propagation combines subproblem solutions into final result"
+      ]
+    },
+    {
+      "id": "base-case-design",
+      "name": "Base Case Design and Termination",
+      "description": "Identifying stopping conditions that prevent infinite recursion and provide direct solutions for simplest problem instances.",
+      "group": "recursion-algorithms",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Base case must handle simplest possible input without recursive calls",
+        "Multiple base cases may be needed for complex problem domains",
+        "Base case should be checked before making recursive calls",
+        "Base case return value must be correct for the terminating condition",
+        "Missing base cases cause StackOverflowError from infinite recursion"
+      ]
+    },
+    {
+      "id": "recursive-problem-decomposition",
+      "name": "Recursive Problem Decomposition", 
+      "description": "Breaking complex problems into smaller identical subproblems that combine to form the complete solution.",
+      "group": "recursion-algorithms",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Identify how large problem relates to smaller versions of same problem",
+        "Ensure recursive calls work on progressively smaller inputs",
+        "Combine subproblem results to construct solution for original problem",
+        "Trust that recursive calls correctly solve their subproblems",
+        "Avoid trying to trace through all levels of recursion mentally"
+      ]
+    },
+    {
+      "id": "exception-handling",
+      "name": "Exception Handling and Error Recovery",
+      "description": "Managing runtime errors through try-catch blocks, exception propagation, and defensive programming techniques for robust applications.",
+      "group": "exception-handling",
+      "level": 1,
+      "size": 18,
+      "skillLevels": {
+  "novice": "**Exception model misconceptions**: Assumes any exception will 'crash the program' and wraps arbitrary code in try-catch to be safe. **Overbroad catch**: Uses 'catch(Exception e)' for everything, ignoring that different exception types require different handling. **Diagnostic avoidance**: Ignores stack traces and error messages, changes code randomly until it 'works'. **Exception object confusion**: Doesn't recognize exceptions are objects; attempts to throw strings or primitives.",
+        
+        "basic": "**Syntax memorization**: Can write try-catch blocks but doesn't understand when exceptions should be caught vs propagated to calling methods. **Recovery strategy absence**: Catches exceptions but provides no meaningful recovery - either ignores them or prints generic error messages. **Checked vs unchecked confusion**: Doesn't understand why some exceptions must be caught or declared while others are optional. **Resource leak creation**: Opens files or network connections without proper finally blocks or try-with-resources, causing resource leaks.",
+        
+        "developing": "**Mechanical exception handling**: Follows patterns like 'catch FileNotFoundException' but doesn't design comprehensive exception handling strategies for entire applications. **Inappropriate exception types**: Creates new exception classes for every error condition rather than using existing appropriate exception types. **Error propagation confusion**: Mixes checked and unchecked exceptions inappropriately, causing compilation errors or forced catching of programming errors. **Testing gaps**: Doesn't write unit tests for exception conditions, so error handling code is never validated.",
+        
+        "proficient": "**Strategic exception design**: Creates exception hierarchies that allow calling code to catch at appropriate abstraction levels (specific vs general exception types). **Graceful degradation**: Implements fallback strategies that allow applications to continue functioning when non-critical exceptions occur. **Resource management mastery**: Uses try-with-resources and proper finally blocks to ensure resources are cleaned up even when exceptions interrupt normal flow. **Logging integration**: Provides meaningful error messages and logging that help diagnose problems without exposing internal implementation details.",
+        
+        "advanced": "**Exception handling architecture**: Designs comprehensive error handling policies that balance user experience, debugging information, and system stability across entire applications. **Custom exception strategy**: Creates domain-specific exception hierarchies that map business errors to appropriate technical responses. **Transactional error handling**: Implements rollback strategies for multi-step operations that maintain data consistency when exceptions occur. **Performance consideration**: Understands exception handling performance implications and avoids using exceptions for normal control flow.",
+        
+        "mastery": "**Framework-level design**: Creates reusable exception handling frameworks that provide consistent error handling across multiple applications or teams. **Distributed system expertise**: Handles exceptions in networked environments including timeout handling, retry strategies, and circuit breaker patterns. **Security-aware exception handling**: Ensures exception messages and stack traces don't leak sensitive information while still providing useful debugging data. **Teaching and mentoring**: Can help others understand the difference between recoverable errors, programming bugs, and system failures, guiding appropriate exception handling strategies."
+      }
+    },
+    {
+      "id": "try-catch-finally-blocks",
+      "name": "Try-Catch-Finally Block Structure",
+      "description": "Exception handling syntax for protecting code sections, catching specific exception types, and ensuring cleanup operations execute.",
+      "group": "exception-handling",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "try block contains code that might throw exceptions",
+  "catch blocks must be ordered from most specific to most general",
+        "finally block executes regardless of exception occurrence",
+        "Multiple catch blocks handle different exception types",
+  "Exception propagation continues if no matching catch block found",
+  "try-with-resources automatically closes AutoCloseable resources"
+      ]
+    },
+    {
+      "id": "exception-types-hierarchy",
+      "name": "Exception Types and Class Hierarchy",
+      "description": "Java exception class hierarchy from Throwable to specific exception types with checked vs unchecked distinction.",
+      "group": "exception-handling",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Throwable is the root class for all exceptions and errors",
+        "Exception class represents recoverable error conditions", 
+        "RuntimeException represents programming errors (unchecked)",
+        "Checked exceptions must be caught or declared in method signature",
+        "Error class represents unrecoverable system-level problems"
+      ]
+    },
+    {
+      "id": "throws-declaration",
+      "name": "Throws Declaration and Exception Propagation",
+      "description": "Method signatures declaring checked exceptions that might be thrown, enabling exception propagation up the call stack.",
+      "group": "exception-handling", 
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "throws keyword in method signature declares possible checked exceptions",
+        "Calling methods must catch or propagate declared exceptions", 
+        "Exception propagation allows higher-level methods to handle errors",
+        "Multiple exception types can be declared with throws clause",
+  "Overriding methods may declare the same or narrower (subtype) checked exceptions; unchecked exceptions are not restricted"
+      ]
+    },
+    {
+      "id": "abstract-classes-interfaces",
+      "name": "Abstract Classes and Interfaces",
+      "description": "Contract specification mechanisms enabling polymorphism through abstract methods, interface implementation, and multiple inheritance of type.",
+      "group": "abstract-classes-interfaces", 
+      "level": 1,
+      "size": 18,
+      "skillLevels": {
+        "novice": "**Abstract confusion**: Thinks 'abstract' means 'difficult to understand' rather than 'incomplete implementation requiring subclass completion'. **Interface misconception**: Believes interfaces are 'like classes but with public methods' missing the contract specification purpose. **Instantiation attempts**: Tries to create objects from abstract classes or interfaces, confused by compilation errors. **Implementation avoidance**: Sees abstract methods as 'broken code' and tries to provide empty implementations to 'fix' them.",
+        
+        "basic": "**Mechanical implementation**: Can implement interfaces by copying method signatures but doesn't understand the contract obligations each method must fulfill. **Abstract vs concrete confusion**: Creates abstract classes when concrete classes would work, or concrete classes when abstraction is needed. **Single interface limitation**: Implements one interface successfully but struggles with multiple interface implementation and name conflicts. **Default behavior misunderstanding**: Doesn't understand when to use interface default methods vs abstract class protected methods.",
+        
+  "developing": "**Inappropriate abstraction**: Creates abstract classes for convenience rather than genuine behavioral contracts - makes classes abstract solely to prevent instantiation. **Interface segregation violations**: Creates fat interfaces that force implementing classes to provide empty methods for unused functionality. **Diamond problem confusion**: Struggles with multiple inheritance scenarios and doesn't understand how interface default methods resolve conflicts. **Contract violation**: Implements interface methods but violates behavioral contracts (like Comparable.compareTo() not being consistent with equals()).",
+        
+        "proficient": "**Strategic abstraction design**: Identifies when abstraction is appropriate and creates clean hierarchies that separate interface contracts from implementation concerns. **Template method mastery**: Uses abstract classes to define algorithmic structure while allowing subclasses to customize specific steps through abstract methods. **Interface composition**: Designs systems where classes implement multiple focused interfaces rather than extending deep inheritance hierarchies. **Polymorphic collection usage**: Creates collections of interface types that can hold different implementations with appropriate method dispatch.",
+        
+        "advanced": "**Framework design patterns**: Creates extensible frameworks using Strategy, Template Method, and Factory patterns that leverage abstract classes and interfaces effectively. **Contract-driven development**: Designs interfaces that prevent misuse through type constraints and clear behavioral specifications in documentation. **Mixin-style composition**: Uses interface default methods to provide reusable behavior components that classes can adopt without inheritance constraints. **Refactoring mastery**: Extracts interfaces from existing code to improve testability and flexibility without breaking client dependencies.",
+        
+        "mastery": "**API design expertise**: Creates stable, extensible public APIs that balance flexibility with simplicity using appropriate abstraction mechanisms. **Language evolution awareness**: Understands how interface default methods, sealed classes, and other modern language features affect abstraction design decisions. **Cross-language abstraction**: Applies abstraction principles across different programming paradigms and can explain trade-offs between different approaches. **Teaching and mentoring**: Can diagnose when students misunderstand abstraction concepts and guide them toward appropriate interface vs abstract class usage patterns."
+      }
+    },
+    {
+      "id": "interface-definition-implementation", 
+      "name": "Interface Definition and Implementation",
+      "description": "Contract specification through interface declarations with abstract methods that implementing classes must provide concrete implementations for.",
+      "group": "abstract-classes-interfaces",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "interface keyword declares a contract with abstract method signatures",
+        "implements keyword indicates class provides concrete implementations", 
+  "Interface methods are implicitly public and abstract (excluding default and static methods)",
+        "Classes can implement multiple interfaces simultaneously",
+        "Interface implementation requires all abstract methods to be implemented"
+      ]
+    },
+    {
+      "id": "abstract-class-design",
+      "name": "Abstract Class Design and Usage", 
+      "description": "Partially implemented classes with abstract methods requiring subclass completion, combining concrete implementation with required customization points.",
+      "group": "abstract-classes-interfaces",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+  "abstract keyword declares a class that cannot be instantiated but can be subclassed",
+        "Abstract classes can contain both concrete and abstract methods",
+        "Subclasses must implement all inherited abstract methods",
+        "Abstract classes can have constructors called by subclass constructors",
+        "Template method pattern uses abstract methods for customization points"
+      ]
+    },
+    {
+      "id": "polymorphism-through-interfaces",
+      "name": "Polymorphism Through Interface Types",
+      "description": "Using interface references to achieve runtime polymorphism where different implementations provide varied behavior through common method signatures.",
+      "group": "abstract-classes-interfaces",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Interface references can hold any implementing class instance",
+        "Method calls on interface references use dynamic dispatch",
+        "Collections of interface types enable heterogeneous object storage",
+        "Interface polymorphism decouples client code from specific implementations",
+  "The instanceof operator checks if an object implements a specific interface"
+      ]
+    }
+  ],
+  "links": [
+    {
+      "source": "cscd211",
+      "target": "oop-design-fundamentals",
+      "type": "contains",
+      "description": "Course foundation: Students cannot proceed to inheritance, composition, or collections without mastering how objects encapsulate state and behavior through classes."
+    },
+    {
+      "source": "oop-design-fundamentals",
+      "target": "class-definition-structure", 
+      "type": "contains",
+      "description": "Architectural foundation: Class structure provides the template that defines how objects store state and expose behavior to clients."
+    },
+    {
+      "source": "oop-design-fundamentals",
+      "target": "object-instantiation-lifecycle",
+      "type": "contains", 
+      "description": "Runtime execution model: Students must understand how 'new' operator allocates memory and executes constructors to debug NullPointerExceptions."
+    },
+    {
+      "source": "oop-design-fundamentals",
+      "target": "encapsulation-mechanisms",
+      "type": "contains",
+      "description": "Information hiding principle: Protects object invariants and enables interface changes without breaking client code - essential for lab assignments."
+    },
+    {
+      "source": "class-definition-structure",
+      "target": "class-declaration-syntax",
+      "type": "contains",
+      "description": "Compilation requirement: Proper syntax prevents compiler errors that block all subsequent programming attempts."
+    },
+    {
+      "source": "class-definition-structure", 
+      "target": "field-declaration-initialization",
+      "type": "contains",
+      "description": "State management foundation: Fields store object data that constructors initialize and methods manipulate throughout object lifecycle."
+    },
+    {
+      "source": "class-definition-structure",
+      "target": "constructor-design-patterns", 
+      "type": "contains",
+      "description": "Object creation protocol: Constructors establish object invariants that all methods must maintain throughout object lifetime."
+    },
+    {
+      "source": "object-instantiation-lifecycle",
+      "target": "object-creation-new-operator",
+      "type": "contains",
+      "description": "Memory allocation mechanism: 'new' operator allocates heap space and triggers constructor execution sequence including parent class initialization."
+    },
+    {
+      "source": "object-instantiation-lifecycle",
+      "target": "reference-semantics-aliasing",
+      "type": "contains", 
+      "description": "Object lifecycle involves understanding reference semantics and aliasing."
+    },
+    {
+      "source": "encapsulation-mechanisms",
+      "target": "access-modifier-hierarchy",
+      "type": "contains",
+      "description": "Encapsulation relies on access modifier hierarchy."
+    },
+    {
+      "source": "encapsulation-mechanisms",
+      "target": "getter-setter-patterns",
+      "type": "contains",
+      "description": "Encapsulation uses getter and setter patterns for controlled access."
+    },
+    {
+      "source": "class-declaration-syntax",
+      "target": "field-declaration-initialization",
+      "type": "prerequisite",
+      "description": "Class syntax must be understood before field declarations."
+    },
+    {
+      "source": "field-declaration-initialization", 
+      "target": "constructor-design-patterns",
+      "type": "prerequisite",
+      "description": "Field understanding enables constructor design."
+    },
+    {
+      "source": "constructor-design-patterns",
+      "target": "object-creation-new-operator", 
+      "type": "prerequisite",
+      "description": "Constructor knowledge required for object creation."
+    },
+    {
+      "source": "access-modifier-hierarchy",
+      "target": "getter-setter-patterns",
+      "type": "prerequisite", 
+      "description": "Access control understanding enables getter/setter design."
+    },
+    {
+      "source": "object-creation-new-operator",
+      "target": "reference-semantics-aliasing",
+      "type": "enables",
+      "description": "Object creation understanding enables comprehension of reference behavior."
+    },
+    {
+      "source": "collections-data-structures",
+      "target": "oop-design-fundamentals",
+      "type": "applies",
+      "description": "Collections demonstrate composition and encapsulation principles in practice"
+    },
+    {
+      "source": "arraylist-implementation",
+      "target": "collections-data-structures",
+      "type": "implements",
+      "description": "ArrayList is the most commonly used concrete collection implementation"
+    },
+    {
+      "source": "linkedlist-implementation",
+      "target": "collections-data-structures",
+      "type": "implements",
+      "description": "LinkedList demonstrates alternative implementation strategy with different performance characteristics"
+    },
+    {
+      "source": "generic-collections",
+      "target": "collections-data-structures",
+      "type": "foundation",
+      "description": "Generic types provide type safety essential for effective collection usage"
+    },
+    {
+      "source": "generic-collections",
+      "target": "arraylist-implementation",
+      "type": "applies",
+      "description": "ArrayList<T> demonstrates practical generic type usage"
+    },
+    {
+      "source": "generic-collections",
+      "target": "linkedlist-implementation",
+      "type": "applies",
+      "description": "LinkedList<T> demonstrates generic type parameters in action"
+    },
+    {
+      "source": "cscd211",
+      "target": "collections-data-structures",
+      "type": "contains",
+      "description": "CSCD 211 includes collections as fundamental data structure topic"
+    },
+    {
+      "source": "cscd211",
+      "target": "recursion-algorithms",
+      "type": "contains",
+  "description": "Core course requirement: Recursion is an essential problem-solving paradigm explicitly listed in the course description for structured algorithm design."
+    },
+    {
+      "source": "cscd211", 
+      "target": "exception-handling",
+      "type": "contains",
+      "description": "Robustness requirement: Exception handling is fundamental for creating production-quality applications that gracefully manage runtime errors."
+    },
+    {
+      "source": "recursion-algorithms",
+      "target": "recursive-method-design",
+      "type": "contains",
+      "description": "Implementation foundation: Recursive algorithms require understanding method design patterns for self-referential function calls."
+    },
+    {
+      "source": "recursive-method-design",
+      "target": "base-case-design",
+      "type": "contains",
+      "description": "Termination requirement: Base cases are critical for preventing infinite recursion and providing solutions to simplest problem instances."
+    },
+    {
+      "source": "recursive-method-design",
+      "target": "recursive-problem-decomposition",
+      "type": "contains",
+      "description": "Problem-solving strategy: Decomposition breaks complex problems into manageable subproblems that recursive calls can solve."
+    },
+    {
+      "source": "exception-handling",
+      "target": "try-catch-finally-blocks",
+      "type": "contains",
+      "description": "Syntax foundation: Try-catch-finally provides basic exception handling structure required for all error management strategies."
+    },
+    {
+      "source": "exception-handling",
+      "target": "exception-types-hierarchy",
+      "type": "contains",
+      "description": "Classification system: Understanding exception hierarchy enables appropriate catch block design and error recovery strategies."
+    },
+    {
+      "source": "exception-handling",
+      "target": "throws-declaration",
+      "type": "contains",
+      "description": "Method contract specification: Throws declarations enable exception propagation and inform calling methods about potential error conditions."
+    },
+    {
+      "source": "oop-design-fundamentals",
+      "target": "recursion-algorithms",
+      "type": "enables",
+      "description": "Object-oriented foundation enables recursive algorithms that operate on object collections and hierarchical data structures."
+    },
+    {
+      "source": "collections-data-structures",
+      "target": "recursion-algorithms",
+      "type": "synergizes",
+      "description": "Collections provide data containers that recursive algorithms often process - tree traversal, list processing, search algorithms."
+    },
+    {
+      "source": "recursion-algorithms",
+      "target": "exception-handling",
+      "type": "requires",
+  "description": "Recursive methods should validate inputs and handle exceptional conditions appropriately to avoid runtime errors."
+    },
+    {
+      "source": "method-overriding",
+      "target": "exception-handling",
+      "type": "constrains",
+  "description": "Overridden methods may only declare the same or narrower checked exceptions than parent methods, influencing exception hierarchy design."
+    },
+    {
+      "source": "cscd211",
+      "target": "abstract-classes-interfaces",
+      "type": "contains",
+      "description": "Advanced course topic: Abstract classes and interfaces enable contract-based programming explicitly required in course description."
+    },
+    {
+      "source": "abstract-classes-interfaces",
+      "target": "interface-definition-implementation",
+      "type": "contains",
+      "description": "Contract specification foundation: Interface definition provides behavioral contracts that implementing classes must fulfill."
+    },
+    {
+      "source": "abstract-classes-interfaces",
+      "target": "abstract-class-design",
+      "type": "contains",
+      "description": "Partial implementation strategy: Abstract classes provide template methods and shared implementation while requiring subclass customization."
+    },
+    {
+      "source": "abstract-classes-interfaces",
+      "target": "polymorphism-through-interfaces",
+      "type": "contains",
+      "description": "Runtime polymorphism mechanism: Interface references enable dynamic dispatch and implementation substitutability."
+    },
+    {
+      "source": "inheritance-polymorphism",
+      "target": "abstract-classes-interfaces",
+      "type": "extends",
+      "description": "Advanced polymorphism: Abstract classes and interfaces provide more sophisticated polymorphic behavior than simple class inheritance."
+    },
+    {
+      "source": "abstract-classes-interfaces",
+      "target": "collections-data-structures",
+      "type": "enables",
+      "description": "Generic contract specification: Collection interfaces like List and Set demonstrate real-world interface usage with multiple implementations."
+    },
+    {
+      "source": "interface-definition-implementation",
+      "target": "polymorphism-through-interfaces",
+      "type": "enables",
+      "description": "Implementation foundation: Interface definition creates the contract structure that enables polymorphic method dispatch."
+    },
+    {
+      "source": "abstract-class-design",
+      "target": "polymorphism-through-interfaces", 
+      "type": "synergizes",
+      "description": "Complementary abstraction: Abstract classes and interfaces work together to provide both shared implementation and behavioral contracts."
+    }
+  ]
+}
