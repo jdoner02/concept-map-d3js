@@ -1,8 +1,26 @@
 [
-  { "file": "old-concept-map.json",       "name": "CSCD211 Concept Map" },
-  { "file": "hrv-research-nodes-v1.json", "name": "HRV Research Map" },
-  { "file": "concept-map-preview.research.json", "name": "HRV Research Map v2" },
-  { "file": "ewu-course-catalog.json",    "name": "EWU Course Catalog" },
-  { "file": "cscd210-decomposed.json",    "name": "CSCD210 Concept Map" },
-  { "file": "cscd211-decomposed.json",    "name": "CSCD211 Concept Map (V2)" }
+  {
+    "file": "concept-map-preview.research.json",
+    "name": "Apple Watch Ecg Clinical Validation"
+  },
+  {
+    "file": "hrv-research-nodes-v1.json",
+    "name": "Consumer Wearable-Based Autonomic Monitoring for Neuropsychiatric Stress Response Detection"
+  },
+  {
+    "file": "cscd210-decomposed.json",
+    "name": "CSCD 210 Programming Principles I"
+  },
+  {
+    "file": "cscd211-decomposed.json",
+    "name": "CSCD 211: Programming Principles II (cscd211-decomposed.json)"
+  },
+  {
+    "file": "old-concept-map.json",
+    "name": "CSCD 211: Programming Principles II (old-concept-map.json)"
+  },
+  {
+    "file": "ewu-course-catalog.json",
+    "name": "EWU Official Course Catalog"
+  }
 ]
