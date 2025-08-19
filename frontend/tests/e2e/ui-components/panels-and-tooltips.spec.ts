@@ -20,33 +20,24 @@ test.describe('UI Components', () => {
     await conceptMap.waitForLoad();
   });
 
-  test('tooltip appears on double-click and neighbor interaction works', async ({ page }) => {
+  test('tooltip shows title and toggles description expansion', async ({ page }) => {
     await conceptMap.waitForSelector('svg .node-group', { state: 'attached' });
 
-    // Trigger double-click to show tooltip
+    // Desktop users double-click to open the focused tooltip.
     await conceptMap.doubleClickFirstNode();
 
     const tooltip = page.getByTestId(TEST_IDS.NODE_TOOLTIP);
     await expect(tooltip).toBeVisible();
-    
-    // Try to interact with mini-tree if present
-    const miniTreeLeaf = tooltip.getByTestId(TEST_IDS.MINI_LEAF).first();
-    const isLeafVisible = await miniTreeLeaf.isVisible().catch(() => false);
-    
-    if (isLeafVisible) {
-      // Capture the neighbor name and click
-      const leafName = (await miniTreeLeaf.textContent())?.trim() || '';
-      await miniTreeLeaf.evaluate((el: Element) => {
-        el.dispatchEvent(new MouseEvent('click', { bubbles: true, composed: true }));
-      });
-      
-      await conceptMap.waitForTimeout(200);
-      
-      // Verify neighbor node is highlighted/visible
-      if (leafName.length > 0) {
-        const neighborLabel = page.locator('svg .node-group .node-label', { hasText: leafName }).first();
-        await expect(neighborLabel).toBeVisible();
-      }
+
+    // If a "Read more" button exists, clicking it should reveal additional
+    // text and the control should flip to "Show less" to indicate the new
+    // state. Some nodes may have short descriptions; in those cases the
+    // button simply won't render.
+    const expandBtn = tooltip.getByRole('button', { name: /read more/i }).first();
+    const btnVisible = await expandBtn.isVisible().catch(() => false);
+    if (btnVisible) {
+      await expandBtn.click();
+      await expect(expandBtn).toHaveText(/show less/i);
     }
   });
 
