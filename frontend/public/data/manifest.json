@@ -2,5 +2,7 @@
   { "file": "old-concept-map.json",       "name": "CSCD211 Concept Map" },
   { "file": "hrv-research-nodes-v1.json", "name": "HRV Research Map" },
   { "file": "concept-map-preview.research.json", "name": "HRV Research Map v2" },
-  { "file": "ewu-course-catalog.json",    "name": "EWU Course Catalog" }
+  { "file": "ewu-course-catalog.json",    "name": "EWU Course Catalog" },
+  { "file": "cscd210-decomposed.json",    "name": "CSCD210 Concept Map" },
+  { "file": "cscd211-decomposed.json",    "name": "CSCD211 Concept Map (V2)" }
 ]
