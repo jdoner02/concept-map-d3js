@@ -1501,8 +1501,12 @@ const ConceptMapVisualization = () => {
     nodeGroups.on('mouseout', () => {
       setHoverInfo({ visible: false, x: 0, y: 0, node: null });
     });
-    // Node double-click opens the rich tooltip with mini-tree
+    // Node double-click opens the rich tooltip with mini-tree on desktop.
+    // Touch screens typically reserve double-tap for zooming, so we skip
+    // this handler when the device doesn't support hover.
     nodeGroups.on('dblclick', (event, d) => {
+      const lacksHover = window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0; // heuristic: touch device
+      if (lacksHover) return; // mobile uses single tap handled below
       const [mx, my] = d3.pointer(event, svg.node());
       // Hide hover tooltip to avoid overlap with the detailed panel
       setHoverInfo({ visible: false, x: 0, y: 0, node: null });
@@ -1531,13 +1535,18 @@ const ConceptMapVisualization = () => {
         .on('end', () => r.remove());
     };
 
-    // Click toggles Sims-like ring and centers the node smoothly
+    // Clicking a node serves two roles: on desktop it toggles the
+    // Sims-like metadata ring, while on touch devices it acts like a
+    // double-click and opens the rich tooltip since "hover" doesn't
+    // exist there.
     nodeGroups.on('click', (event, d) => {
       event.stopPropagation();
-      // Remove hover tooltip since the focus shifts to metadata bubbles
+      const lacksHover = window.matchMedia('(hover: none)').matches || navigator.maxTouchPoints > 0; // heuristic: touch device
+
+      // Any click shifts focus away from the lightweight hover tooltip.
       setHoverInfo({ visible: false, x: 0, y: 0, node: null });
 
-      // Smooth zoom/pan to center the clicked node
+      // Smooth zoom/pan to center the clicked node for spatial context.
       const nodeX = d.x || 0;
       const nodeY = d.y || 0;
       const centerX = width / 2;
@@ -1546,22 +1555,36 @@ const ConceptMapVisualization = () => {
       const targetTransform = d3.zoomIdentity
         .translate(centerX - nodeX * currentTransform.k, centerY - nodeY * currentTransform.k)
         .scale(currentTransform.k);
-      
+
       if (zoomBehaviorRef.current) {
         svg.transition()
           .duration(750)
           .ease(d3.easeCubicOut)
           .call(zoomBehaviorRef.current.transform, targetTransform);
       }
-  // Immediate fallback to ensure transform is visible across browsers/tests
-  zoomRef.current = targetTransform;
-  container.interrupt().attr('transform', targetTransform);
-      // Ripple flair
-  spawnRipple(nodeX, nodeY, getGroupColor(Number.isFinite(+d.level) ? +d.level : 'unknown'));
-      
-      toggleMetaRing(d);
-  // Apply focus mode
-  applyFocus(d);
+      // Immediate fallback keeps the transform visible even if the
+      // transition above is interrupted (helps in tests/browsers).
+      zoomRef.current = targetTransform;
+      container.interrupt().attr('transform', targetTransform);
+      // Small ripple provides visual feedback for the tap/click.
+      spawnRipple(nodeX, nodeY, getGroupColor(Number.isFinite(+d.level) ? +d.level : 'unknown'));
+
+      if (lacksHover) {
+        // Mobile/touch: show the detailed tooltip near the tap location.
+        const [mx, my] = d3.pointer(event, svg.node());
+        setTooltip({ visible: true, x: mx, y: my, node: { ...d } });
+        // Preserve minimal info-panel text for legacy tests.
+        const info = document.getElementById('info-panel');
+        if (info) {
+          info.textContent = `${d.name || d.id}${d.description ? ` — ${d.description}` : ''}`;
+        }
+      } else {
+        // Desktop: toggle metadata ring UI elements.
+        toggleMetaRing(d);
+      }
+
+      // In both cases we consider this node "focused" for keyboard users.
+      applyFocus(d);
     });
 
     // Clicking empty space closes the ring (ignore events that bubbled from nodes/bubbles)
