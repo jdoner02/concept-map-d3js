@@ -29,8 +29,11 @@ const ConceptMapVisualization = () => {
   const [augmentedNodes, setAugmentedNodes] = useState([]); // ephemeral nodes added via tooltip actions
   const [augmentedLinks, setAugmentedLinks] = useState([]);
   const [tooltip, setTooltip] = useState({ visible: false, x: 0, y: 0, node: null });
-  const tooltipTreeRef = useRef(null);
   const tooltipDivRef = useRef(null);
+  // Whether the tooltip's description is fully revealed.  Starting collapsed
+  // keeps the popup compact on small screens but still lets curious users
+  // explore more detail on demand.
+  const [descExpanded, setDescExpanded] = useState(false);
   // Quick search + tour
   const [search, setSearch] = useState('');
   const idleTourRef = useRef({ timer: null, active: false });
@@ -1510,6 +1513,9 @@ const ConceptMapVisualization = () => {
       const [mx, my] = d3.pointer(event, svg.node());
       // Hide hover tooltip to avoid overlap with the detailed panel
       setHoverInfo({ visible: false, x: 0, y: 0, node: null });
+      // Open the focused tooltip and reset any prior expansion state so each
+      // node starts with the compact view.
+      setDescExpanded(false);
       setTooltip({ visible: true, x: mx, y: my, node: { ...d } });
       // Minimal legacy info-panel content to keep tests happy
       const info = document.getElementById('info-panel');
@@ -1572,6 +1578,9 @@ const ConceptMapVisualization = () => {
       if (lacksHover) {
         // Mobile/touch: show the detailed tooltip near the tap location.
         const [mx, my] = d3.pointer(event, svg.node());
+        // Show the simplified tooltip for touch users, again collapsing any
+        // lingering expanded state from previous interactions.
+        setDescExpanded(false);
         setTooltip({ visible: true, x: mx, y: my, node: { ...d } });
         // Preserve minimal info-panel text for legacy tests.
         const info = document.getElementById('info-panel');
@@ -1803,8 +1812,19 @@ const ConceptMapVisualization = () => {
         if (focus && typeof focus.x === 'number' && typeof focus.y === 'number') {
           const t = zoomRef.current || d3.zoomIdentity;
           const pt = t.apply([focus.x, focus.y]);
-          tooltipDivRef.current.style.left = `${pt[0] + 16}px`;
-          tooltipDivRef.current.style.top = `${pt[1] + 16}px`;
+          // Start with a point slightly offset from the node so the tooltip
+          // does not obscure it.
+          let left = pt[0] + 16;
+          let top = pt[1] + 16;
+          // Clamp the position so the card stays fully visible within the
+          // viewport; eight pixels of padding keeps it from kissing edges.
+          const margin = 8;
+          const w = tooltipDivRef.current.offsetWidth;
+          const h = tooltipDivRef.current.offsetHeight;
+          left = Math.min(Math.max(margin, left), window.innerWidth - w - margin);
+          top = Math.min(Math.max(margin, top), window.innerHeight - h - margin);
+          tooltipDivRef.current.style.left = `${left}px`;
+          tooltipDivRef.current.style.top = `${top}px`;
         }
       }
 
@@ -1901,117 +1921,9 @@ const ConceptMapVisualization = () => {
     };
   }, [filteredNodes, tooltip.visible, viewSize]);
 
-  // Render a tiny hierarchy of neighbors inside the tooltip using d3.tree
-  useEffect(() => {
-    if (!tooltip.visible || !tooltip.node || !data || !tooltipTreeRef.current) return;
-    try {
-      const nodeId = tooltip.node.id;
-      const links = data.links || [];
-      const nodes = data.nodes || [];
-      const nodeById = new Map(nodes.map(n => [n.id, n]));
-      const keyOf = (l) => l.label || l.relationshipType || l.type || 'relates to';
-
-      const outgoing = links.filter(l => l.source === nodeId);
-      const incoming = links.filter(l => l.target === nodeId);
-
-      const groupByType = (arr) => {
-        const m = new Map();
-        for (const l of arr) {
-          const k = keyOf(l);
-          if (!m.has(k)) m.set(k, []);
-          m.get(k).push(l);
-        }
-        return Array.from(m.entries()).map(([type, arr2]) => ({ type, arr: arr2 }));
-      };
-
-      const outGroups = groupByType(outgoing).slice(0, 4);
-      const inGroups = groupByType(incoming).slice(0, 4);
-
-      const toChildren = (groups, dir) => groups.map(g => ({
-        name: `${dir}: ${g.type}`,
-        children: g.arr.slice(0, 6).map(l => {
-          const nbrId = dir === 'out' ? l.target : l.source;
-          const base = nodeById.get(nbrId);
-          const label = base?.name || nbrId;
-          return { name: label };
-        })
-      }));
-
-      const treeData = {
-        name: tooltip.node.name || tooltip.node.id,
-        children: [
-          ...toChildren(outGroups, 'out'),
-          ...toChildren(inGroups, 'in')
-        ]
-      };
-
-      // Compute size based on leaves for readability
-      const leafCount = treeData.children.reduce((acc, g) => acc + (g.children?.length || 0), 0);
-      const width = 280;
-      const height = Math.max(120, Math.min(280, 40 + leafCount * 16));
-
-      const svg = d3.select(tooltipTreeRef.current);
-      svg.attr('width', width).attr('height', height);
-      svg.selectAll('*').remove();
-
-      const root = d3.hierarchy(treeData);
-      const layout = d3.tree().size([height - 20, width - 60]);
-      layout(root);
-
-  const g = svg.append('g').attr('transform', 'translate(30,10)');
-
-      // links
-      g.selectAll('path.tlink')
-        .data(root.links())
-        .enter()
-        .append('path')
-        .attr('class', 'tlink')
-        .attr('fill', 'none')
-        .attr('stroke', '#c0c4cc')
-        .attr('stroke-width', 1)
-        .attr('d', d => `M${d.source.y},${d.source.x}L${d.target.y},${d.target.x}`);
-
-      // nodes
-  const tn = g.selectAll('g.tnode')
-        .data(root.descendants())
-        .enter()
-        .append('g')
-        .attr('class', 'tnode')
-        .attr('transform', d => `translate(${d.y},${d.x})`);
-
-      tn.append('circle')
-        .attr('r', d => (d.depth === 0 ? 4 : 3))
-        .attr('fill', d => (d.depth === 0 ? '#4E79A7' : '#888'));
-
-      tn.append('text')
-        .attr('dx', 6)
-        .attr('dy', 3)
-        .attr('font-size', 11)
-        .attr('fill', '#333')
-        .attr('data-testid', d => (d.depth >= 2 ? 'mini-leaf' : null))
-        .text(d => d.data.name.length > 38 ? d.data.name.slice(0, 35) + '…' : d.data.name)
-        .style('cursor', d => (d.depth >= 2 ? 'pointer' : 'default'))
-        .on('click', (event, d) => {
-          // Leaf represents a neighbor under an in/out type group
-          if (d.depth < 2 || !data?.links || !data?.nodes || !tooltip.node) return;
-          const parent = d.parent; // type node
-          const dir = parent?.data?.name?.startsWith('out:') ? 'out' : 'in';
-          const label = d.data.name;
-          // Find node id by name
-          const found = (data.nodes || []).find(n => (n.name || n.id) === label);
-          if (!found) return;
-          const src = dir === 'out' ? tooltip.node.id : found.id;
-          const dst = dir === 'out' ? found.id : tooltip.node.id;
-          const marker = `${tooltip.node.id}::minitree:${dir}`;
-          const link = { source: src, target: dst, label: parent?.data?.name?.split(': ')[1], distance: 120, _marker: marker };
-          setAugmentedNodes(prev => (prev.some(n => n.id === found.id) ? prev : prev.concat({ ...found })));
-          setAugmentedLinks(prev => (prev.some(l => l.source === link.source && l.target === link.target) ? prev : prev.concat(link)));
-        });
-    } catch (e) {
-      // eslint-disable-next-line no-console
-      console.error('Tooltip tree render error:', e);
-    }
-  }, [tooltip, data]);
+  // The earlier build displayed a miniature tree of related nodes inside the
+  // tooltip. The current approach removes that extra visualization to keep the
+  // card lightweight and focused on a single concept.
 
   if (loading) {
     return (
@@ -2149,6 +2061,7 @@ const ConceptMapVisualization = () => {
                 .call(zoomBehaviorRef.current.transform, tx)
                 .on('end', () => {
                   // open meta ring via stateful toggle
+                  setDescExpanded(false);
                   setTooltip({ visible: false, x: 0, y: 0, node: null });
                   activeMetaRef.current = null;
                   const sel = document.querySelector(`g.node-group[data-node-id='${CSS.escape(String(found.id))}']`);
@@ -2350,16 +2263,15 @@ const ConceptMapVisualization = () => {
           })()}
         </div>
       )}
-      {/* Tooltip for node details and facet toggles */}
-    {tooltip.visible && tooltip.node && (
+      {/* Tooltip focused on title and description */}
+      {tooltip.visible && tooltip.node && (
         <div
           ref={tooltipDivRef}
           data-testid="node-tooltip"
           /*
-           * The outer container mimics the feel of a trading card: a subtle
-           * border, rounded corners and a gentle drop shadow help it float
-           * above the map.  We also mark it as a dialog so screen readers know
-           * it behaves like a temporary pop‑up window.
+           * Visually this container resembles a small card.  Cards are a
+           * familiar pattern across mobile and desktop UIs, so reusing the
+           * style makes the tooltip feel instantly recognisable and polished.
            */
           style={{
             position: 'absolute',
@@ -2368,9 +2280,9 @@ const ConceptMapVisualization = () => {
             background: 'rgba(255,255,255,0.98)',
             border: '1px solid #e0e0e0',
             borderRadius: 8,
-            padding: '10px 12px',
+            padding: '12px 14px',
             boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-            maxWidth: 320,
+            maxWidth: 280,
             zIndex: 10
           }}
           role="dialog"
@@ -2378,17 +2290,18 @@ const ConceptMapVisualization = () => {
           tabIndex={0}
           onKeyDown={(e) => {
             if (e.key === 'Escape') {
+              setDescExpanded(false);
               setTooltip({ visible: false, x: 0, y: 0, node: null });
             }
           }}
           onDoubleClick={e => e.stopPropagation()}
         >
-          {/*
-           * Close button floats in the top‑right corner so the title below can
-           * remain perfectly centred.
-           */}
+          {/* Close control – always give users a clear escape hatch */}
           <button
-            onClick={() => setTooltip({ visible: false, x: 0, y: 0, node: null })}
+            onClick={() => {
+              setDescExpanded(false);
+              setTooltip({ visible: false, x: 0, y: 0, node: null });
+            }}
             style={{
               position: 'absolute',
               top: 4,
@@ -2404,170 +2317,58 @@ const ConceptMapVisualization = () => {
             ×
           </button>
 
-          {/*
-           * Title box — draws inspiration from trading cards where the name is
-           * highlighted inside its own framed area.
-           */}
+          {/* Title: short and bold so it anchors the user's attention */}
           <div
             style={{
               textAlign: 'center',
-              border: '2px solid #facc15', // golden border for a classic card feel
-              borderRadius: 6,
-              padding: '4px 8px',
-              marginBottom: 8,
               fontWeight: 'bold',
               fontSize: 16,
-              background: '#fffbe6'
+              marginBottom: 8,
+              color: '#111'
             }}
           >
             {tooltip.node.name || tooltip.node.id}
           </div>
 
           {/*
-           * Description box — a separate framed area that keeps the text
-           * centred and readable.
+           * Description: initially collapsed to a two‑line preview.  A
+           * dedicated button lets touch users expand it without needing a
+           * precise gesture.  The button toggles via aria-expanded for screen
+           * readers.
            */}
           {tooltip.node.description && (
-            <div
-              style={{
-                textAlign: 'center',
-                border: '1px solid #e0e0e0',
-                borderRadius: 6,
-                padding: '6px 8px',
-                margin: '6px 0 10px',
-                color: '#444',
-                background: '#fafafa'
-              }}
-            >
-              {tooltip.node.description}
+            <div style={{ textAlign: 'center' }}>
+              <p
+                style={{
+                  margin: 0,
+                  color: '#444',
+                  overflow: 'hidden',
+                  display: '-webkit-box',
+                  WebkitLineClamp: descExpanded ? 'unset' : 2,
+                  WebkitBoxOrient: 'vertical'
+                }}
+              >
+                {tooltip.node.description}
+              </p>
+              {tooltip.node.description.length > 120 && (
+                <button
+                  onClick={() => setDescExpanded(prev => !prev)}
+                  aria-expanded={descExpanded}
+                  style={{
+                    marginTop: 8,
+                    padding: '6px 12px',
+                    fontSize: 13,
+                    borderRadius: 6,
+                    border: '1px solid #d1d5db',
+                    background: '#fff',
+                    cursor: 'pointer'
+                  }}
+                >
+                  {descExpanded ? 'Show less' : 'Read more'}
+                </button>
+              )}
             </div>
           )}
-          {isValidHttpUrl(tooltip.node.url) && (
-            // Present the node's URL as a traditional blue, underlined link so
-            // it's obvious to newcomers that the element is actionable.  The
-            // target attribute ensures the resource opens in a separate tab and
-            // doesn't disrupt the visualisation.
-            <p style={{ margin: '6px 0 10px 0' }}>
-              <a
-                href={tooltip.node.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                style={{ color: '#2563eb', textDecoration: 'underline' }}
-              >
-                Open link in new tab
-              </a>
-            </p>
-          )}
-          {/* Facet toggles that spawn temporary nodes linked to this node */}
-          <div style={{ borderTop: '1px solid #eee', paddingTop: 8 }}>
-            <div style={{ fontSize: 13, color: '#555', marginBottom: 6 }}>Show facets:</div>
-            {['category', 'group'].map((facetKey) => {
-              const facetVal = tooltip.node[facetKey];
-              const facetId = `${tooltip.node.id}::facet:${facetKey}`;
-              const isOn = augmentedNodes.some(n => n.id === facetId);
-              return (
-                <label key={facetKey} style={{ display: 'block', marginBottom: 4, cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={isOn}
-                    onChange={(e) => {
-                      if (e.target.checked) {
-                        // Add a facet node + link at a short distance so it "spawns" nearby
-                        const newNode = {
-                          id: facetId,
-                          name: `${facetKey}: ${facetVal ?? 'n/a'}`,
-                          description: `Facet of ${tooltip.node.name || tooltip.node.id}`,
-                          group: 'facet',
-                          degree: 0
-                        };
-                        const newLink = { source: tooltip.node.id, target: facetId, label: facetKey, distance: 90 };
-                        setAugmentedNodes(prev => (prev.some(n => n.id === facetId) ? prev : prev.concat(newNode)));
-                        setAugmentedLinks(prev => (prev.some(l => l.source === newLink.source && l.target === newLink.target) ? prev : prev.concat(newLink)));
-                      } else {
-                        setAugmentedNodes(prev => prev.filter(n => n.id !== facetId));
-                        setAugmentedLinks(prev => prev.filter(l => !(l.source === tooltip.node.id && l.target === facetId)));
-                      }
-                    }}
-                  />{' '}
-                  <span style={{ fontSize: 13 }}>{facetKey}</span>
-                </label>
-              );
-            })}
-          </div>
-
-          {/* Neighbor toggles (incoming/outgoing) to spawn directly connected nodes */}
-          <div style={{ borderTop: '1px solid #eee', paddingTop: 8, marginTop: 8 }}>
-            <div style={{ fontSize: 13, color: '#555', marginBottom: 6 }}>Neighbors:</div>
-            {[
-              { key: 'outgoing', label: 'Show outgoing neighbors', dir: 'out' },
-              { key: 'incoming', label: 'Show incoming neighbors', dir: 'in' },
-            ].map(cfg => {
-              const marker = `${tooltip.node.id}::nbr:${cfg.key}`;
-              const isOn = augmentedLinks.some(l => l._marker === marker);
-              return (
-                <label key={cfg.key} style={{ display: 'block', marginBottom: 4, cursor: 'pointer' }}>
-                  <input
-                    type="checkbox"
-                    checked={isOn}
-                    onChange={(e) => {
-                      if (!data?.links || !data?.nodes) return;
-                      const nodeId = tooltip.node.id;
-                      if (e.target.checked) {
-                        const MAX = 10;
-                        const neighbors = data.links.filter(l => cfg.dir === 'out' ? l.source === nodeId : l.target === nodeId).slice(0, MAX);
-                        const nextNodes = [];
-                        const nextLinks = [];
-                        const nodeById = new Map(data.nodes.map(n => [n.id, n]));
-                        for (const l of neighbors) {
-                          const nbrId = cfg.dir === 'out' ? l.target : l.source;
-                          const base = nodeById.get(nbrId);
-                          if (!base) continue;
-                          nextNodes.push({ ...base });
-                          nextLinks.push({
-                            source: cfg.dir === 'out' ? nodeId : nbrId,
-                            target: cfg.dir === 'out' ? nbrId : nodeId,
-                            label: l.label,
-                            relationshipType: l.relationshipType,
-                            type: l.type,
-                            distance: 130,
-                            _marker: marker
-                          });
-                        }
-                        setAugmentedNodes(prev => {
-                          const existing = new Set(prev.map(n => n.id));
-                          const merged = prev.concat(nextNodes.filter(n => !existing.has(n.id)));
-                          return merged;
-                        });
-                        setAugmentedLinks(prev => {
-                          const seen = new Set(prev.map(x => `${x.source}->${x.target}`));
-                          for (const nl of nextLinks) {
-                            const key = `${nl.source}->${nl.target}`;
-                            if (!seen.has(key)) { prev = prev.concat(nl); seen.add(key); }
-                          }
-                          return prev;
-                        });
-                      } else {
-                        // Remove links with this marker; remove nodes no longer referenced by any augmented link
-                        setAugmentedLinks(prev => prev.filter(l => l._marker !== marker));
-                        setAugmentedNodes(prev => {
-                          const stillRef = new Set();
-                          augmentedLinks.filter(l => l._marker !== marker).forEach(l => { stillRef.add(l.source); stillRef.add(l.target); });
-                          return prev.filter(n => stillRef.has(n.id) || n.id.startsWith(`${tooltip.node.id}::facet:`));
-                        });
-                      }
-                    }}
-                  />{' '}
-                  <span style={{ fontSize: 13 }}>{cfg.label}</span>
-                </label>
-              );
-            })}
-          </div>
-
-          {/* Mini hierarchy preview */}
-          <div style={{ borderTop: '1px solid #eee', paddingTop: 8, marginTop: 8 }}>
-            <div style={{ fontSize: 13, color: '#555', marginBottom: 6 }}>Local map:</div>
-            <svg ref={tooltipTreeRef} style={{ display: 'block' }} />
-          </div>
         </div>
       )}
       {/* Legacy info panel fallback, kept for compatibility */}
