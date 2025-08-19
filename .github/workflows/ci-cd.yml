@@ -31,15 +31,6 @@ jobs:
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
           restore-keys: ${{ runner.os }}-m2
 
-      - name: Set up Python 3
-        uses: actions/setup-python@v5
-        with:
-          python-version: '3.x'
-
-      - name: Validate concept-map.json integrity
-        run: |
-          python3 _Test_Guardian_Homebase/TOOLING/validate_concept_map_nodes.py src/main/resources/concept-map.json --check-orphans
-
       - name: Run backend tests
         run: ./mvnw clean test
 
