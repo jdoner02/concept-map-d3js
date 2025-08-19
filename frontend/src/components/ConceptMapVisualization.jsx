@@ -2330,8 +2330,14 @@ const ConceptMapVisualization = () => {
       {/* Tooltip for node details and facet toggles */}
     {tooltip.visible && tooltip.node && (
         <div
-      ref={tooltipDivRef}
-      data-testid="node-tooltip"
+          ref={tooltipDivRef}
+          data-testid="node-tooltip"
+          /*
+           * The outer container mimics the feel of a trading card: a subtle
+           * border, rounded corners and a gentle drop shadow help it float
+           * above the map.  We also mark it as a dialog so screen readers know
+           * it behaves like a temporary pop‑up window.
+           */
           style={{
             position: 'absolute',
             left: tooltip.x + 16,
@@ -2354,17 +2360,64 @@ const ConceptMapVisualization = () => {
           }}
           onDoubleClick={e => e.stopPropagation()}
         >
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <strong style={{ fontSize: 16 }}>{tooltip.node.name || tooltip.node.id}</strong>
-            <button
-              onClick={() => setTooltip({ visible: false, x: 0, y: 0, node: null })}
-              style={{ border: 'none', background: 'transparent', cursor: 'pointer', fontSize: 18 }}
-              aria-label="Close"
-              title="Close"
-            >×</button>
+          {/*
+           * Close button floats in the top‑right corner so the title below can
+           * remain perfectly centred.
+           */}
+          <button
+            onClick={() => setTooltip({ visible: false, x: 0, y: 0, node: null })}
+            style={{
+              position: 'absolute',
+              top: 4,
+              right: 6,
+              border: 'none',
+              background: 'transparent',
+              cursor: 'pointer',
+              fontSize: 18
+            }}
+            aria-label="Close"
+            title="Close"
+          >
+            ×
+          </button>
+
+          {/*
+           * Title box — draws inspiration from trading cards where the name is
+           * highlighted inside its own framed area.
+           */}
+          <div
+            style={{
+              textAlign: 'center',
+              border: '2px solid #facc15', // golden border for a classic card feel
+              borderRadius: 6,
+              padding: '4px 8px',
+              marginBottom: 8,
+              fontWeight: 'bold',
+              fontSize: 16,
+              background: '#fffbe6'
+            }}
+          >
+            {tooltip.node.name || tooltip.node.id}
           </div>
+
+          {/*
+           * Description box — a separate framed area that keeps the text
+           * centred and readable.
+           */}
           {tooltip.node.description && (
-            <p style={{ margin: '6px 0 10px 0', color: '#444' }}>{tooltip.node.description}</p>
+            <div
+              style={{
+                textAlign: 'center',
+                border: '1px solid #e0e0e0',
+                borderRadius: 6,
+                padding: '6px 8px',
+                margin: '6px 0 10px',
+                color: '#444',
+                background: '#fafafa'
+              }}
+            >
+              {tooltip.node.description}
+            </div>
           )}
           {isValidHttpUrl(tooltip.node.url) && (
             // Present the node's URL as a traditional blue, underlined link so
