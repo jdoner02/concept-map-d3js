@@ -23,6 +23,11 @@
   border-radius: 6px;
   font-size: 0.9em;
   z-index: 12;
+  /* Constrain total width so the bar never collides with other floating UI. */
+  max-width: 90vw;
+  /* Allow items to wrap on very narrow screens instead of overflowing. */
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .concept-map-header select {
@@ -32,6 +37,12 @@
   border-radius: 4px;
   background: #fff;
   font-size: 0.9em;
+  /* Cap width so long dataset names do not shove neighbouring controls. */
+  max-width: 180px;
+  /* Let the browser shrink the control when space is tight. */
+  width: auto;
+  /* Prevent the label text from wrapping onto multiple lines. */
+  white-space: nowrap;
 }
 
 .metadata {
