@@ -1,24 +1,41 @@
 {
+  "metadata": {
+    "version": "1.0",
+    "created": "2025-08-19T04:57:31.792Z",
+    "last_updated": "2025-08-19T04:57:31.793Z",
+    "description": "Decomposed CSCD210 concept map with hierarchical relationships.",
+    "author": "Documentation Curator Agent",
+    "total_nodes": 85,
+    "total_links": 93
+  },
   "nodes": [
     {
       "id": "CSCD210",
       "title": "CSCD 210 Programming Principles I",
-      "description": "Introduction to programming covering fundamental concepts of data representation, basic algorithms, computer architecture, and software development. Students learn to write, run, debug, and analyze simple programs using primitive types, control structures, functions, and basic data structures."
+      "description": "Introduction to programming covering fundamental concepts of data representation, basic algorithms, computer architecture, and software development. Students learn to write, run, debug, and analyze simple programs using primitive types, control structures, functions, and basic data structures.",
+      "name": "CSCD 210 Programming Principles I",
+      "level": 0
     },
     {
       "id": "CSCD210-Domain1",
       "title": "Information Representation & Hardware Basics",
-      "description": "Covers how information is represented in computer systems (number systems, data encoding) and basic hardware organization (CPU, memory). Students learn about binary and other bases, how primitive data is stored, and the fundamentals of computer architecture."
+      "description": "Covers how information is represented in computer systems (number systems, data encoding) and basic hardware organization (CPU, memory). Students learn about binary and other bases, how primitive data is stored, and the fundamentals of computer architecture.",
+      "name": "Information Representation & Hardware Basics",
+      "level": 1
     },
     {
       "id": "CSCD210-Domain1-Subdomain1",
       "title": "Number Systems",
-      "description": "Explores different base systems for representing numbers and their interconversion. Emphasizes understanding decimal, binary, and hexadecimal systems and how to convert between them."
+      "description": "Explores different base systems for representing numbers and their interconversion. Emphasizes understanding decimal, binary, and hexadecimal systems and how to convert between them.",
+      "name": "Number Systems",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea1",
       "title": "Positional Notation Systems",
-      "description": "Covers the idea that the value of a digit depends on its position (place value) in the number and the base of the number system."
+      "description": "Covers the idea that the value of a digit depends on its position (place value) in the number and the base of the number system.",
+      "name": "Positional Notation Systems",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea1-Concept1",
@@ -29,7 +46,9 @@
       "developing": "Understands place value for ones, tens, hundreds and can convert small values (e.g., 45 is 4 tens + 5 ones) with minor errors.",
       "proficient": "Accurately interprets and forms decimal numbers of any size, confidently explaining each digit’s value (e.g., 372 = 3×10^2 + 7×10^1 + 2×10^0).",
       "advanced": "Fluently converts complex values (including decimals) in base-10 and compares magnitudes, addressing edge cases like leading/trailing zeros.",
-      "mastery": "Demonstrates deep understanding of base-10, effortlessly explaining decimal representation and teaching others how positional value works."
+      "mastery": "Demonstrates deep understanding of base-10, effortlessly explaining decimal representation and teaching others how positional value works.",
+      "name": "Decimal (Base-10) system",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea1-Concept2",
@@ -40,7 +59,9 @@
       "developing": "Understands binary place values (1, 2, 4, 8, ...) and converts numbers ≤8 bits between binary and decimal with some errors under pressure.",
       "proficient": "Reliably converts binary to decimal and vice versa for typical values (e.g., 101101₂ = 45₁₀), and explains the process of summing powers of two.",
       "advanced": "Handles large binary numbers (>=16 bits) accurately, including signed two’s complement representation, and can perform binary arithmetic (addition) correctly.",
-      "mastery": "Intuitively works with binary numbers (e.g., in debugging bit-level issues), mental-converting and explaining binary operations, and guiding others in binary logic."
+      "mastery": "Intuitively works with binary numbers (e.g., in debugging bit-level issues), mental-converting and explaining binary operations, and guiding others in binary logic.",
+      "name": "Binary (Base-2) system",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea1-Concept3",
@@ -51,12 +72,16 @@
       "developing": "Can convert small hex numbers to decimal and back (e.g., 0xF = 15, 27₁₀ = 0x1B) using the 16^n place values, making minor mistakes for multi-digit values.",
       "proficient": "Correctly converts typical multi-digit hex values to decimal (and vice versa) and understands each hex digit’s weight (e.g., 0x3E8 = 1000₁₀).",
       "advanced": "Comfortable with large hex values and their binary equivalents (grouping bits into hex digits), able to perform hex arithmetic or interpret memory addresses in hex.",
-      "mastery": "Effortlessly uses hexadecimal in context (e.g., reading machine code or color codes), quickly converting and explaining the relationship between binary and hex to others."
+      "mastery": "Effortlessly uses hexadecimal in context (e.g., reading machine code or color codes), quickly converting and explaining the relationship between binary and hex to others.",
+      "name": "Hexadecimal (Base-16) system",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea2",
       "title": "Numeric Conversions",
-      "description": "Techniques for converting values from one number system base to another (especially between decimal, binary, and hexadecimal)."
+      "description": "Techniques for converting values from one number system base to another (especially between decimal, binary, and hexadecimal).",
+      "name": "Numeric Conversions",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea2-Concept1",
@@ -67,7 +92,9 @@
       "developing": "Uses the divide-by-2 method or place-value method to convert decimals up to three digits into binary with occasional mistakes (e.g., mis-ordering remainders).",
       "proficient": "Reliably converts decimal numbers of typical size (e.g., 0–1023) into binary without errors, understanding how to pad with leading zeros if needed.",
       "advanced": "Quickly converts large decimal values to binary, possibly doing mental shorthand, and checks work by reconverting to decimal. Recognizes patterns (e.g., powers of 2 as one followed by zeros).",
-      "mastery": "Fluently converts any decimal to binary and explains the process (division or place value) clearly. Can derive binary representations under various constraints (fixed bit-length, two’s complement, etc.) and teach the technique."
+      "mastery": "Fluently converts any decimal to binary and explains the process (division or place value) clearly. Can derive binary representations under various constraints (fixed bit-length, two’s complement, etc.) and teach the technique.",
+      "name": "Decimal to Binary conversion",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea2-Concept2",
@@ -78,7 +105,9 @@
       "developing": "Converts binary numbers (up to 8 bits) to decimal by writing out place values (1,2,4,...) and adding those with bits set to 1, with minor arithmetic mistakes at times.",
       "proficient": "Accurately converts binary values of moderate length (e.g., 11010110₂) to decimal, systematically summing the appropriate powers of 2 with no errors.",
       "advanced": "Quickly evaluates long binary strings (≥16 bits) to decimal using grouping or other shortcuts, and can verify results by back-conversion or estimation (knowing approximate sizes).",
-      "mastery": "Instantly recognizes binary patterns and their decimal values (e.g., knows 2^n and combinations by heart). Can handle fractional binary to decimal conversions as well, and adeptly communicates the conversion process."
+      "mastery": "Instantly recognizes binary patterns and their decimal values (e.g., knows 2^n and combinations by heart). Can handle fractional binary to decimal conversions as well, and adeptly communicates the conversion process.",
+      "name": "Binary to Decimal conversion",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea2-Concept3",
@@ -89,12 +118,16 @@
       "developing": "Converts one- and two-digit hex numbers to decimal (and to binary) by systematically using place values or hex-to-binary tables; might err with letters beyond F or large place values.",
       "proficient": "Correctly converts between hex and binary for any length (mapping each hex digit to 4 bits) and can convert common multi-digit hex to decimal (e.g., 0x7B = 123₁₀) without mistakes.",
       "advanced": "Easily converts complex hex values to decimal (and vice versa) possibly using mental shortcuts (like breaking into bytes), and checks consistency by cross-verifying with binary representations.",
-      "mastery": "Expertly handles hex in all contexts: seamlessly interconverts hex, binary, and decimal even for very large values, and explains conversion techniques (grouping binary, using powers of 16) to others. May also handle hex fractions or other bases relative to hex."
+      "mastery": "Expertly handles hex in all contexts: seamlessly interconverts hex, binary, and decimal even for very large values, and explains conversion techniques (grouping binary, using powers of 16) to others. May also handle hex fractions or other bases relative to hex.",
+      "name": "Hexadecimal conversions",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea3",
       "title": "Negative Numbers Representation",
-      "description": "How negative integers are encoded in binary within computer systems (e.g., using two’s complement or sign-magnitude forms)."
+      "description": "How negative integers are encoded in binary within computer systems (e.g., using two’s complement or sign-magnitude forms).",
+      "name": "Negative Numbers Representation",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea3-Concept1",
@@ -105,7 +138,9 @@
       "developing": "Understands the procedure to get two’s complement (invert bits, add 1) and can apply it to small numbers (8-bit or so) to find negative representations, possibly making mistakes on edge cases like -128.",
       "proficient": "Accurately converts between two’s complement binary and signed decimal (for typical bit-widths, e.g., 8 or 16 bits) and explains why it works (e.g., the highest bit indicating sign). Recognizes overflow conditions (when a value is out of range).",
       "advanced": "Comfortably works with two’s complement across various bit lengths, including identifying when arithmetic overflow occurs or how extension to more bits works (sign extension).",
-      "mastery": "Demonstrates deep understanding of two’s complement: can derive formulas, reason about it abstractly (e.g., why it’s modulo 2^n), and teach others. Effortlessly performs two’s complement operations mentally for a variety of values."
+      "mastery": "Demonstrates deep understanding of two’s complement: can derive formulas, reason about it abstractly (e.g., why it’s modulo 2^n), and teach others. Effortlessly performs two’s complement operations mentally for a variety of values.",
+      "name": "Two's complement representation",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain1-ConceptArea3-Concept2",
@@ -116,17 +151,23 @@
       "developing": "Can represent small integers in sign-magnitude form (e.g., in 8-bit, +5 = 00000101, -5 = 10000101) and identify the sign bit, though might err on representing -0 or interpreting negative values correctly.",
       "proficient": "Correctly encodes and decodes sign-magnitude binary for given bit lengths, noting the dual representations of 0 (positive 0 and negative 0). Explains how addition is more complicated in this system (no automatic handling of carries for mixed signs).",
       "advanced": "Understands limitations of sign-magnitude (like two zeros) and can convert between sign-magnitude and two’s complement representations for any given number. Rarely makes errors in interpreting sign/magnitude bits even in edge cases.",
-      "mastery": "Thoroughly understands various historical/alternative representation schemes (sign-magnitude, one’s complement, etc.) in context. Can seamlessly explain and contrast these with two’s complement, and possibly implement custom arithmetic handling for sign-magnitude."
+      "mastery": "Thoroughly understands various historical/alternative representation schemes (sign-magnitude, one’s complement, etc.) in context. Can seamlessly explain and contrast these with two’s complement, and possibly implement custom arithmetic handling for sign-magnitude.",
+      "name": "Sign-magnitude representation",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain2",
       "title": "Data Representation",
-      "description": "Discusses how different forms of data (numbers, text) are encoded in binary form. Covers measurement units for data and encoding systems for characters."
+      "description": "Discusses how different forms of data (numbers, text) are encoded in binary form. Covers measurement units for data and encoding systems for characters.",
+      "name": "Data Representation",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea1",
       "title": "Bits, Bytes, and Data Units",
-      "description": "Introduces the basic units of information. 1 bit is a binary digit; 8 bits form 1 byte. Larger units include KB, MB, GB, etc., typically powers of 2 in computing contexts."
+      "description": "Introduces the basic units of information. 1 bit is a binary digit; 8 bits form 1 byte. Larger units include KB, MB, GB, etc., typically powers of 2 in computing contexts.",
+      "name": "Bits, Bytes, and Data Units",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea1-Concept1",
@@ -137,7 +178,9 @@
       "developing": "Correctly states 1 byte = 8 bits and can give simple implications (e.g., a byte can represent 256 distinct values). May not yet fully connect bytes with characters or addresses.",
       "proficient": "Clearly explains bits and bytes, including how bytes are used to encode data (like ASCII characters). Understands related terms like nibble (4 bits) and can perform small conversions (e.g., how many bytes are 16 bits).",
       "advanced": "Understands how bits and bytes relate to hardware (memory addressing, alignment) and larger units. For example, can reason how many bytes are needed to store certain data types. Rarely makes mistakes in units.",
-      "mastery": "Demonstrates comprehensive understanding: instantly converts between bits and bytes in various contexts, explains historical or unusual byte sizes if needed (like 7-bit bytes in some systems), and instructs others on best practices (e.g., why data sizes are in powers of 2)."
+      "mastery": "Demonstrates comprehensive understanding: instantly converts between bits and bytes in various contexts, explains historical or unusual byte sizes if needed (like 7-bit bytes in some systems), and instructs others on best practices (e.g., why data sizes are in powers of 2).",
+      "name": "Bit and Byte definitions",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea1-Concept2",
@@ -148,12 +191,16 @@
       "developing": "Understands 1 KB = 1024 bytes and can list units up to GB or TB with their approximate values. Might not consistently distinguish between decimal and binary prefixes or handle less common units (e.g., kibibyte vs kilobyte).",
       "proficient": "Accurately defines KB, MB, GB, etc., in the binary sense (e.g., 1 MB = 2^20 bytes = 1,048,576 bytes) and is aware of the context where decimal might be used. Distinguishes bits vs bytes in units (Kb vs KB).",
       "advanced": "Comfortable with all units up to very large (TB, PB, etc.), including the concept of IEC binary prefixes (KiB, MiB). Explains why 1024 is used and can convert between units (e.g., how many MB in a GB, precisely).",
-      "mastery": "Expertly navigates both binary and decimal unit systems, anticipating context (like OS memory vs disk manufacturers). Can perform mental calculations for conversions (e.g., bytes to MB) and explain historical reasons for units. Capable of teaching unit conversions with clarity."
+      "mastery": "Expertly navigates both binary and decimal unit systems, anticipating context (like OS memory vs disk manufacturers). Can perform mental calculations for conversions (e.g., bytes to MB) and explain historical reasons for units. Capable of teaching unit conversions with clarity.",
+      "name": "Kilobytes, Megabytes, etc.",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea2",
       "title": "Character Encoding",
-      "description": "How text characters are represented as numeric codes. Focus on ASCII and Unicode standards which map characters to binary values."
+      "description": "How text characters are represented as numeric codes. Focus on ASCII and Unicode standards which map characters to binary values.",
+      "name": "Character Encoding",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea2-Concept1",
@@ -164,7 +211,9 @@
       "developing": "Understands that each character has a numeric ASCII code. Can convert a few characters to/from ASCII (e.g., 'A' = 65, 'a' = 97) when prompted, though not comprehensively.",
       "proficient": "Knows the ASCII table basics: capital letters, lowercase, digits (e.g., '0' = 48) and common punctuation. Explains ASCII is 7-bit and fits in one byte. Can encode/decode short strings by referencing known ASCII values or patterns.",
       "advanced": "Comfortable working with ASCII codes in programming (e.g., using character arithmetic). Remembers extended ASCII (8-bit variants) and knows limitations (only covers English/Latin characters). Rarely makes mistakes in interpreting ASCII values of common characters.",
-      "mastery": "Possesses near complete knowledge of ASCII table and its structure (e.g., contiguous ranges for letters). Efficiently converts text to ASCII and vice versa even for control characters. Can explain historical context and how ASCII paved way for Unicode."
+      "mastery": "Possesses near complete knowledge of ASCII table and its structure (e.g., contiguous ranges for letters). Efficiently converts text to ASCII and vice versa even for control characters. Can explain historical context and how ASCII paved way for Unicode.",
+      "name": "ASCII encoding",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea2-Concept2",
@@ -175,12 +224,16 @@
       "developing": "Understands Unicode provides codes for characters in many languages and symbols. Can give a simple example (e.g., Unicode for '€' or '漢' exists) and knows UTF-8 is a common encoding that can use multiple bytes per character. Might confuse specific encodings but grasps the idea of extended range.",
       "proficient": "Explains that Unicode has a large range (over a million code points) and covers most scripts. Can describe how UTF-8 encodes ASCII as one byte and others as 2-4 bytes, and why Unicode was needed beyond ASCII. Knows basic use (e.g., in programming, using Unicode strings).",
       "advanced": "Understands different Unicode encoding forms (UTF-8, UTF-16, UTF-32) and their trade-offs. Can interpret or identify code points for less common characters given a reference. Rarely confuses character vs byte count. Aware of issues like endianness in UTF-16 or combining characters.",
-      "mastery": "Deep knowledge of Unicode: explains code point allocation (blocks for scripts), normalization, surrogate pairs in UTF-16, etc. Capable of solving complex issues like mojibake or advising on internationalization. Could teach a module on how Unicode encoding works and why it’s vital."
+      "mastery": "Deep knowledge of Unicode: explains code point allocation (blocks for scripts), normalization, surrogate pairs in UTF-16, etc. Capable of solving complex issues like mojibake or advising on internationalization. Could teach a module on how Unicode encoding works and why it’s vital.",
+      "name": "Unicode encoding",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea3",
       "title": "Primitive Data Storage",
-      "description": "Examines how basic data types are laid out in memory: how many bits they occupy and what ranges/precision they allow."
+      "description": "Examines how basic data types are laid out in memory: how many bits they occupy and what ranges/precision they allow.",
+      "name": "Primitive Data Storage",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea3-Concept1",
@@ -191,7 +244,9 @@
       "developing": "Recalls common size allocations (like 4 bytes for 32-bit int, 8 bytes for double) for primitive types in the course’s context. Can determine total size of a simple structure (like an array of 10 ints = 40 bytes) with minor prompting.",
       "proficient": "Accurately states memory sizes and alignment for all primitive types learned (e.g., boolean, char, short, int, long, float, double in Java/C). Understands how these relate to range/precision (e.g., 32-bit int range ±2 billion). Computes composite sizes reliably.",
       "advanced": "Understands how memory allocation might vary by platform or language (like C++ implementation-defined sizes). Can explain how type size impacts performance and memory usage. Rarely forgets a size or range and accounts for edge cases (like sign bit).",
-      "mastery": "Deeply understands primitive storage: not just sizes but also representation details (IEEE 754 for floats, two’s complement for ints, etc.). Can derive any type’s storage implications and teach others how memory and types interact at the hardware level."
+      "mastery": "Deeply understands primitive storage: not just sizes but also representation details (IEEE 754 for floats, two’s complement for ints, etc.). Can derive any type’s storage implications and teach others how memory and types interact at the hardware level.",
+      "name": "Primitive types memory allocation",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain2-ConceptArea3-Concept2",
@@ -202,17 +257,23 @@
       "developing": "Understands the general idea: e.g., 16-bit unsigned max is 65535, 32-bit signed max ~2 billion. Knows floats can’t exactly represent very large or very precise numbers. Might not predict exact overflow outcomes but knows it exists.",
       "proficient": "Can state the precise ranges for common integer types (like 8-bit -128 to 127, 32-bit ~±2.147e9) and the typical precision for floats (e.g., ~7 decimal digits for single precision). Anticipates overflow or rounding issues in relevant computations, avoiding them or coding checks.",
       "advanced": "Comfortable working with extreme values: identifies when an operation will overflow or underflow and knows strategies to mitigate (using larger types or arbitrary precision). Explains float precision in terms of bits of mantissa and can give examples of rounding errors.",
-      "mastery": "Fully internalized limitations: effortlessly calculates or derives any type’s range from bit-length and explains floating-point precision intricacies (like representation in scientific notation form). Can teach how to determine and handle type limits in algorithms, possibly referencing standards (IEEE 754)."
+      "mastery": "Fully internalized limitations: effortlessly calculates or derives any type’s range from bit-length and explains floating-point precision intricacies (like representation in scientific notation form). Can teach how to determine and handle type limits in algorithms, possibly referencing standards (IEEE 754).",
+      "name": "Range and precision limitations",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain3",
       "title": "Computer Architecture Basics",
-      "description": "A high-level overview of how a computer's hardware is organized: CPU, memory, and how software instructions are executed by hardware."
+      "description": "A high-level overview of how a computer's hardware is organized: CPU, memory, and how software instructions are executed by hardware.",
+      "name": "Computer Architecture Basics",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain1-Subdomain3-ConceptArea1",
       "title": "CPU and Memory",
-      "description": "Discusses the roles of the Central Processing Unit (processor) and main memory (RAM). The CPU executes instructions and performs calculations, while memory stores program instructions and data for quick access."
+      "description": "Discusses the roles of the Central Processing Unit (processor) and main memory (RAM). The CPU executes instructions and performs calculations, while memory stores program instructions and data for quick access.",
+      "name": "CPU and Memory",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain3-ConceptArea1-Concept1",
@@ -223,7 +284,9 @@
       "developing": "Can outline the CPU’s basic operation: it retrieves instructions from memory, executes them (using ALU for arithmetic), and moves to the next. Knows terms like \"clock speed\" or \"cores\" loosely, though not in depth.",
       "proficient": "Explains the CPU’s role in detail – how it reads instructions from memory, uses registers, ALU, and control unit to execute them. Understands the concept of a cycle and can identify factors affecting CPU performance (clock, cache) in general terms.",
       "advanced": "Demonstrates solid knowledge of CPU internals: can discuss pipelining or how multiple cores work, although not at a deep architecture course level. Draws connections between high-level code and CPU operations (how code becomes instructions that CPU executes).",
-      "mastery": "Deeply understands CPU design and function, possibly including assembly-level execution or architecture specifics (like how branching or caching works). Could teach an introductory lesson on how CPUs process instructions and interact with memory."
+      "mastery": "Deeply understands CPU design and function, possibly including assembly-level execution or architecture specifics (like how branching or caching works). Could teach an introductory lesson on how CPUs process instructions and interact with memory.",
+      "name": "Central Processing Unit (CPU) role",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain3-ConceptArea1-Concept2",
@@ -234,12 +297,16 @@
       "developing": "Understands that when programs run, they are loaded into RAM, and CPU reads instructions/data from it. Can explain basic characteristics: volatile, measured in GB, faster than disk, used for currently running tasks.",
       "proficient": "Explains memory’s role in detail – how variables and instructions reside at memory addresses during execution, and CPU accesses them via these addresses. Understands memory hierarchy a bit (registers, cache vs RAM vs disk).",
       "advanced": "Knows specifics such as how memory addressing works (e.g., 32-bit vs 64-bit addresses), the concept of memory management (maybe virtual memory basics), and can reason about memory-related performance (cache misses, etc.) at a conceptual level.",
-      "mastery": "Fully grasps memory operations: could discuss memory allocation, segmentation/paging (if introduced), and instruct others on writing memory-efficient code. Deep insight into the interplay between CPU and RAM speeds and how it influences computing."
+      "mastery": "Fully grasps memory operations: could discuss memory allocation, segmentation/paging (if introduced), and instruct others on writing memory-efficient code. Deep insight into the interplay between CPU and RAM speeds and how it influences computing.",
+      "name": "Memory (RAM) function",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain3-ConceptArea2",
       "title": "Machine Code Execution",
-      "description": "How high-level programs are translated into machine-level instructions and executed. Includes the distinction between compiled vs interpreted code and the basic fetch-decode-execute cycle."
+      "description": "How high-level programs are translated into machine-level instructions and executed. Includes the distinction between compiled vs interpreted code and the basic fetch-decode-execute cycle.",
+      "name": "Machine Code Execution",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain1-Subdomain3-ConceptArea2-Concept1",
@@ -250,7 +317,9 @@
       "developing": "Understands that a compiler translates source into machine code (or an intermediate form) ahead of time, whereas an interpreter executes source instructions directly. Can give simple pros/cons (e.g., compiled often faster, interpreted more flexible).",
       "proficient": "Explains in detail the steps of compilation (source → object code → executable) vs how an interpreter reads and executes code on the fly. Provides examples and correctly uses terminology (linking, bytecode for Java, etc., if applicable).",
       "advanced": "Understands hybrid approaches (just-in-time compilation, etc.) and can discuss why some languages choose one method. Rarely confuses the concepts and can predict implications for performance or portability for a given approach.",
-      "mastery": "Has comprehensive knowledge of execution models. Could design or outline a simple compiler vs interpreter. Capable of teaching how languages are implemented, including the nuances of JIT, virtual machines, and how human code becomes machine instructions."
+      "mastery": "Has comprehensive knowledge of execution models. Could design or outline a simple compiler vs interpreter. Capable of teaching how languages are implemented, including the nuances of JIT, virtual machines, and how human code becomes machine instructions.",
+      "name": "Compilation vs Interpretation",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain1-Subdomain3-ConceptArea2-Concept2",
@@ -261,22 +330,30 @@
       "developing": "Can list and explain the basic steps: the CPU fetches an instruction from memory, decodes it to signals, executes the operation (like arithmetic or memory access), then moves to the next instruction (incrementing program counter). Might be fuzzy on details like where decoded signals go or pipeline overlap.",
       "proficient": "Clearly describes the F-D-E cycle and how the program counter increments, etc. Can relate it to writing simple loops or instructions in code. Possibly mentions things like registers involvement in execute phase. Recognizes that this cycle is happening billions of times per second in modern CPUs.",
       "advanced": "Understands more advanced aspects such as pipelining (overlapping F-D-E of multiple instructions) or how modern CPUs break this cycle into stages. Rarely has misconceptions about execution order or how jumps/branches affect the cycle.",
-      "mastery": "Deeply understands instruction execution, perhaps down to microarchitecture. Can explain in depth including how branch prediction or pipelining modifies the naive cycle. Could simulate or teach a simple CPU model processing instructions cycle by cycle."
+      "mastery": "Deeply understands instruction execution, perhaps down to microarchitecture. Can explain in depth including how branch prediction or pipelining modifies the naive cycle. Could simulate or teach a simple CPU model processing instructions cycle by cycle.",
+      "name": "Instruction execution cycle",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2",
       "title": "Program Development & Design",
-      "description": "Focuses on the process of creating software: from analyzing a problem, designing a solution (often using algorithms, pseudocode, or flowcharts), through coding, testing, debugging, and maintaining the program."
+      "description": "Focuses on the process of creating software: from analyzing a problem, designing a solution (often using algorithms, pseudocode, or flowcharts), through coding, testing, debugging, and maintaining the program.",
+      "name": "Program Development & Design",
+      "level": 1
     },
     {
       "id": "CSCD210-Domain2-Subdomain1",
       "title": "Software Development Process",
-      "description": "The structured steps involved in writing a program, often including stages such as requirement analysis, design, coding, testing, and maintenance."
+      "description": "The structured steps involved in writing a program, often including stages such as requirement analysis, design, coding, testing, and maintenance.",
+      "name": "Software Development Process",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain2-Subdomain1-ConceptArea1",
       "title": "Programming Lifecycle",
-      "description": "An overview of phases in program development: understanding the problem, planning a solution, implementing code, verifying correctness, and deploying/updating."
+      "description": "An overview of phases in program development: understanding the problem, planning a solution, implementing code, verifying correctness, and deploying/updating.",
+      "name": "Programming Lifecycle",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain2-Subdomain1-ConceptArea1-Concept1",
@@ -287,7 +364,9 @@
       "developing": "Breaks down a problem into parts and identifies basic requirements (inputs, outputs) and some constraints. May still miss some edge conditions or assume unspecified details.",
       "proficient": "Thoroughly analyzes problems by listing all requirements and constraints, identifying special cases. Asks clarifying questions if something is ambiguous. Produces a clear problem statement and understands what constitutes a correct solution.",
       "advanced": "In addition to proficient behavior, anticipates potential difficulties or complexities in solving the problem. Categorizes requirements (functional vs non-functional if applicable) and can document them clearly. Rarely proceeds without a complete understanding.",
-      "mastery": "Excels at analysis: possibly uses formal methods (like writing out preconditions/postconditions) for complex problems. Mentors others in how to systematically understand a problem before coding. Ensures no aspect of the problem is left ambiguous."
+      "mastery": "Excels at analysis: possibly uses formal methods (like writing out preconditions/postconditions) for complex problems. Mentors others in how to systematically understand a problem before coding. Ensures no aspect of the problem is left ambiguous.",
+      "name": "Problem Analysis",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain1-ConceptArea1-Concept2",
@@ -298,7 +377,9 @@
       "developing": "Writes pseudocode that outlines the main logic for a problem or draws a flowchart for key parts. The design covers major steps (loops, decisions) but might need adjustments or refinements when turned into actual code.",
       "proficient": "Creates clear, step-by-step pseudocode or flowcharts for the entire solution before coding. The design addresses all sub-tasks and decision points and could almost directly translate into code. Uses standard conventions (e.g., consistent indentation, flowchart symbols) making it easy to follow.",
       "advanced": "Designs solutions for complex problems systematically, possibly breaking them into modular pseudocode for functions or multiple flowcharts. Anticipates potential pitfalls in design (like infinite loops or improper conditions) and resolves them at design stage. Uses pseudocode that is almost executable in structure.",
-      "mastery": "The student’s designs are often as good as an initial code implementation. They can take a complex problem and produce a structured, rigorous solution outline that others can easily understand and implement. They might incorporate pseudo-code in an almost formal specification manner. They teach others the value of thorough design before coding."
+      "mastery": "The student’s designs are often as good as an initial code implementation. They can take a complex problem and produce a structured, rigorous solution outline that others can easily understand and implement. They might incorporate pseudo-code in an almost formal specification manner. They teach others the value of thorough design before coding.",
+      "name": "Design (Pseudocode/Flowcharts)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain1-ConceptArea1-Concept3",
@@ -309,7 +390,9 @@
       "developing": "Translates pseudocode/design into code for straightforward problems with some errors that are then debugged. Structure of code roughly follows the plan (loops, conditionals in right places). Moderate syntax familiarity – still looks up basic language features occasionally.",
       "proficient": "Implements code that closely follows the design with only minor modifications. The code is organized, reasonably commented, and uses idiomatic constructs of the language. Few syntax errors occur, and logic is correct for most inputs on first try, requiring minimal debugging.",
       "advanced": "Codes efficiently and accurately, even for more complex problems. They use language features effectively (e.g., appropriate data structures, control structures) to implement the design. Their first version is often correct or very close, needing only small fixes. They consider edge cases while coding.",
-      "mastery": "Translates designs into robust, clean code even under challenging requirements. Rarely introduces new logical errors in implementation. Their code is not only correct but also well-structured and readable (even beyond course standards). They might optimize or refine during coding without deviating from correctness, and often help peers fix coding issues."
+      "mastery": "Translates designs into robust, clean code even under challenging requirements. Rarely introduces new logical errors in implementation. Their code is not only correct but also well-structured and readable (even beyond course standards). They might optimize or refine during coding without deviating from correctness, and often help peers fix coding issues.",
+      "name": "Implementation (Coding)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain1-ConceptArea1-Concept4",
@@ -320,7 +403,9 @@
       "developing": "Tests the program on a few normal cases and maybe one edge case. Uses simple debugging techniques (like print statements or a debugger) to trace through code when output is wrong. Can fix obvious bugs (syntax, simple logic errors) but may miss subtle issues.",
       "proficient": "Develops a set of test cases including edge cases (e.g., boundary values, special conditions) and verifies program output for each. When a bug is found, uses systematic debugging (tracing variables, breakpoints) to pinpoint the cause and correct it. Ensures all tests pass before considering the program done.",
       "advanced": "Proactively considers potential failure scenarios and writes extensive tests (perhaps using automated frameworks if available or multiple rounds of inputs) to validate correctness. Debugs efficiently, often predicting where issues might lie from symptoms. Rarely leaves any known bug unfixed. Also checks for performance issues or resource usage if relevant.",
-      "mastery": "Applies rigorous testing methodologies (like unit testing each component) and possibly techniques like test-driven development (writing tests first) for complex assignments. Debugging skills are exemplary: can resolve even elusive issues (like those involving multiple conditions or interactions) and explain the root cause. They might also help others debug by logically examining code."
+      "mastery": "Applies rigorous testing methodologies (like unit testing each component) and possibly techniques like test-driven development (writing tests first) for complex assignments. Debugging skills are exemplary: can resolve even elusive issues (like those involving multiple conditions or interactions) and explain the root cause. They might also help others debug by logically examining code.",
+      "name": "Testing & Debugging",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain1-ConceptArea1-Concept5",
@@ -331,17 +416,23 @@
       "developing": "Can make small modifications to an existing codebase: e.g., change a constant, add a simple feature. Tries to match the code’s style but might introduce minor inconsistencies or inadvertently break something else due to limited understanding of the whole program.",
       "proficient": "Comfortable reading and understanding code they or others wrote previously. Can localize where a change is needed and implement it without breaking other parts. Uses version control or backups implicitly (even if not formally taught) to manage changes. Ensures after maintenance that all original functionality still works (regression testing).",
       "advanced": "Handles complex maintenance tasks, such as refactoring code to improve clarity or efficiency without altering behavior. Writes additional tests for new features and checks all older tests still pass. Maintains good documentation of changes. Rarely injects new bugs when updating code due to careful consideration of code structure.",
-      "mastery": "Expert at maintaining and evolving software: can dive into a large codebase, quickly comprehend it, and make significant enhancements or fixes in a safe manner. They apply best practices like code reviews for changes and keep the code quality high or higher than original. Often anticipates future maintenance needs and writes code in a way that’s easy to maintain."
+      "mastery": "Expert at maintaining and evolving software: can dive into a large codebase, quickly comprehend it, and make significant enhancements or fixes in a safe manner. They apply best practices like code reviews for changes and keep the code quality high or higher than original. Often anticipates future maintenance needs and writes code in a way that’s easy to maintain.",
+      "name": "Maintenance",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain2",
       "title": "Program Design Techniques",
-      "description": "Covers methods and strategies for planning program logic and structure effectively. This includes algorithmic thinking, top-down design, modularization, and using pseudocode or diagrams to map out solutions."
+      "description": "Covers methods and strategies for planning program logic and structure effectively. This includes algorithmic thinking, top-down design, modularization, and using pseudocode or diagrams to map out solutions.",
+      "name": "Program Design Techniques",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea1",
       "title": "Algorithmic Problem Solving",
-      "description": "Approaching problems methodically by formulating algorithms – step-by-step solution procedures – before coding. Emphasizes logical reasoning and clarity of the steps to solve a given problem."
+      "description": "Approaching problems methodically by formulating algorithms – step-by-step solution procedures – before coding. Emphasizes logical reasoning and clarity of the steps to solve a given problem.",
+      "name": "Algorithmic Problem Solving",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea1-Concept1",
@@ -352,7 +443,9 @@
       "developing": "Applies stepwise refinement to moderate extents: e.g., identifies major sub-tasks (input, compute, output) and refines each somewhat. Possibly writes helper pseudocode for each subtask. Some sub-tasks could still be too large or not clearly separated, but the approach is evident.",
       "proficient": "Consistently uses top-down thinking: breaks down a problem into well-defined subtasks or functions and refines each to manageable steps. Pseudocode or initial code is organized by these refined steps. Each refinement logically follows from the last, and they stop refining when steps are straightforward to implement.",
       "advanced": "Excels at multi-level refinement: e.g., breaks a complex algorithm into multiple layers of functions or structured pseudocode. Ensures each level of detail correctly and completely addresses the level above. Rarely ends up with an unrefined part that is too complex. This results in code that is modular and clear.",
-      "mastery": "Could tackle a very complex project by iterative refinement, demonstrating foresight in how to structure from abstract to concrete. Their approach is teachable as an example. They might also assist in refining peers’ solutions by identifying intermediate steps they missed. The final programs have a clean structure corresponding to the refined plan."
+      "mastery": "Could tackle a very complex project by iterative refinement, demonstrating foresight in how to structure from abstract to concrete. Their approach is teachable as an example. They might also assist in refining peers’ solutions by identifying intermediate steps they missed. The final programs have a clean structure corresponding to the refined plan.",
+      "name": "Stepwise Refinement",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea1-Concept2",
@@ -363,7 +456,9 @@
       "developing": "Identifies the main components of a solution (for example, input handling, processing, output formatting) as top-level parts. Breaks those into smaller parts, at least one level deep. Uses this structure to guide coding, though may sometimes go back and adjust structure mid-implementation.",
       "proficient": "Always starts by outlining major parts of the problem and the relationships between them. Each major part might be assigned to a function or logical section. Designs hierarchically: the outline can be broken down into pseudocode for each part, and so on. Follows this plan when coding, resulting in logically structured code.",
       "advanced": "Top-down design is second nature: for any non-trivial problem, the student articulates multiple layers of abstraction. They handle interactions between components gracefully (defining clear interfaces for functions/modules). Rarely needs to significantly restructure the program mid-coding because the top-down plan was solid.",
-      "mastery": "Can design at a system level (if needed), applying top-down thinking even to large projects. They produce structure charts or similar representations spontaneously. They might even combine top-down with bottom-up insight (knowing what building blocks are available) – a sign of maturity in design. Capable of instructing classmates in planning out solutions effectively."
+      "mastery": "Can design at a system level (if needed), applying top-down thinking even to large projects. They produce structure charts or similar representations spontaneously. They might even combine top-down with bottom-up insight (knowing what building blocks are available) – a sign of maturity in design. Capable of instructing classmates in planning out solutions effectively.",
+      "name": "Top-down design",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea1-Concept3",
@@ -374,12 +469,16 @@
       "developing": "Draws flowcharts for straightforward algorithms that include decisions and loops. The diagrams mostly use correct symbols and flow lines, though they might be a bit messy or have minor logic representation issues (like where loops return or how branches merge).",
       "proficient": "Comfortably uses standard flowchart symbols to represent complex logic (including nested loops or multi-branch decisions). The flowcharts they create are logically correct and could be followed to implement the program. They also can interpret flowcharts and translate them into code.",
       "advanced": "Creates clear and well-structured flowcharts even for more intricate problems, possibly segmenting parts into sub-flowcharts for modularity. Understands the limitations and when a flowchart becomes too unwieldy. Rarely, if ever, uses incorrect flow lines or symbols. Could critique or improve others’ flowcharts for clarity.",
-      "mastery": "Masterful with visual algorithm representation: can take any algorithm and represent it in a clear, correct flowchart quickly. Understands and perhaps teaches the nuance of using diagrams vs pseudocode. Possibly introduces peers to alternative diagramming techniques (like UML activity diagrams) if relevant. Their flowcharts communicate the solution so well that coding from them is straightforward."
+      "mastery": "Masterful with visual algorithm representation: can take any algorithm and represent it in a clear, correct flowchart quickly. Understands and perhaps teaches the nuance of using diagrams vs pseudocode. Possibly introduces peers to alternative diagramming techniques (like UML activity diagrams) if relevant. Their flowcharts communicate the solution so well that coding from them is straightforward.",
+      "name": "Flowchart usage",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea2",
       "title": "Pseudocode Conventions",
-      "description": "Conventions and style for writing pseudocode: using a structured, language-independent syntax to outline algorithms clearly and unambiguously."
+      "description": "Conventions and style for writing pseudocode: using a structured, language-independent syntax to outline algorithms clearly and unambiguously.",
+      "name": "Pseudocode Conventions",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea2-Concept1",
@@ -390,7 +489,9 @@
       "developing": "Writes pseudocode with a reasonable structure for the given problem. Key steps are in order and use indentation for blocks. Some minor issues might exist, like small leaps in logic or using language-specific terms occasionally, but overall it captures the algorithm.",
       "proficient": "Consistently writes clear pseudocode that could be implemented by someone else without further clarification. Uses a uniform style (e.g., all loops and conditionals written with consistent phrasing) and includes every significant step, including edge cases or error handling in the logic. Indentation and wording make the flow easy to understand.",
       "advanced": "Pseudocode reads almost like a high-level code: it's precise, unambiguous, and covers even complex structures (like nested loops or multiple decision branches) clearly. They maintain a balance of natural language and structure, avoiding language-specific syntax while being very explicit. Others can readily pick up their pseudocode and implement correctly.",
-      "mastery": "Their pseudocode could serve as documentation. They might define their own helper functions or abstractions within it to simplify complexity (and those are clearly explained). It's effectively a blueprint of the program logic that seldom needs revision during coding. They can also adapt pseudocode style to audience (more formal vs more explanatory) and instruct others on writing good pseudocode."
+      "mastery": "Their pseudocode could serve as documentation. They might define their own helper functions or abstractions within it to simplify complexity (and those are clearly explained). It's effectively a blueprint of the program logic that seldom needs revision during coding. They can also adapt pseudocode style to audience (more formal vs more explanatory) and instruct others on writing good pseudocode.",
+      "name": "Writing pseudocode",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain2-ConceptArea2-Concept2",
@@ -401,17 +502,23 @@
       "developing": "Understands pseudocode with common structures: can trace through an algorithm given in pseudocode and determine its output for a sample input, albeit slowly. Minor misunderstandings might occur (e.g., not tracking a variable update correctly) but overall gets the idea.",
       "proficient": "Reads pseudocode fluently and can mentally execute it or convert it into actual code. For example, given pseudocode for a sorting algorithm, they can explain how it works and what each step does. Rarely thrown off by unfamiliar notation because they infer meaning from context.",
       "advanced": "Interprets complex pseudocode (with nested logic, multiple functions) reliably, even if the style is different from what they use. Can find potential issues or inefficiencies by reading pseudocode. Possibly can take pseudocode from technical descriptions (like textbooks or papers) and implement it without major confusion.",
-      "mastery": "Essentially language-agnostic in understanding algorithms: whether given in pseudocode, flowcharts, or another high-level description, they can follow and reason about it. Could assist in verifying the correctness of pseudocode or optimizing the approach just by reading it. This skill approaches the ability to formally reason about algorithm pseudocode for correctness and complexity."
+      "mastery": "Essentially language-agnostic in understanding algorithms: whether given in pseudocode, flowcharts, or another high-level description, they can follow and reason about it. Could assist in verifying the correctness of pseudocode or optimizing the approach just by reading it. This skill approaches the ability to formally reason about algorithm pseudocode for correctness and complexity.",
+      "name": "Interpreting pseudocode",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain3",
       "title": "Debugging and Testing",
-      "description": "Covers the systematic approach to finding and fixing errors in programs (debugging) and the methods of verifying that code works correctly by trying various inputs and scenarios (testing)."
+      "description": "Covers the systematic approach to finding and fixing errors in programs (debugging) and the methods of verifying that code works correctly by trying various inputs and scenarios (testing).",
+      "name": "Debugging and Testing",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea1",
       "title": "Debugging Techniques",
-      "description": "Strategies and tools to diagnose and correct bugs. This includes using debuggers, inserting print statements, isolating problematic code, and understanding error messages."
+      "description": "Strategies and tools to diagnose and correct bugs. This includes using debuggers, inserting print statements, isolating problematic code, and understanding error messages.",
+      "name": "Debugging Techniques",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea1-Concept1",
@@ -422,7 +529,9 @@
       "developing": "Can use a debugger for basic tasks: sets breakpoints at suspected problem areas, steps through a loop or function call, and watches variable values. Sometimes unsure what to conclude from the data, but can at least observe where a variable changes unexpectedly or where a crash happens.",
       "proficient": "Uses the debugger effectively to pinpoint bugs. For example, they’ll step through until they see a variable take an incorrect value, or an if-condition go the wrong way, then examine the call stack or conditions. Understands features like stepping over vs into functions, and can inspect memory/structures as needed.",
       "advanced": "Fluent with advanced debugger features: conditional breakpoints, inspecting memory or registers (if relevant), and evaluating expressions on the fly. Debugs not just obvious issues but subtle logic errors by thoughtfully choosing where to break and what to inspect. Rarely resorts to print-debugging except for trivial checks or when debugger isn’t available.",
-      "mastery": "Could practically teach debugging. Knows debugger tools inside-out and perhaps uses automation (scripts/macros) in debugging. Handles complex situations (multi-threaded debugging, if applicable, or tricky state-dependent bugs) systematically. They often find and fix issues faster than peers because of their efficient use of the debugger."
+      "mastery": "Could practically teach debugging. Knows debugger tools inside-out and perhaps uses automation (scripts/macros) in debugging. Handles complex situations (multi-threaded debugging, if applicable, or tricky state-dependent bugs) systematically. They often find and fix issues faster than peers because of their efficient use of the debugger.",
+      "name": "Using a debugger tool",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea1-Concept2",
@@ -433,7 +542,9 @@
       "developing": "Reads error messages and generally knows what they refer to. E.g., sees “NullPointerException at MyClass.java:20” and looks at line 20 to find what might be null. May still be confused by multi-line stack traces or template errors, but they at least navigate to the mentioned code portion.",
       "proficient": "Understands and utilizes error messages fully: follows stack traces from top to root cause, deciphers syntax error descriptions to find typos, and uses error codes or descriptions to search for solutions when needed. Rarely stuck on understanding what an error *means*. For compile errors, knows what common phrases indicate (e.g., 'cannot find symbol' means a variable or method name issue).",
       "advanced": "Even cryptic messages or large stack traces are navigated efficiently. The student can often predict the kind of mistake from the error text alone, thanks to experience (e.g., knows a memory address in a crash dump suggests uninitialized pointer, etc. if C/C++ context or knows IndexOutOfBounds means loop/index issue). They use all information given, including error codes and documentation references if present, to guide fixes.",
-      "mastery": "Treats error messages almost like familiar friends – each message is quickly associated with a typical cause and fix. They might help others by reading and interpreting their error messages. In complex scenarios, they can separate secondary errors from primary ones (e.g., in a cascade of compile errors they find the first real cause). If needed, they refer to compiler or runtime documentation to fully understand obscure errors."
+      "mastery": "Treats error messages almost like familiar friends – each message is quickly associated with a typical cause and fix. They might help others by reading and interpreting their error messages. In complex scenarios, they can separate secondary errors from primary ones (e.g., in a cascade of compile errors they find the first real cause). If needed, they refer to compiler or runtime documentation to fully understand obscure errors.",
+      "name": "Reading error messages",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea1-Concept3",
@@ -444,12 +555,16 @@
       "developing": "Can trace through code with pencil and paper or prints for moderate complexity segments, maintaining a notion of variable states. For example, given a loop, can list the variable values each iteration. May need to slow down and occasionally gets off-by-one errors in tracing, but the approach is there.",
       "proficient": "Effectively traces through complex logic to predict the program’s behavior or locate where it diverges from expected behavior. Uses print statements in a targeted way (printing key variables at certain points) to illuminate the program’s path. Can mentally run through common algorithms and determine their result for given input, catching logical errors by noticing discrepancies in expected vs traced state.",
       "advanced": "Traces through multi-module or multi-function programs by systematically tracking state, possibly drawing diagrams or tables for clarity. Rarely misses a variable update or control flow change when tracing. Capable of doing dry-runs of code to validate correctness prior to running, catching many bugs by reasoning alone. They optimize their tracing by focusing on crucial points (not every single line if not needed).",
-      "mastery": "Traces code almost as well as executing it — even for non-trivial code, they can predict outcomes and identify issues by reasoning through the execution. They might mentally simulate recursion stacks, pointer manipulations, or complex state transitions accurately. This skill is at a level where they could prove correctness or find bugs through logical analysis of execution, a hallmark of mastery in debugging and reasoning."
+      "mastery": "Traces code almost as well as executing it — even for non-trivial code, they can predict outcomes and identify issues by reasoning through the execution. They might mentally simulate recursion stacks, pointer manipulations, or complex state transitions accurately. This skill is at a level where they could prove correctness or find bugs through logical analysis of execution, a hallmark of mastery in debugging and reasoning.",
+      "name": "Tracing code execution",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea2",
       "title": "Testing Strategies",
-      "description": "Approaches to systematically test a program’s correctness, such as using unit tests, creating test cases that cover typical, boundary, and error conditions, and validating output against expected results."
+      "description": "Approaches to systematically test a program’s correctness, such as using unit tests, creating test cases that cover typical, boundary, and error conditions, and validating output against expected results.",
+      "name": "Testing Strategies",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea2-Concept1",
@@ -460,7 +575,9 @@
       "developing": "Writes simple driver code or uses provided frameworks to test core functions with a few inputs. For example, might have a `main` that calls a function `f(x)` for x=some typical cases and prints the results to compare with expected. Covers obvious cases but might miss edge cases.",
       "proficient": "Regularly creates thorough unit tests for functions: covers normal cases, edge cases (like minimum/maximum inputs), and error cases. Automates the checking (e.g., by comparing function return to expected value and reporting pass/fail). Uses consistent structure to test all new functions as they are developed, leading to catching bugs early.",
       "advanced": "Has a deep grasp of testing methodology: possibly uses or mimics a testing framework (like JUnit, unittest) to organize tests. Writes tests even for tricky conditions or internal helper functions. Ensures tests are repeatable and can be run often. Rarely leaves a function untested. Understands concepts like test coverage and aims for high coverage of code paths.",
-      "mastery": "Could teach unit testing. Thinks of possible points of failure and writes tests to specifically target them (including edge cases most would overlook). Likely introduces test-driven development practices in projects, writing tests even before implementation sometimes. Their test suites are comprehensive and well-documented, and they can evaluate the quality of tests (not just quantity)."
+      "mastery": "Could teach unit testing. Thinks of possible points of failure and writes tests to specifically target them (including edge cases most would overlook). Likely introduces test-driven development practices in projects, writing tests even before implementation sometimes. Their test suites are comprehensive and well-documented, and they can evaluate the quality of tests (not just quantity).",
+      "name": "Unit testing basics",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea2-Concept2",
@@ -471,7 +588,9 @@
       "developing": "Creates a list of test cases covering a range of situations: at least one typical scenario, some edge values (like 0, 1, max/min), and maybe an erroneous input if relevant. Usually can predict expected outputs for these and uses them to check the program, though some edge cases might still be overlooked or expected results not clearly defined in advance.",
       "proficient": "Designs test cases methodically: partitions input space into categories and picks representatives for each. Ensures all boundary values are tested (e.g., off-by-one boundaries). Has expected outputs computed (either manually or via alternative method) for each case to verify correctness. Updates tests if code changes require new cases. This results in discovering most bugs.",
       "advanced": "Very adept at test design: includes corner cases where multiple factors interact (e.g., largest input combined with a special mode flag, etc.). Thinks of unusual scenarios (like repeated values, sorted vs unsorted input, etc. depending on problem context) that others might miss. Can justify why each test case is chosen and what part of the code it verifies. Likely achieves near comprehensive coverage of spec behavior with their test suite.",
-      "mastery": "Masterful test planner: practically performs specification analysis to derive tests. If a formal specification exists, they ensure every requirement and clause is exercised by some test. Identifies even improbable scenarios (like simultaneous events or error injection) to test program robustness. This level ensures the program works not just for expected use but also gracefully handles unexpected situations. They might incorporate randomized or fuzz testing if applicable, reflecting thoroughness in test case development."
+      "mastery": "Masterful test planner: practically performs specification analysis to derive tests. If a formal specification exists, they ensure every requirement and clause is exercised by some test. Identifies even improbable scenarios (like simultaneous events or error injection) to test program robustness. This level ensures the program works not just for expected use but also gracefully handles unexpected situations. They might incorporate randomized or fuzz testing if applicable, reflecting thoroughness in test case development.",
+      "name": "Test case development",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain2-Subdomain3-ConceptArea2-Concept3",
@@ -482,22 +601,30 @@
       "developing": "Can list common edge cases for a given problem when prompted (e.g., for an array problem: empty array, single-element array, already sorted array if sorting, etc.) and usually includes checks or tests for some of them. Sometimes misses less obvious ones or those that combine multiple factors.",
       "proficient": "Routinely identifies edge cases during both design and testing. Anticipates inputs at boundaries of constraints and weird scenarios (like extremely long strings, negative values where allowed, division by zero possibility, etc.) and ensures the program handles them gracefully. Rarely do edge cases cause their program to completely fail because they considered them.",
       "advanced": "Thinks about edge cases almost as second nature, even the very rare ones. E.g., wonders about integer overflow in intermediate calculations, or multiple simultaneous extreme conditions (like smallest and largest values combined). Ensures coverage for these in logic and tests. Very few surprises arise in their program’s behavior because they preemptively handled them.",
-      "mastery": "Edge case guru: not only considers standard extremes but also structural edge cases (like deeply nested data, cyclic references if relevant, etc.). They sometimes find edge cases that even the problem spec didn’t explicitly mention. Their thoroughness sets a model – their code handles practically any valid input appropriately. They could analyze others’ algorithms and pinpoint missing edge case considerations."
+      "mastery": "Edge case guru: not only considers standard extremes but also structural edge cases (like deeply nested data, cyclic references if relevant, etc.). They sometimes find edge cases that even the problem spec didn’t explicitly mention. Their thoroughness sets a model – their code handles practically any valid input appropriately. They could analyze others’ algorithms and pinpoint missing edge case considerations.",
+      "name": "Edge cases identification",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3",
       "title": "Data Types, Variables, and Expressions",
-      "description": "Covers the basic building blocks of programming: how data is typed and stored in variables, and how expressions using operators compute new values. It includes understanding of different primitive types and the effects of using various operators."
+      "description": "Covers the basic building blocks of programming: how data is typed and stored in variables, and how expressions using operators compute new values. It includes understanding of different primitive types and the effects of using various operators.",
+      "name": "Data Types, Variables, and Expressions",
+      "level": 1
     },
     {
       "id": "CSCD210-Domain3-Subdomain1",
       "title": "Variables and Constants",
-      "description": "Introduction to using named storage (variables) whose values can change during execution, versus constants which hold fixed values. Involves syntax of declaring variables and understanding their scope and lifetime."
+      "description": "Introduction to using named storage (variables) whose values can change during execution, versus constants which hold fixed values. Involves syntax of declaring variables and understanding their scope and lifetime.",
+      "name": "Variables and Constants",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain3-Subdomain1-ConceptArea1",
       "title": "Variable Declaration & Initialization",
-      "description": "How to define a new variable with a specific type and optionally give it an initial value. For example, `int count = 0;` reserves memory for an integer named count and sets it to zero."
+      "description": "How to define a new variable with a specific type and optionally give it an initial value. For example, `int count = 0;` reserves memory for an integer named count and sets it to zero.",
+      "name": "Variable Declaration & Initialization",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain1-ConceptArea1-Concept1",
@@ -508,7 +635,9 @@
       "developing": "Consistently writes correct declarations for standard types. Chooses meaningful names more often than not and adheres to conventions (e.g., lowerCamelCase for variables in Java). Might still have minor issues like not understanding certain type keywords fully (e.g., when to use long vs int).",
       "proficient": "Declares variables correctly and thoughtfully. Uses appropriate types for the context and clear, descriptive names. Rarely, if ever, has syntax errors in declarations. They also declare variables close to first use (good practice) and with correct initial values if needed. Understands scope implications of where a variable is declared.",
       "advanced": "Exhibits deep understanding of declarations: uses them efficiently (e.g., multiple declarations in one line if sensible, but also aware of readability). Avoids shadowing pitfalls by careful naming and scoping. Possibly knows nuances like different forms of initialization (declaration vs assignment, static vs instance context if applicable).",
-      "mastery": "Beyond mechanical syntax, they teach proper variable declaration habits. They use constant declarations for values that shouldn’t change (showing insight into `const` or `final` usage). Their code reflects a discipline in declaring variables (minimal scope, correct type, proper naming) that leads to maintainable code. They might also be aware of how variable declaration differs in various languages and adapt accordingly."
+      "mastery": "Beyond mechanical syntax, they teach proper variable declaration habits. They use constant declarations for values that shouldn’t change (showing insight into `const` or `final` usage). Their code reflects a discipline in declaring variables (minimal scope, correct type, proper naming) that leads to maintainable code. They might also be aware of how variable declaration differs in various languages and adapt accordingly.",
+      "name": "Syntax of declaring variables",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain1-ConceptArea1-Concept2",
@@ -519,12 +648,16 @@
       "developing": "Understands that local primitive variables need explicit initialization (or else it’s a compile error in languages like Java, or indeterminate in C). Knows the concept of default values for object references (null) or static storage but might not have it perfectly memorized for all types. Generally initializes variables to avoid issues.",
       "proficient": "Clearly knows which variables get default values and which don’t, per language semantics. For instance, can explain that instance variables in Java have default values (0, false, null) while local variables do not and must be initialized. Always initializes variables deliberately either at declaration or before first use. Avoids relying on defaults except when appropriate and safe.",
       "advanced": "Exhibits a strong grasp by discussing scenarios: e.g., static vs non-static defaults, default constructor behavior, etc. Rarely if ever runs into uninitialized variable errors or logic issues from assumed values. Encourages best practice of initialization. In languages like C, knows to set pointers to NULL and not assume automatic initialization.",
-      "mastery": "Expertly navigates initialization. Possibly aware of deeper topics like memory representation of default values, and how not initializing can lead to undefined behavior in some contexts. They ensure clarity in their code by always giving variables a defined value. They can answer nuanced questions like \"why must this variable be initialized before use in this language\" or \"what is the default value of a boolean field in a class\" effortlessly, even across different languages if needed."
+      "mastery": "Expertly navigates initialization. Possibly aware of deeper topics like memory representation of default values, and how not initializing can lead to undefined behavior in some contexts. They ensure clarity in their code by always giving variables a defined value. They can answer nuanced questions like \"why must this variable be initialized before use in this language\" or \"what is the default value of a boolean field in a class\" effortlessly, even across different languages if needed.",
+      "name": "Initialization vs Default values",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain1-ConceptArea2",
       "title": "Constants",
-      "description": "Using fixed values in programs. This includes literal constants (like 5, 3.14, 'A') that appear directly in code and named constants (declared with keywords like `const` or `final`) whose values do not change once set."
+      "description": "Using fixed values in programs. This includes literal constants (like 5, 3.14, 'A') that appear directly in code and named constants (declared with keywords like `const` or `final`) whose values do not change once set.",
+      "name": "Constants",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain1-ConceptArea2-Concept1",
@@ -535,7 +668,9 @@
       "developing": "Uses literals appropriately and distinguishes types (e.g., knows to add a decimal point for double literal 5.0 vs int 5). Still uses magic numbers occasionally but is starting to use named constants for clarity when a value has significance. Recognizes common escape sequences for character literals like '\\n'.",
       "proficient": "Avoids magic numbers: most non-trivial literal values in their code are either commented or replaced by named constants. Fully aware of literal types and notation (e.g., the difference between '5' (char) and 5 (int), or 5 vs 5.0 vs 5.0f). Their code benefits from clarity because literals are only used when the meaning is obvious, otherwise they use a well-named constant.",
       "advanced": "Expertly manages literals: might know language-specific literal forms (like binary or hex notation, or scientific notation for large floats) and uses them when appropriate. They consistently communicate intent with literals (through naming or context). They rarely if ever cause type confusion with a literal (e.g., losing precision inadvertently) because they choose the right form (like using a long literal 5L when needed).",
-      "mastery": "Could give a mini-lecture on literal constants in the language, covering everything from integer bases to string internals. Their code is essentially free of unexplained constants – each literal either is self-explanatory (like 0 or 1, perhaps) or is defined symbolically. They might also discuss the performance or memory implications of certain literal uses (like large string literals duplication) at an expert level."
+      "mastery": "Could give a mini-lecture on literal constants in the language, covering everything from integer bases to string internals. Their code is essentially free of unexplained constants – each literal either is self-explanatory (like 0 or 1, perhaps) or is defined symbolically. They might also discuss the performance or memory implications of certain literal uses (like large string literals duplication) at an expert level.",
+      "name": "Literal constants (e.g., 5, 'c')",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain1-ConceptArea2-Concept2",
@@ -546,17 +681,23 @@
       "developing": "Starts to define constants for important values (especially if used in multiple places). Understands the syntax to declare a constant and that its value cannot change after initialization. Uses them for clarity and maintainability (e.g., array sizes, thresholds). Might occasionally forget to use one for a value that should have one, but overall shows awareness.",
       "proficient": "Consistently creates named constants for any magic number or significant constant in the program. Follows naming conventions (ALL_CAPS for constants, etc.) and proper scoping (e.g., if a constant is used in one class only, declares it there). Never tries to change a constant at runtime. Sees value in this practice during maintenance (like easily updating a value in one place).",
       "advanced": "Proactively refactors code to replace repeated literals with named constants once identified. Understands subtleties like constant versus read-only variables (for instance, `final` in Java vs a normal variable not changed, or `const` correctness in C++ if relevant). They also consider where to define constants (correct abstraction level) such that they can be reused and make sense contextually. Rarely misses an opportunity to improve code robustness with constants.",
-      "mastery": "Treats constants as a fundamental tool for clean code. Possibly introduces enumerations or constant classes for better organization when appropriate. Educates others on the importance of not using literal values directly. Their code’s use of constants results in highly readable and easily adjustable parameters for the program. They fully grasp memory and performance aspects as well (like how static constants might be inlined by compilers, etc., if such details arise)."
+      "mastery": "Treats constants as a fundamental tool for clean code. Possibly introduces enumerations or constant classes for better organization when appropriate. Educates others on the importance of not using literal values directly. Their code’s use of constants results in highly readable and easily adjustable parameters for the program. They fully grasp memory and performance aspects as well (like how static constants might be inlined by compilers, etc., if such details arise).",
+      "name": "Named constants (final variables)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain2",
       "title": "Primitive Data Types",
-      "description": "Covers the fundamental data types provided by the programming language for numbers, characters, and booleans. Students learn the differences (storage size, range, operations) between types like int, float, char, bool, etc."
+      "description": "Covers the fundamental data types provided by the programming language for numbers, characters, and booleans. Students learn the differences (storage size, range, operations) between types like int, float, char, bool, etc.",
+      "name": "Primitive Data Types",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea1",
       "title": "Numeric Types",
-      "description": "The integer and floating-point types. Integers (of various sizes) represent whole numbers; floating-point types (float, double) represent real numbers with limited precision. Explores what each is used for."
+      "description": "The integer and floating-point types. Integers (of various sizes) represent whole numbers; floating-point types (float, double) represent real numbers with limited precision. Explores what each is used for.",
+      "name": "Numeric Types",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea1-Concept1",
@@ -567,7 +708,9 @@
       "developing": "Knows int’s range roughly (around ±2 billion for 32-bit) and that long exists for larger values. Uses int for most counting/indexing and long only if expecting very large values. Avoids using int for fractions. Beginning to catch overflow issues in thought (like summing many ints could overflow).",
       "proficient": "Comfortably uses the appropriate integer type for a given task. Can explain why an `int` might overflow and chooses a `long` if needed (e.g., for population of world in a program). Understands the difference between signed and unsigned if applicable. Rarely misuses integer types; also knows about byte/short but also that int is default in many operations (if Java/C, etc.).",
       "advanced": "Deep understanding of integer types: including two’s complement representation, what happens on overflow in their language (e.g., wrap-around vs undefined). They can anticipate and mitigate overflow (maybe using libraries for big integers if needed). Knows memory implications (like an array of long vs int). Could answer which type to use in border cases (like needing 64-bit for certain calculations).",
-      "mastery": "Expert-level handle on integers: may know how integer arithmetic is implemented at hardware level and leverages that knowledge in coding (like using bit operations for efficiency when appropriate). Could implement arbitrary precision integers if required. Teaches others about choosing the correct data type for the job and pitfalls of ignoring integer limits. In languages with multiple numeric types, they fully understand each (e.g., in C++: int, long, long long, etc.)."
+      "mastery": "Expert-level handle on integers: may know how integer arithmetic is implemented at hardware level and leverages that knowledge in coding (like using bit operations for efficiency when appropriate). Could implement arbitrary precision integers if required. Teaches others about choosing the correct data type for the job and pitfalls of ignoring integer limits. In languages with multiple numeric types, they fully understand each (e.g., in C++: int, long, long long, etc.).",
+      "name": "Integers (int, long, etc.)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea1-Concept2",
@@ -578,12 +721,16 @@
       "developing": "Understands that floating-point numbers have limited precision and rounding errors can occur (e.g., 0.1 + 0.2 not exactly 0.3). Chooses double over float by default (aware that double is more precise and commonly used). Avoids comparing floats for equality directly or knows it’s problematic. May not fully grasp magnitude of errors but knows to be cautious (e.g., using an epsilon tolerance).",
       "proficient": "Uses double precision for calculations unless there’s a memory/performance reason for float. Can explain binary representation causing some decimals not to be exact. Handles floating-point comparisons properly (with a tolerance or using library functions). Understands common pitfalls like accumulating error over many operations or that equality checks fail often. They select float vs double deliberately (like float for graphics where minor error is fine, double for scientific calc).",
       "advanced": "Deeply knowledgeable about floating-point: likely knows about IEEE 754 specifics (infinite, NaN, subnormals). Can anticipate precision loss situations (like subtracting two nearly equal large numbers) and mitigate them (perhaps by rearranging formula). Possibly aware of advanced topics like Kahan summation for accuracy. Rarely, if ever, gets tripped by floating rounding because they plan for it.",
-      "mastery": "Floating-point arithmetic holds no surprises: they could implement a basic floating-point simulation if asked. They are adept at designing algorithms that minimize error accumulation. They might also know about arbitrary precision libraries for when floats/doubles won’t suffice. They preempt any precision pitfalls in projects and educate peers about why, for example, you shouldn’t use == on doubles or why some sums need special handling."
+      "mastery": "Floating-point arithmetic holds no surprises: they could implement a basic floating-point simulation if asked. They are adept at designing algorithms that minimize error accumulation. They might also know about arbitrary precision libraries for when floats/doubles won’t suffice. They preempt any precision pitfalls in projects and educate peers about why, for example, you shouldn’t use == on doubles or why some sums need special handling.",
+      "name": "Floating-point (float, double)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea2",
       "title": "Non-numeric Types",
-      "description": "The other primitive types such as characters and booleans. Characters represent single text symbols; booleans represent truth values (true/false)."
+      "description": "The other primitive types such as characters and booleans. Characters represent single text symbols; booleans represent truth values (true/false).",
+      "name": "Non-numeric Types",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea2-Concept1",
@@ -594,7 +741,9 @@
       "developing": "Comfortable with char for individual characters. Knows char is essentially a numeric code (e.g., can do 'A' + 1 to get 'B' in many languages). Aware that char can represent more than just letters (digits, symbols) and possibly that in Java it’s a Unicode code unit (so can represent e.g., 'Ω'). Maybe not deeply aware of multi-byte characters or surrogate pairs, but at least knows char has a numeric range (0–65535 in Java, -128 to 127 as signed in some C implementations if char is signed, etc.).",
       "proficient": "Uses char appropriately and can perform operations like iterating through alphabet by incrementing a char variable. Understands character encoding enough to explain why 'A' + 1 = 'B' and what happens if you go beyond 'Z'. Handles chars as small integers when needed (like converting '0' to int 0 by subtracting '0'). Aware of locale/Unicode issues at least at a basic level (e.g., that not all letters are in contiguous ranges once you consider other languages).",
       "advanced": "Knows the relationship between char and code points in Unicode thoroughly. For instance, can explain how Unicode characters beyond BMP might not fit in a single 16-bit char (surrogate pairs). Rarely confuses characters with strings or numbers. If needed, can use library calls to get numeric codes or transform cases. Understands char signedness in C++ vs Java differences. Likely aware of ASCII table patterns (like digits 0-9 are 48–57 in ASCII) by heart.",
-      "mastery": "Mastery of character representation: could delve into encoding forms, and knows exactly how characters map to numeric values. Possibly comfortable working with wide characters, multi-byte encodings, or switching to integer representation and back. Could write a custom function to determine if a char is a letter or digit without library by using knowledge of code ranges. They ensure proper handling of characters in any context, including internationalization aspects if relevant."
+      "mastery": "Mastery of character representation: could delve into encoding forms, and knows exactly how characters map to numeric values. Possibly comfortable working with wide characters, multi-byte encodings, or switching to integer representation and back. Could write a custom function to determine if a char is a letter or digit without library by using knowledge of code ranges. They ensure proper handling of characters in any context, including internationalization aspects if relevant.",
+      "name": "Characters (char)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea2-Concept2",
@@ -605,12 +754,16 @@
       "developing": "Comfortably declares and uses boolean variables to make code clearer (e.g., `boolean isDone = false;`). Understands logical operations yield booleans (result of comparisons, etc.). If language has truthy/falsy values (like Python), knows typical rules. Rarely writes something like `if (flag == true)` unnecessarily; starts to trust boolean value directly. Might still be unaware of memory representation but doesn't need it usually.",
       "proficient": "Uses booleans idiomatically: simplifies complex conditions by breaking parts into boolean variables, uses De Morgan’s laws implicitly to simplify logic. Understands the default false/true states if not assigned (in some contexts). If using a language like C, knows to include <stdbool.h> or use 1/0 correctly. No confusion about assignment vs comparison in condition (a common pitfall).",
       "advanced": "Manages boolean logic with ease even in complex scenarios (multiple flags, combinations). Might introduce enums or bitflags if more than two states are needed, showing understanding of booleans’ limitations. Likely aware of how booleans might be stored/optimized (e.g., as bit fields). Ensures code doesn’t rely on non-explicit truthiness in languages that allow it (explicit comparisons for clarity where needed).",
-      "mastery": "Boolean logic mastery often overlaps with algorithmic thinking – they prove logical equivalences, simplify conditions for performance or clarity, and ensure that boolean states are always consistent (avoid invalid combinations). Possibly conversant with boolean algebra principles formally. In terms of coding, their use of booleans is efficient and clear, and they might even consider subtle issues like boolean variables in multithreading context (ensuring atomic access etc. if relevant). Essentially, they have internalized boolean logic deeply."
+      "mastery": "Boolean logic mastery often overlaps with algorithmic thinking – they prove logical equivalences, simplify conditions for performance or clarity, and ensure that boolean states are always consistent (avoid invalid combinations). Possibly conversant with boolean algebra principles formally. In terms of coding, their use of booleans is efficient and clear, and they might even consider subtle issues like boolean variables in multithreading context (ensuring atomic access etc. if relevant). Essentially, they have internalized boolean logic deeply.",
+      "name": "Booleans (true/false)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea3",
       "title": "Type Properties",
-      "description": "Understanding attributes of types like size (in bits/bytes) and the range of values they can hold, as well as how different types interact (type promotion, casting)."
+      "description": "Understanding attributes of types like size (in bits/bytes) and the range of values they can hold, as well as how different types interact (type promotion, casting).",
+      "name": "Type Properties",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea3-Concept1",
@@ -621,7 +774,9 @@
       "developing": "Remembers common sizes: e.g., int is 32 bits, char 16 bits (Java) or 8 bits (C), boolean is often 1 bit conceptually but 1 byte in practice, etc. Understands that more bits = more range/precision. Can calculate number of values given bits (like 2^n). Possibly can derive int range from 32 bits (2^31-1 for max signed).",
       "proficient": "Knows all standard type sizes by heart and the significance (like why float is 32-bit and double 64-bit). Uses this knowledge to choose appropriate types and anticipate issues (like potential overflow in 16-bit vs 32-bit). Also aware of environment specifics if any (like C++ compilers where long might be 64-bit or 32-bit). Calculating ranges or memory usage from sizes is routine for them.",
       "advanced": "Understands size not only in abstract but how it’s implemented (alignment, padding possibly). Could explain historical reasons for certain sizes. Rarely if ever uses a type without knowing its size and implications. If asked about e.g., how many bits in a pointer or in a long on a certain platform, they can infer or know it. They also consider size when optimizing memory usage for large arrays or structures.",
-      "mastery": "Treats knowledge of type sizes as foundational: has potentially explored non-standard architectures or edge cases (like 9-bit bytes, or exotic C++ environments). Could compute with ease the memory footprint of complex data structures. Uses bit-level reasoning in advanced ways (like bit masks or bit fields to conserve space, where appropriate). They ensure others understand bit sizing when needed (like cautioning against assuming long is always a certain size in portable code)."
+      "mastery": "Treats knowledge of type sizes as foundational: has potentially explored non-standard architectures or edge cases (like 9-bit bytes, or exotic C++ environments). Could compute with ease the memory footprint of complex data structures. Uses bit-level reasoning in advanced ways (like bit masks or bit fields to conserve space, where appropriate). They ensure others understand bit sizing when needed (like cautioning against assuming long is always a certain size in portable code).",
+      "name": "Size (bits) of types",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain2-ConceptArea3-Concept2",
@@ -632,17 +787,23 @@
       "developing": "Remembers or can derive specific ranges for common types (like can figure out 16-bit int max is 32767 if prompted). Understands overflow conceptually and avoids obvious cases (like summing very large numbers in a small type). Might insert manual checks if expecting values near limits. Comprehends that using a type too small can cause incorrect results.",
       "proficient": "Fully aware of ranges for all primitive types and uses appropriate type to accommodate expected values. For instance, if something could exceed ~2 billion, uses a 64-bit type. Writes code defensively to handle overflow/underflow where relevant (e.g., loops that break if overflow likely, or using library big integers). If working in C, knows overflow of signed is undefined but of unsigned is modulo and leverages/avoids accordingly.",
       "advanced": "Prevents overflow systematically or handles it. Could calculate ranges quickly (like given 20-bit number range, etc.). Possibly uses static analysis or asserts to ensure values remain in range. If implementing algorithms, they account for intermediate results that might overflow standard types (and adjust type or method). They also document assumptions about ranges. Likely familiar with language-specific quirks (like Python’s ints being unbounded, or C’s unspecified behavior on overflow).",
-      "mastery": "An authority on type ranges: might know not just typical 2^n ranges but also details like floating-point exponent range, etc. If an overflow can occur, they either redesign the approach or handle it gracefully (perhaps saturating arithmetic or arbitrary precision). They never use a type without knowing its exact range in context. Can teach others how to determine and respect type limits to avoid subtle bugs. In short, their code is essentially free of overflow errors unless intentionally using modulo behavior."
+      "mastery": "An authority on type ranges: might know not just typical 2^n ranges but also details like floating-point exponent range, etc. If an overflow can occur, they either redesign the approach or handle it gracefully (perhaps saturating arithmetic or arbitrary precision). They never use a type without knowing its exact range in context. Can teach others how to determine and respect type limits to avoid subtle bugs. In short, their code is essentially free of overflow errors unless intentionally using modulo behavior.",
+      "name": "Value ranges",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3",
       "title": "Operators and Expressions",
-      "description": "How to combine variables and values with operators to form expressions that compute new values. This includes arithmetic operators, relational (comparison) operators, logical operators, and understanding precedence and associativity."
+      "description": "How to combine variables and values with operators to form expressions that compute new values. This includes arithmetic operators, relational (comparison) operators, logical operators, and understanding precedence and associativity.",
+      "name": "Operators and Expressions",
+      "level": 2
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea1",
       "title": "Arithmetic Operations",
-      "description": "Using operators for basic math: addition (+), subtraction (-), multiplication (*), division (/), and modulus (%). Understanding how these work with integers vs floating point (especially integer division truncation) and respecting operator precedence in expressions."
+      "description": "Using operators for basic math: addition (+), subtraction (-), multiplication (*), division (/), and modulus (%). Understanding how these work with integers vs floating point (especially integer division truncation) and respecting operator precedence in expressions.",
+      "name": "Arithmetic Operations",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea1-Concept1",
@@ -653,7 +814,9 @@
       "developing": "Comfortable with all basic arithmetic and generally remembers that * and / come before + and - in expressions (precedence). Understands the need for parentheses to clarify logic and uses them when unsure. Aware that dividing two ints yields an int result (truncation) in many languages and thus chooses types appropriately or casts to get precise results. Rarely makes calculation order mistakes beyond maybe complex combined expressions without parentheses.",
       "proficient": "Consistently writes arithmetic expressions correctly and idiomatically, e.g., not over-parenthesizing when not needed but clearly grouping where it improves readability. Never confused by operator precedence or associativity; can parse even a long expression like `a + b * c - d / e` as compiler would. Handles mixed-type arithmetic deliberately (casting or using correct literal types). Understands integer division truncation and avoids unintended use. Likely familiar with modulo as well for remainder.",
       "advanced": "Arithmetic expressions flow naturally in their code; they might even simplify expressions algebraically for efficiency (like realizing `x*2 + x*3` can be `5*x`). They consider edge cases like division by zero and implement safeguards or checks. They understand how these operations compile to low-level (like cost of multiplication vs addition, if that matters). Precedence and associativity rules are second nature; they could write out an expression’s evaluation order from memory. They might utilize compound assignments (+=, -=) effectively and understand their semantics thoroughly.",
-      "mastery": "Could probably parse or evaluate a complex expression in their head or explain the exact sequence of operations if asked. They can optimize arithmetic expressions and are aware of things like overflow or rounding behavior intimately. If relevant, they consider arithmetic identities or potential floating-point precision issues in certain combinations (like subtractive cancellation). Their usage of arithmetic in code is both correct and optimized, showing a deep understanding of both mathematical and implementation aspects."
+      "mastery": "Could probably parse or evaluate a complex expression in their head or explain the exact sequence of operations if asked. They can optimize arithmetic expressions and are aware of things like overflow or rounding behavior intimately. If relevant, they consider arithmetic identities or potential floating-point precision issues in certain combinations (like subtractive cancellation). Their usage of arithmetic in code is both correct and optimized, showing a deep understanding of both mathematical and implementation aspects.",
+      "name": "Addition, Subtraction, etc.",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea1-Concept2",
@@ -664,7 +827,9 @@
       "developing": "Understands precedence levels that they commonly use (arithmetic, then comparison, then logical, then assignment). Rarely makes mistakes in computing expressions due to precedence. Possibly still cautious with tricky ones like mixing && and || (knows both have same precedence but left-associative), so tends to parenthesize conditions for clarity. Fully comfortable that multiplication/division happens before addition/subtraction and that equal level goes left to right.",
       "proficient": "Knows the standard precedence table fairly well, enough that their code relies on it without error and without excessive parentheses. For instance, they write `if(a + b*2 > c)` confidently, and know how it will be evaluated. They also know when to use parentheses for clarity even if not needed for correctness. They can read others' complex expressions and correctly interpret them according to precedence. Rarely, if ever, do they produce a bug traceable to misunderstanding operator order.",
       "advanced": "Has the full precedence hierarchy down, including unary vs binary distinctions, and less common operators (like bitwise vs logical precedence differences). Could explain why `a < b && b < c` works as expected due to left-to-right evaluation of &&. They consciously use operator precedence to write succinct code but also balance readability. They might catch subtle issues, e.g., knowing that in C, `*p++` increments pointer not value due to precedence of postfix ++, or similar language-specific quirks. This shows detailed mastery beyond the basics.",
-      "mastery": "Precendence and associativity are ingrained to the point they can predict any well-defined expression’s behavior instantly. They could practically write a parser or assist in language design for operator precedence. They ensure that less experienced readers of their code aren't confused: they know where adding parentheses helps clarity even if they know the compiler's rules would handle it. They never rely on non-intuitive precedence in critical code without clarifying (like bitwise vs relational in C). Essentially, they've mastered both usage and communication of expression evaluation order."
+      "mastery": "Precendence and associativity are ingrained to the point they can predict any well-defined expression’s behavior instantly. They could practically write a parser or assist in language design for operator precedence. They ensure that less experienced readers of their code aren't confused: they know where adding parentheses helps clarity even if they know the compiler's rules would handle it. They never rely on non-intuitive precedence in critical code without clarifying (like bitwise vs relational in C). Essentially, they've mastered both usage and communication of expression evaluation order.",
+      "name": "Order of operations (precedence)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea1-Concept3",
@@ -675,12 +840,16 @@
       "developing": "Comfortable using % in common scenarios. Can use it to loop over cyclic patterns (like every 5th element, etc.) and to enforce bounds (like index = index % n to wrap around). Aware that dividing and then multiplying back plus remainder reconstructs the original number (a = (a/b)*b + a%b). May not know the exact behavior with negatives but generally sticks to non-negative usage or uses library docs if needed.",
       "proficient": "Fully understands how modulus works including edge cases (like in many languages, sign of result follows dividend or is always non-negative; they either know Python mod vs C mod differences if they use multiple languages). Uses modulus in clever ways, e.g., to constrain values or implement hash functions basics. Rarely, if ever, misuses it (like they won’t use it when a different operation is needed). They also consider performance for huge numbers (though mod is usually fine).",
       "advanced": "Knows mathematical properties of modulus (like distributivity: (a+b)%n = ((a%n)+(b%n))%n) and uses such identities if needed to simplify computations or avoid overflow. They handle negative mod results correctly in languages where it can be negative (like C: -3 % 5 = -3) by adjusting if a positive remainder is needed. Possibly familiar with using mod in algorithms (like Euclidean GCD algorithm).",
-      "mastery": "Shows deep comfort with modulus: might apply it in advanced contexts like number theory computations (modular arithmetic in algorithms) or optimizing periodic behaviors. If teaching others, they clarify the differences in definition across languages and ensure correctness in any scenario. They foresee where modulus usage might introduce issues (like bias in random distributions if using mod, or mod by 0 errors) and handle accordingly. Essentially, they treat modulus as an integral part of their toolkit, fully under control."
+      "mastery": "Shows deep comfort with modulus: might apply it in advanced contexts like number theory computations (modular arithmetic in algorithms) or optimizing periodic behaviors. If teaching others, they clarify the differences in definition across languages and ensure correctness in any scenario. They foresee where modulus usage might introduce issues (like bias in random distributions if using mod, or mod by 0 errors) and handle accordingly. Essentially, they treat modulus as an integral part of their toolkit, fully under control.",
+      "name": "Modulo operation",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea2",
       "title": "Relational & Logical Ops",
-      "description": "Using comparison operators (==, !=, <, >, <=, >=) to form boolean expressions, and combining multiple conditions with logical operators (&&, ||, !)."
+      "description": "Using comparison operators (==, !=, <, >, <=, >=) to form boolean expressions, and combining multiple conditions with logical operators (&&, ||, !).",
+      "name": "Relational & Logical Ops",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea2-Concept1",
@@ -691,7 +860,9 @@
       "developing": "Uses comparisons confidently in most scenarios. Knows to compare values of compatible types and that equality on floating-point might be unreliable. Avoids obvious pitfalls like the range check problem by combining with logical AND. Rarely confuses = with == by this point. Probably comfortable comparing strings using correct methods (knowing not to use '==' for objects like strings in Java).",
       "proficient": "Comparison operations are second nature. They form complex conditions correctly (like combined with logical ops) without error. They consider edge conditions (like >= vs > when reaching a boundary condition). They also understand underlying issues like precision when comparing floats (and thus seldom use == on doubles unless appropriate). They can explain how comparisons are evaluated (like lexicographic for strings if using appropriate library, address compare if done wrongly).",
       "advanced": "Fully fluent in all nuances: could talk about how equality works for reference types vs primitives, how overloading of == might happen in some languages (== in Python calls __eq__, etc.), or why NaN != NaN in IEEE floating rules. They ensure comparisons are semantically correct (like not using equality where identity is meant or vice versa). Likely also aware of short-circuit evaluation in combined comparisons and how to optimize multi-part checks.",
-      "mastery": "Comparison and its proper usage is something they could teach deeply: covering algorithmic use (like binary search relies on comparisons), pitfalls (like comparing signed and unsigned in C++), and design (like implementing equality and ordering in custom classes). Their code never has a logical error due to misuse of a comparison operator. They might also use comparisons in bitwise or arithmetic contexts cleverly (like leveraging true=1/false=0 in C for certain sums, but only in a safe and documented manner). Essentially, they’ve mastered both the practical use and theoretical understanding of relational operators."
+      "mastery": "Comparison and its proper usage is something they could teach deeply: covering algorithmic use (like binary search relies on comparisons), pitfalls (like comparing signed and unsigned in C++), and design (like implementing equality and ordering in custom classes). Their code never has a logical error due to misuse of a comparison operator. They might also use comparisons in bitwise or arithmetic contexts cleverly (like leveraging true=1/false=0 in C for certain sums, but only in a safe and documented manner). Essentially, they’ve mastered both the practical use and theoretical understanding of relational operators.",
+      "name": "Comparison operators (==, !=, >, <)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea2-Concept2",
@@ -702,12 +873,16 @@
       "developing": "Correctly writes complex conditions with AND/OR, grouping with parentheses when needed (and knows when it's needed due to precedence). Understands that in `A && B`, if A is false, B won't be checked (and similarly for OR). Avoids common mistakes like using & instead of && unless intended for bitwise operations. Simplifies logical expressions by removing double negatives or using De Morgan's laws conceptually when writing (though maybe not formally naming them).",
       "proficient": "Uses logical operators idiomatically: seldom over-parenthesizes because they know && comes before || in evaluation order but will use parentheses for clarity across multiple lines. They leverage short-circuiting (e.g., using `if(ptr != null && ptr->field == value)` to avoid null dereference). They also handle negation gracefully, often choosing the clearer expression (for example, prefer x >= 5 over !(x < 5)). They know how to chain multiple conditions and how logic will flow. Also aware of truth tables – can analyze logical expressions reliably.",
       "advanced": "Possesses a robust understanding of logical identities and uses them to simplify conditions in code or ensure clarity (maybe applying De Morgan’s law to simplify a complex not of an AND/OR combination). They can predict side effects with short-circuit (like a function call in the second operand only happening if needed). If using a language with bitwise vs logical, they consciously differentiate and might use bitwise in specific cases intentionally (like flags aggregation) while ensuring not to confuse them. Essentially, they have logic algebra down in practice.",
-      "mastery": "Their use of logical operators is not only correct but optimized and clear. They could refactor a tangled conditional into simpler normal form or explain exactly why a certain combination yields a certain result in all cases. They are aware of more subtle points like sequence points or evaluation order guarantees beyond just short-circuit (for instance, knowing the order in C++ function calls in conditions is unspecified vs specified in Java). They never fall for logical pitfalls, and can reason about any logical expression to determine an equivalent simpler form if one exists. Teaching others how to simplify conditions or reason about them is something they likely do naturally."
+      "mastery": "Their use of logical operators is not only correct but optimized and clear. They could refactor a tangled conditional into simpler normal form or explain exactly why a certain combination yields a certain result in all cases. They are aware of more subtle points like sequence points or evaluation order guarantees beyond just short-circuit (for instance, knowing the order in C++ function calls in conditions is unspecified vs specified in Java). They never fall for logical pitfalls, and can reason about any logical expression to determine an equivalent simpler form if one exists. Teaching others how to simplify conditions or reason about them is something they likely do naturally.",
+      "name": "Logical operators (&&, ||, !)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea3",
       "title": "Expression Evaluation",
-      "description": "Understanding how expressions are evaluated by the computer, including implicit type conversion (promotion/demotion), integer division vs floating division, and the effects of mixing types in an expression (type casting)."
+      "description": "Understanding how expressions are evaluated by the computer, including implicit type conversion (promotion/demotion), integer division vs floating division, and the effects of mixing types in an expression (type casting).",
+      "name": "Expression Evaluation",
+      "level": 3
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea3-Concept1",
@@ -718,7 +893,9 @@
       "developing": "Understands typical promotion rules: e.g., in an arithmetic expression if one operand is double, the other int is promoted to double. Aware that explicit casting might truncate or overflow if narrowing. Uses casts when needed (like dividing to force floating result: (double)a/b). Rarely gets type mismatch compile errors now because they anticipate when to cast or change variable types. They treat casting as a tool to convert types but also know it should be used carefully (losing precision or range).",
       "proficient": "Fully comfortable with conversions. They know all standard widening conversions are safe (no data loss) and usually implicit, and that narrowing conversions need explicit cast and may lose information. They use casting intentionally and correctly — e.g., when summing bytes in Java, they know it results in int and might cast back to byte if needed after range check. Also likely familiar with converting between numeric and string via language-specific methods and don't confuse that with simple casting. They avoid unnecessary casts that clutter code, relying on language’s implicit rules aptly. They foresee issues like integer division and handle via cast or type choice proactively.",
       "advanced": "Understands deeper implications of casting: e.g., in C, casting an out-of-range value causes undefined or implementation-defined behavior for signed overflow, or how bit patterns reinterpret if doing an unsafe cast (like pointer casts). Might utilize casting in advanced ways like polymorphism (casting between class types with instanceof checking, etc., in OOP context). They also consider readability — they know exactly what the compiler will do with or without a cast, and thus only cast when it changes the outcome or clarifies code. They might also be knowledgeable about dynamic vs static casts in languages like C++. Implicit conversion rules are at their fingertips, even the subtle ones (like promotions in varargs or the usual arithmetic conversions in C).",
-      "mastery": "Type conversion holds no mysteries: they could basically read off a conversion table from memory. They avoid all pitfalls by design: e.g., if implementing generic code, they minimize casts or isolate them. They likely know how to implement custom conversion (like converting objects to other types) responsibly. If needed, they reason about the low-level representation (like IEEE 754 bit casting to int and back) and use it appropriately (maybe in bit hacking tasks). They ensure type correctness and clarity in any expression, often eliminating the need for casting by coding in a type-consistent way from the start. And when performance is key, they know the cost (if any) of certain conversions. They can teach comprehensive lessons on when and how casting is appropriate or how automatic type promotion works in the language."
+      "mastery": "Type conversion holds no mysteries: they could basically read off a conversion table from memory. They avoid all pitfalls by design: e.g., if implementing generic code, they minimize casts or isolate them. They likely know how to implement custom conversion (like converting objects to other types) responsibly. If needed, they reason about the low-level representation (like IEEE 754 bit casting to int and back) and use it appropriately (maybe in bit hacking tasks). They ensure type correctness and clarity in any expression, often eliminating the need for casting by coding in a type-consistent way from the start. And when performance is key, they know the cost (if any) of certain conversions. They can teach comprehensive lessons on when and how casting is appropriate or how automatic type promotion works in the language.",
+      "name": "Type conversion (casting)",
+      "level": 4
     },
     {
       "id": "CSCD210-Domain3-Subdomain3-ConceptArea3-Concept2",
@@ -729,7 +906,9 @@
       "developing": "Consciously ensures at least one operand is double when a precise division is needed. For example, writes (double)sum / count to get an average. Conversely, knows when integer division is intended (like computing an index or something) and uses it appropriately. Rarely confuses the two now. If a language floors instead of truncates with negative (like Python’s integer division floors), they know that nuance as well. They test borderline cases (like negative division outcomes) if relevant.",
       "proficient": "Never makes a mistake regarding division types. They likely have internalized that the type of the operands dictates the type of the result. Could explain to someone that dividing ints discards the remainder. In languages where this is a common bug, they proactively cast or promote to float. They use integer division intentionally for things like computing counts or chunk indices, fully understanding the truncation. And if negative numbers are involved, they know how it rounds (toward zero vs floor). They also consider using library functions for rounding if needed after float division, rather than misusing integer division.",
       "advanced": "Fully versed in the intricacies: e.g., in C they know if both arguments are int, result is int, and how promotion works if one is long or double. They ensure that results are what they want even in edge conditions – like if count is zero, they handle that before dividing. They also consider performance: maybe avoiding float division in a tight loop if int division suffices, due to speed differences. Or they understand how mixed type expression is resolved (like int/float -> float). They could anticipate corner cases such as 1/0 vs 1.0/0.0 (exception vs Inf in some languages).",
-      "mastery": "They treat numeric computations with professional thoroughness. Possibly aware of historical gotchas like 1/2 vs 1/2.0 in different languages or how certain languages (like Python) changed semantics (Py2 vs Py3 division differences). They can help design robust numerical code by picking correct division semantics – for example, using floor division explicitly when needed or high precision rationals instead. Their understanding transcends just coding: they know mathematically and practically what each division does, and ensure the program’s behavior matches the real-world intent by using the correct form of division."
+      "mastery": "They treat numeric computations with professional thoroughness. Possibly aware of historical gotchas like 1/2 vs 1/2.0 in different languages or how certain languages (like Python) changed semantics (Py2 vs Py3 division differences). They can help design robust numerical code by picking correct division semantics – for example, using floor division explicitly when needed or high precision rationals instead. Their understanding transcends just coding: they know mathematically and practically what each division does, and ensure the program’s behavior matches the real-world intent by using the correct form of division.",
+      "name": "Integer division vs float division",
+      "level": 4
     }
   ],
   "links": [
