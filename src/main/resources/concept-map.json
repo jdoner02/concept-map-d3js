@@ -6,8 +6,8 @@
     "description": "Comprehensive CSCD211-centered concept map with explosive recursive decomposition, holistic curriculum integration, complete pedagogical framework, and enhanced core concept coverage - Now includes all officially required course concepts with detailed educational descriptions",
     "author": "Documentation Curator Agent",
     "methodology": "Explosive Recursive Decomposition with Complete Curriculum Integration, Mathematical Foundations Mapping, Holistic CS Education Pathway Analysis, and Comprehensive Course Content Coverage",
-    "total_nodes": 55,
-    "total_links": 146,
+    "total_nodes": 61,
+    "total_links": 150,
     "refinement_phase": "Content-Complete - All official CSCD211 course concepts with enhanced pedagogical descriptions and assessment guidance"
   },
   "nodes": [
@@ -42,41 +42,104 @@
       "size": 18
     },
     {
-      "id": "cscd210", 
+      "id": "cscd210",
       "name": "CSCD 210: Programming Principles I",
-      "description": "Advanced programming concepts including algorithms, data structures, method design, and file I/O. Bridges procedural programming to object-oriented thinking through systematic algorithm development and modular design principles.",
-      "pedagogical_focus": "Algorithmic thinking development and systematic programming methodology",
+      "description": "This course covers the concepts and practices of information representation, computer algorithms, hardware organization and computer program design and implementation. Students write, run, debug, analyze and evaluate computer programs. Topics include primitive data types, number systems, file I/O classes, control structures, method design and usage, array–sorting and searching algorithms. Programming projects are required.",
+      "pedagogical_focus": "Java-based algorithmic problem solving and disciplined program development",
       "cognitive_scaffolding": [
-        "Algorithms as systematic problem-solving approaches",
-        "Data representation and manipulation strategies",
-        "Method design for code reusability and modularity",
-        "File systems and persistent data management"
+        "Binary, decimal, and hexadecimal thinking for data representation",
+        "Stepwise construction of algorithms using Java syntax",
+        "Incremental testing and debugging practices",
+        "Organizing code through methods and control structures"
       ],
       "core_concepts": [
-        "Information representation and number systems",
-        "Computer algorithms and systematic problem-solving",
-        "Hardware organization and computational models",
-        "Method design, implementation, and parameter passing",
-        "Array processing, sorting, and searching algorithms",
-        "File I/O operations and data persistence",
-        "Primitive data types and memory management"
+        "Primitive data types and number systems",
+        "Control structures and method design",
+        "Array sorting and searching algorithms",
+        "File I/O classes and data persistence",
+        "Algorithm development and analysis",
+        "Program development lifecycle: write, run, debug, evaluate",
+        "Hardware organization and memory basics"
       ],
       "mathematical_integration": [
-        "MATH 114 algebra provides foundation for algorithmic thinking",
-        "Number systems and mathematical representations",
-        "Logical operations and boolean algebra applications",
-        "Mathematical functions translate to programming methods"
+        "Binary arithmetic underpins number system conversion",
+        "Boolean algebra drives conditional logic",
+        "Algebraic reasoning informs algorithm design",
+        "Function concepts map directly to Java methods"
       ],
       "bridges_to_cscd211": [
-        "Procedural algorithm mastery enables object-oriented method design",
-        "Array manipulation prepares for collection frameworks",
-        "Method design principles scale to class design",
-        "Algorithmic thinking supports object-oriented problem decomposition"
+        "Procedural fluency enables object-oriented method design",
+        "Array manipulation prepares students for Java collection classes",
+        "Method decomposition scales naturally to class design",
+        "Algorithmic thinking supports object-oriented problem modeling"
       ],
-      "critical_transition": "Students must evolve from procedural to object-oriented thinking paradigms",
+      "critical_transition": "Students shift from scripting small tasks to engineering structured Java programs",
       "group": "curriculum-context",
       "level": 0,
       "size": 19
+    },
+    {
+      "id": "cscd210-programming-fundamentals",
+      "name": "Programming Fundamentals",
+      "description": "Primitive data types, number systems, and console I/O in Java. Students convert between binary, decimal, and hexadecimal, declare typed variables, and interact using Scanner and System.out.",
+      "key_topics": ["int/double/boolean/char", "binary–decimal–hex conversion", "variable scope", "Scanner input", "formatted output"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
+    },
+    {
+      "id": "cscd210-control-structures",
+      "name": "Control Structures & Program Flow",
+      "description": "Decision making and repetition with if/else, switch, for, while, and do-while. Emphasizes translating algorithmic logic into structured execution paths.",
+      "key_topics": ["if/else chains", "switch expressions", "loop selection", "boolean expressions", "flow control keywords"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
+    },
+    {
+      "id": "cscd210-method-design",
+      "name": "Method Design & Decomposition",
+      "description": "Construction of reusable Java methods with parameters and return values. Students practice stepwise refinement and method overloading to organize code.",
+      "key_topics": ["method signatures", "parameter passing", "return types", "static vs instance", "stepwise refinement"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
+    },
+    {
+      "id": "cscd210-arrays-algorithms",
+      "name": "Arrays, Sorting, and Searching",
+      "description": "One-dimensional arrays and fundamental algorithms such as bubble sort, selection sort, and linear and binary search.",
+      "key_topics": ["array indexing", "traversal patterns", "bubble/selection sort", "linear/binary search", "off-by-one prevention"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
+    },
+    {
+      "id": "cscd210-file-io",
+      "name": "File I/O & Data Persistence",
+      "description": "Reading from and writing to external files using Java's Scanner and PrintStream with proper resource management.",
+      "key_topics": ["Scanner on File", "PrintStream output", "checked exceptions", "file paths", "persistent storage"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
+    },
+    {
+      "id": "cscd210-program-development",
+      "name": "Program Development Lifecycle",
+      "description": "Practical process of writing, compiling, running, debugging, and evaluating Java programs.",
+      "key_topics": ["incremental development", "IDE debugging", "code testing", "refactoring", "project-based practice"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
+    },
+    {
+      "id": "cscd210-hardware-basics",
+      "name": "Hardware Organization & Memory",
+      "description": "How the CPU, memory, and storage execute Java instructions, linking software behavior to underlying hardware.",
+      "key_topics": ["CPU fetch–execute cycle", "RAM vs storage", "bits and bytes", "machine instruction mapping", "hardware impact on efficiency"],
+      "group": "cscd210-domain",
+      "level": 1,
+      "size": 12
     },
     {
       "id": "cscd300",
@@ -244,16 +307,6 @@
       "group": "course",
       "level": 0,
       "size": 25
-    },
-    {
-      "id": "cscd210",
-      "name": "Programming Principles I", 
-      "description": "Foundational programming course establishing computational thinking, basic syntax, and procedural programming fundamentals. Essential prerequisite for advanced programming concepts.",
-      "pedagogical_focus": "Computational thinking and basic programming constructs",
-      "learning_outcomes": ["Variables and types", "Control structures", "Function design", "Problem decomposition"],
-      "group": "course",
-      "level": 0,
-      "size": 20
     },
     {
       "id": "object-oriented-programming",
@@ -1718,37 +1771,53 @@
       "conceptual_importance": "Core abstraction that enables object-oriented system design and implementation"
     },
     {
-      "source": "variables",
+      "source": "cscd210-programming-fundamentals",
       "target": "cscd210",
-      "type": "foundational-element",
-      "strength": 0.85,
-      "description": "Variables and data types form the fundamental foundation of data representation, manipulation, and storage in computational thinking and programming logic",
-      "pedagogical_reasoning": "Variables provide the essential building blocks for all subsequent data manipulation concepts, serving as the bridge between abstract computational thinking and concrete data management",
-      "fundamental_concepts": ["Data representation", "Type systems", "Memory management", "Value storage and retrieval"],
-      "conceptual_progression": "Abstract data → Typed variables → Structured data → Object state",
-      "cognitive_foundation": "Symbolic representation of computational values and state"
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "Programming fundamentals anchor CSCD210 by introducing Java's primitive types, number systems, and basic I/O." 
     },
     {
-      "source": "control-flow",
+      "source": "cscd210-control-structures",
       "target": "cscd210",
-      "type": "algorithmic-foundation",
-      "strength": 0.85,
-      "description": "Control flow structures provide the fundamental algorithmic building blocks that enable logical decision-making, repetition, and sequential execution in computational problem-solving",
-      "pedagogical_reasoning": "Control flow bridges human logical thinking patterns to computational execution models, establishing the foundation for all algorithmic reasoning and program design",
-      "algorithmic_foundation": ["Decision making", "Repetition patterns", "Sequential execution", "Conditional branching logic"],
-      "cognitive_bridge": "Human logic → Computational algorithms → Program flow",
-      "problem_solving_enablers": ["Conditional reasoning", "Iterative processing", "Sequential decomposition", "Logical control"]
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "Control structures drive program flow in CSCD210, turning algorithms into executable Java code." 
     },
     {
-      "source": "methods",
+      "source": "cscd210-method-design",
       "target": "cscd210",
-      "type": "modular-abstraction",
-      "strength": 0.85,
-      "description": "Methods introduce fundamental principles of functional decomposition, procedural abstraction, and modular programming that enable systematic problem-solving through code organization",
-      "pedagogical_reasoning": "Methods teach students to decompose complex problems into manageable, reusable components while establishing the conceptual foundation for function-based thinking that transitions to object-oriented method design",
-      "modular_benefits": ["Code reuse through parameterization", "Problem decomposition strategies", "Abstraction through naming", "Testing isolation and validation"],
-      "abstraction_progression": "Inline code → Named functions → Parameterized methods → Object behaviors",
-      "design_principles": ["Single responsibility", "Parameter abstraction", "Return value contracts", "Side effect management"]
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "Method design provides the modular building blocks students use to solve problems in CSCD210." 
+    },
+    {
+      "source": "cscd210-arrays-algorithms",
+      "target": "cscd210",
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "Array processing, sorting, and searching algorithms form a central practice arena for CSCD210." 
+    },
+    {
+      "source": "cscd210-file-io",
+      "target": "cscd210",
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "File I/O topics teach students how to persist data and process external input in CSCD210." 
+    },
+    {
+      "source": "cscd210-program-development",
+      "target": "cscd210",
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "The development lifecycle ensures students can write, run, debug, and evaluate Java programs." 
+    },
+    {
+      "source": "cscd210-hardware-basics",
+      "target": "cscd210",
+      "type": "course-domain",
+      "strength": 0.9,
+      "description": "Hardware concepts connect high-level Java code to the CPU and memory behavior discussed in CSCD210." 
     },
     {
       "source": "variables",

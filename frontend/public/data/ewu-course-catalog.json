@@ -2327,7 +2327,7 @@
       "requirement-type": ["MAJOR"],
       "level": 7,
       "course-title": "Programming Principles I",
-      "description": "Foundational programming course covering information representation, algorithms, and program design. Establishes systematic approach to problem-solving through programming and introduces essential software development practices.",
+        "description": "Covers information representation, computer algorithms, hardware organization, and program design using Java. Students write, run, debug, analyze, and evaluate programs while learning primitive data types, number systems, file I/O, control structures, methods, and array-based sorting and searching algorithms.",
       "official-course-code": "CSCD 210",
       "required-prerequisites": [
         "MATH 114",
