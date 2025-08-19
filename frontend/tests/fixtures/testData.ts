@@ -95,6 +95,5 @@ export const TEST_IDS = {
  */
 export const PATTERNS = {
   INTERACTIVE_CONCEPT_MAP: /^Interactive Concept Map$/,
-  VERSION: /Version:/,
   PATH_ATTRIBUTE: /^M/i,
 } as const;

@@ -13,6 +13,7 @@ permissions:
   contents: read
   pages: write
   id-token: write
+  actions: write # enables rollback job to dispatch workflows programmatically
 
 jobs:
   deploy-pages:

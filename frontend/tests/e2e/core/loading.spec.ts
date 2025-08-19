@@ -50,7 +50,8 @@ test.describe('Core Functionality', () => {
 
     // Verify metadata display elements are present
     await expect(page.getByText(/^Interactive Concept Map$/)).toBeVisible();
-    await expect(page.getByText(/Version:/)).toBeVisible();
+    // A version label used to live alongside the title; it was removed to simplify the UI,
+    // so the test only checks for the human-friendly heading now.
     
     // Verify that metadata counters are displayed
     const uiCounts = await conceptMap.getUICounts();

@@ -43,9 +43,11 @@ export class ConceptMapPage {
   async waitForLoad(): Promise<void> {
     await expect(this.svg).toBeVisible();
     await expect(this.page.getByText(/^Interactive Concept Map$/)).toBeVisible();
-    await expect(this.page.getByText(/Version:/)).toBeVisible();
+    // Earlier builds displayed a "Version" label, but the live site no longer exposes
+    // that information.  We now consider the header and the presence of SVG nodes as
+    // proof the app finished bootstrapping.
     await this.page.waitForSelector('svg .node', { state: 'attached', timeout: 20000 });
-    // Small settle for D3 initial positioning
+    // Allow D3 a brief moment to settle its force simulation before tests interact.
     await this.page.waitForTimeout(150);
   }
 
