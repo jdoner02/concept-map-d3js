@@ -153,7 +153,11 @@ const ConceptMapVisualization = () => {
   // "ewu-course-catalog.json" just work.
   useEffect(() => {
     const loadInitial = async () => {
+      // Query and hash parameters let us deep link into a specific dataset.
+      // Using both means folks can share either `?dataset=` or `#dataset=` URLs.
       const sp = new URLSearchParams(window.location.search || '');
+      const hp = new URLSearchParams(window.location.hash?.slice(1) || '');
+      const datasetParam = sp.get('dataset') || hp.get('dataset');
       const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
 
       /**
@@ -192,7 +196,14 @@ const ConceptMapVisualization = () => {
         if (!res.ok) throw new Error(res.status);
         const list = await res.json();
         setDatasets(list);
-        if (list.length > 0) setSelectedDataset(list[0].file);
+        // Honour a dataset name from the URL if it matches the manifest.
+        // Falling back to the first entry keeps old URLs working.
+        const found = datasetParam && list.find(ds => ds.file === datasetParam);
+        if (found) {
+          setSelectedDataset(found.file);
+        } else if (list.length > 0) {
+          setSelectedDataset(list[0].file);
+        }
         setError(null);
       } catch (err) {
         console.warn('No manifest available, falling back to default dataset.', err);
@@ -217,6 +228,15 @@ const ConceptMapVisualization = () => {
   // Whenever the user picks a dataset from the dropdown we fetch it on demand.
   useEffect(() => {
     if (!selectedDataset) return;
+    // Keep the URL in sync with the user's choice so it can be shared.
+    // We touch both the query string and hash fragment since some users
+    // prefer one style over the other when passing around links.
+    const urlObj = new URL(window.location.href);
+    urlObj.searchParams.set('dataset', selectedDataset);
+    urlObj.hash = `dataset=${encodeURIComponent(selectedDataset)}`;
+    window.history.replaceState({}, '', `${urlObj.pathname}${urlObj.search}${urlObj.hash}`);
+
+    // After updating the URL, pull down the actual dataset.
     setLoading(true);
     const base = (import.meta.env.BASE_URL || '/').replace(/\/+$/, '');
     const url = `${base}/data/${selectedDataset}`;
