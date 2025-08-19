@@ -2521,8 +2521,13 @@ const ConceptMapVisualization = () => {
         <div
           ref={tooltipDivRef}
           data-testid="node-tooltip"
+          className="node-tooltip"
           /*
-           * Visually this container resembles a small card.  Cards are a
+           * We attach a class so CSS can draw a tiny triangular pointer using
+           * a ::before pseudo‑element.  This anchors the floating card back to
+           * the node it describes, sparing readers the "which one?" confusion.
+           *
+           * Visually the container itself resembles a small card.  Cards are a
            * familiar pattern across mobile and desktop UIs, so reusing the
            * style makes the tooltip feel instantly recognisable and polished.
            */

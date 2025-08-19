@@ -290,5 +290,27 @@ title {
 .mobile-panel .section { padding: 8px 0; border-top: 1px solid #eee; }
 
 @media (max-width: 768px) {
-  .mobile-panel { display: block; }
+.mobile-panel { display: block; }
+}
+
+/*
+ * Draw a small arrow on the detailed node tooltip.  A ::before pseudo-element
+ * is lighter than extra markup yet still gives the eye a pointer back to the
+ * node that spawned the card.
+ */
+.node-tooltip::before {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  /* Craft a right‑angled triangle that leans toward the node */
+  border: 8px solid transparent;
+  border-bottom-color: rgba(255, 255, 255, 0.98);
+  border-right-color: rgba(255, 255, 255, 0.98);
+  /* Anchor the arrow slightly above and left of the card */
+  top: -8px;
+  left: -8px;
+  /* Outline mirrors the tooltip border so the arrow feels attached */
+  box-shadow: -1px -1px 0 0 #e0e0e0;
+  z-index: -1;
 }
