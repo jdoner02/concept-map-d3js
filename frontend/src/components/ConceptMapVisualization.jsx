@@ -10,6 +10,12 @@ const RELATION_COLOR_OVERRIDES = {
   // add explicit relation type -> color overrides here if needed
 };
 
+// Simple helper to recognise when a string is an HTTP(S) URL.  We keep
+// the check intentionally small and synchronous so it can be reused in
+// both the SVG (D3) and React portions of this component without pulling
+// in heavier URL parsing utilities.
+const isValidHttpUrl = (str) => /^https?:\/\//i.test(String(str).trim());
+
 const ConceptMapVisualization = () => {
   const svgRef = useRef(null);
   const simRef = useRef(null); // keep simulation across renders without touching DOM properties
@@ -930,8 +936,10 @@ const ConceptMapVisualization = () => {
       .attr('stroke', '#fff')
       .attr('stroke-width', 1)
       .attr('filter', 'url(#node-glow)')
-      .style('cursor', 'grab')
-  .on('mouseenter', function() {
+      // If a node advertises an external URL we swap the cursor to a pointer
+      // so users get a visual hint that something will open when activated.
+      .style('cursor', d => isValidHttpUrl(d.url) ? 'pointer' : 'grab')
+      .on('mouseenter', function() {
         const c = d3.select(this);
         c.interrupt().transition().duration(120)
           .attr('stroke-width', 2)
@@ -1053,22 +1061,29 @@ const ConceptMapVisualization = () => {
         .attr('aria-label', b => `${b.key.replace(/_/g, ' ')} for ${d.name || d.id}`)
         .style('cursor', 'pointer')
         .on('keydown', (event) => {
+          // Allow keyboard users to activate the tooltip using Enter or Space,
+          // mirroring native button behaviour.
           if (event.key === 'Enter' || event.key === ' ') {
             event.preventDefault();
-            d3.select(event.currentTarget).dispatch('click', { bubbles: true });
+            d3.select(event.currentTarget).dispatch('mouseenter', { bubbles: true });
           }
         })
-        .on('click', (event, b) => {
-          // Clicking a bubble toggles a small tooltip describing that metadata entry
+        .on('focus', (event) => {
+          d3.select(event.currentTarget).dispatch('mouseenter', { bubbles: true });
+        })
+        .on('mouseenter', (event, b) => {
+          // Hovering a bubble should surface the descriptive tooltip panel.
           event.stopPropagation();
-          if (activeMetaRef.current?.expandedKey === b.key) {
-            activeMetaRef.current.expandedKey = null;
-            annotationsLayer.selectAll('g.meta-panel').remove();
-            return;
-          }
+          if (activeMetaRef.current?.expandedKey === b.key) return;
           activeMetaRef.current.expandedKey = b.key;
           annotationsLayer.selectAll('g.meta-panel').remove();
           const panel = annotationsLayer.append('g').attr('class', 'meta-panel').attr('opacity', 0);
+          panel.on('mouseleave', ev => {
+            if (!ev.relatedTarget || !ev.relatedTarget.closest('g.meta-bubble')) {
+              activeMetaRef.current.expandedKey = null;
+              annotationsLayer.selectAll('g.meta-panel').remove();
+            }
+          });
           const padding = { x: 12, y: 10 };
           const minWidth = 220, maxWidth = 360;
           const initialW = maxWidth;
@@ -1080,8 +1095,10 @@ const ConceptMapVisualization = () => {
             .attr('ry', 10)
             .attr('width', initialW)
             .attr('height', 120)
-            .attr('fill', '#ffffff')
-            .attr('stroke', '#e5e7eb')
+            // Match the styling used by other tooltips (subtle grey border and
+            // slightly translucent white background with a soft drop shadow).
+            .attr('fill', 'rgba(255,255,255,0.98)')
+            .attr('stroke', '#e0e0e0')
             .attr('filter', 'url(#card-shadow)')
             .attr('role', 'dialog')
             .attr('tabindex', 0)
@@ -1109,7 +1126,7 @@ const ConceptMapVisualization = () => {
             items.forEach(item => {
               const str = String(item);
               // Heuristic: treat plain URLs as links so they can be clicked.
-              const isUrl = /^https?:\/\//i.test(str.trim());
+              const isUrl = isValidHttpUrl(str);
               const parent = isUrl
                 ? contentGroup.append('a')
                     .attr('href', str)
@@ -1143,7 +1160,7 @@ const ConceptMapVisualization = () => {
             panel.select('rect.panel-bg').attr('height', totalH);
           } else {
             const val = String(b.value);
-            const isUrl = /^https?:\/\//i.test(val.trim());
+            const isUrl = isValidHttpUrl(val);
             const parent = isUrl
               ? contentGroup.append('a')
                   .attr('href', val)
@@ -1195,6 +1212,12 @@ const ConceptMapVisualization = () => {
           const [anchorX, anchorY] = t.invert([anchorSX, anchorSY]);
           panel.select('path.panel-connector').attr('d', `M${bubbleX - rawX},${bubbleY - rawY} L${anchorX - rawX},${anchorY - rawY}`);
           panel.transition().duration(160).attr('opacity', 1);
+        })
+        .on('mouseleave', (event) => {
+          if (!event.relatedTarget || !event.relatedTarget.closest('g.meta-panel')) {
+            activeMetaRef.current.expandedKey = null;
+            annotationsLayer.selectAll('g.meta-panel').remove();
+          }
         });
 
       bub.append('path')
@@ -2342,6 +2365,22 @@ const ConceptMapVisualization = () => {
           </div>
           {tooltip.node.description && (
             <p style={{ margin: '6px 0 10px 0', color: '#444' }}>{tooltip.node.description}</p>
+          )}
+          {isValidHttpUrl(tooltip.node.url) && (
+            // Present the node's URL as a traditional blue, underlined link so
+            // it's obvious to newcomers that the element is actionable.  The
+            // target attribute ensures the resource opens in a separate tab and
+            // doesn't disrupt the visualisation.
+            <p style={{ margin: '6px 0 10px 0' }}>
+              <a
+                href={tooltip.node.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ color: '#2563eb', textDecoration: 'underline' }}
+              >
+                Open link in new tab
+              </a>
+            </p>
           )}
           {/* Facet toggles that spawn temporary nodes linked to this node */}
           <div style={{ borderTop: '1px solid #eee', paddingTop: 8 }}>
