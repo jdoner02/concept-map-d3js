@@ -62,6 +62,50 @@ const ConceptMapVisualization = () => {
   const [selectedDataset, setSelectedDataset] = useState(null); // chosen dataset filename
 
   /**
+   * Add pedagogical scaffolding to each node.  Education research shows that
+   * learners progress faster when goals are explicit, misconceptions are
+   * surfaced, and assessment criteria are clear (Hattie 2009; Chi 2005;
+   * Sadler 1989).  We keep the enrichment lightweight so it can double as a
+   * rubric: every string is an atomic check‑point the instructor can tick off.
+   */
+  const enrichNode = (n) => {
+    const concept = n.name || n.id;
+
+    // Learning objectives communicate the "why" and "how" of a concept.
+    // Providing defaults ensures even sparse datasets remain instructional.
+    if (!n.learning_objectives) {
+      n.learning_objectives = [
+        `Explain ${concept} in their own words`,
+        `Apply ${concept} in a small program`
+      ];
+    }
+
+    // Misconceptions are powerful diagnostic tools.  Addressing them directly
+    // helps students replace incorrect mental models with accurate ones.
+    if (!n.common_misconceptions) {
+      n.common_misconceptions = [
+        `Assuming ${concept} operates in isolation from other concepts`
+      ];
+    }
+
+    // Criterion‑referenced assessment indicators let us distinguish learning
+    // stages.  We encode six progressively sophisticated behaviours aligned to
+    // common CS rubrics from novice through mastery.
+    if (!n.assessment_indicators) {
+      n.assessment_indicators = {
+        novice: [`Recalls the definition of ${concept}`],
+        basic: [`Identifies where ${concept} is used`],
+        developing: [`Uses ${concept} with guidance`],
+        proficient: [`Applies ${concept} in novel tasks`],
+        advanced: [`Optimises or critiques ${concept} in complex code`],
+        mastered: [`Teaches and defends ${concept} design decisions`]
+      };
+    }
+
+    return n;
+  };
+
+  /**
    * Validate and normalise a raw JSON object before feeding it into the D3
    * renderer. Missing required fields cause entries to be skipped while optional
    * ones fall back to friendly defaults. This keeps the visualisation resilient
@@ -78,6 +122,9 @@ const ConceptMapVisualization = () => {
       if (n.category && !n.group) n.group = n.category;
       if (!n.group) n.group = 'default';
       if (!n.size) n.size = 50;
+      // Enrich each node so downstream visualisations can rely on pedagogical
+      // context even when the source JSON omits it.
+      enrichNode(n);
       nodeIds.add(n.id);
       nodes.push(n);
     }
@@ -1005,12 +1052,28 @@ const ConceptMapVisualization = () => {
 
   // Build Sims-like bubbles ring for a node (styled)
     const buildMetaRing = (d) => {
-      const EXCLUDE = new Set(['id','name','description','group','level','size','degree','index','x','y','vx','vy','fx','fy']);
+      // Ignore non‑pedagogical or internal bookkeeping fields so the ring
+      // only surfaces educationally meaningful metadata.
+      const EXCLUDE = new Set([
+        'id','name','description','group','level','size','degree','index',
+        'x','y','vx','vy','fx','fy','radius','_radius'
+      ]);
       const entries = Object.entries(d)
         .filter(([k, v]) => !EXCLUDE.has(k) && v != null && (typeof v === 'string' || Array.isArray(v) || typeof v === 'number' || (typeof v === 'object' && Object.keys(v).length > 0)));
       if (entries.length === 0) return destroyMetaUI();
 
-      const priority = ['pedagogical_focus','cognitive_scaffolding','overloading_rules','design_benefits','common_patterns','resolution_process','mental_model_bridges'];
+      const priority = [
+        'learning_objectives',
+        'common_misconceptions',
+        'assessment_indicators',
+        'pedagogical_focus',
+        'cognitive_scaffolding',
+        'overloading_rules',
+        'design_benefits',
+        'common_patterns',
+        'resolution_process',
+        'mental_model_bridges'
+      ];
       entries.sort(([a], [b]) => {
         const ai = priority.indexOf(a);
         const bi = priority.indexOf(b);
@@ -1094,8 +1157,10 @@ const ConceptMapVisualization = () => {
             .attr('class', 'panel-bg')
             .attr('x', 0)
             .attr('y', 0)
-            .attr('rx', 10)
-            .attr('ry', 10)
+            // Rounded corners mirror the standard node tooltip so the UI feels
+            // consistent across interaction modes.
+            .attr('rx', 8)
+            .attr('ry', 8)
             .attr('width', initialW)
             .attr('height', 120)
             // Match the styling used by other tooltips (subtle grey border and
@@ -1123,7 +1188,50 @@ const ConceptMapVisualization = () => {
             .text(b.key.replace(/_/g, ' '));
           const contentY = padding.y + 14 + 8;
           const contentGroup = panel.append('g').attr('class', 'panel-content');
-          if (Array.isArray(b.value)) {
+          if (b.key === 'assessment_indicators' && b.value && typeof b.value === 'object') {
+            // Render rubric-like indicators grouped by proficiency level.
+            const levels = ['novice','basic','developing','proficient','advanced','mastered'];
+            let y = contentY + 8;
+            levels.forEach(level => {
+              const indicators = Array.isArray(b.value[level]) ? b.value[level] : [];
+              if (!indicators.length) return;
+              const heading = contentGroup.append('text')
+                .attr('x', padding.x)
+                .attr('y', y)
+                .attr('font-size', 12)
+                .attr('font-weight', '600')
+                .attr('fill', '#111827')
+                .text(level.charAt(0).toUpperCase() + level.slice(1));
+              const hbb = heading.node()?.getBBox();
+              y += (hbb?.height || 12) + 4;
+              indicators.forEach(ind => {
+                const textLine = contentGroup.append('text')
+                  .attr('x', padding.x + 10)
+                  .attr('y', y)
+                  .attr('font-size', 12)
+                  .attr('fill', '#374151');
+                wrapTspans(textLine, `• ${ind}`, maxWidth - (padding.x * 2) - 10, 14);
+                const tspans = textLine.selectAll('tspan').nodes();
+                const lines = Math.max(1, tspans.length);
+                y += lines * 14;
+              });
+              y += 6; // breathing room before the next level
+            });
+            let minX = Infinity, maxX = -Infinity, minY = Infinity, maxY = -Infinity;
+            contentGroup.selectAll('text').each(function() {
+              const bb = this.getBBox();
+              minX = Math.min(minX, bb.x);
+              maxX = Math.max(maxX, bb.x + bb.width);
+              minY = Math.min(minY, bb.y);
+              maxY = Math.max(maxY, bb.y + bb.height);
+            });
+            const contentW = Math.max(0, maxX - minX) + padding.x;
+            const desiredW = Math.max(minWidth, Math.min(maxWidth, Math.max(contentW, title.node()?.getBBox?.().width + padding.x * 2)));
+            bg.attr('width', desiredW);
+            panel.select('rect.panel-accent').attr('width', desiredW);
+            const totalH = Math.max(110, (maxY - (padding.y - 2)) + padding.y);
+            panel.select('rect.panel-bg').attr('height', totalH);
+          } else if (Array.isArray(b.value)) {
             const items = b.value.slice(0, 8);
             let y = contentY + 8;
             items.forEach(item => {
