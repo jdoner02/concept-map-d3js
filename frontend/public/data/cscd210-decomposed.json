@@ -4,7 +4,6 @@
     "created": "2025-08-20T00:00:00Z",
     "last_updated": "2025-08-20T00:00:00Z",
     "description": "CSCD210 concept map aligned with official course description and Java-focused content.",
-    "author": "Documentation Curator Agent",
     "total_nodes": 361,
     "total_links": 360
   },
@@ -41,169 +40,526 @@
       "id": "CSCD210-D1-S1-C1-A1",
       "title": "Compute decimal value of any bit position",
       "name": "Compute decimal value of any bit position",
-      "description": "",
-      "level": 4
+      "description": "Students learn to calculate the decimal value represented by each position in a binary number using powers of 2. Common misconception: Students often confuse bit position counting (starting from 0 at rightmost) with mathematical position (starting from 1). Teaching remedy: Use visual aids showing position labels clearly marked, and emphasize that bit position n has value 2^n.",
+      "level": 4,
+      "learning_objectives": [
+        "Calculate 2^n for any bit position n",
+        "Convert single bit positions to decimal values",
+        "Understand positional notation in binary system"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Counting bit positions from 1 instead of 0",
+          "remedy": "Practice with labeled diagrams showing position indices, emphasize computer science indexing convention"
+        },
+        {
+          "misconception": "Confusing bit position with bit value",
+          "remedy": "Use clear terminology: position vs. value, demonstrate with examples like 'position 3 can hold value 0 or 1'"
+        }
+      ],
+      "prerequisites": ["basic exponent arithmetic", "understanding of place value in decimal system"],
+      "assessment_strategies": ["bit position calculation exercises", "binary-to-decimal conversion practice"]
     },
     {
       "id": "CSCD210-D1-S1-C1-A2",
       "title": "Differentiate between most and least significant bits",
       "name": "Differentiate between most and least significant bits",
-      "description": "",
-      "level": 4
+      "description": "Students distinguish between the leftmost bit (most significant bit or MSB) which has the highest positional value, and the rightmost bit (least significant bit or LSB) which has the lowest positional value. Common misconception: Students may think 'significant' refers to importance rather than mathematical weight. Teaching remedy: Emphasize that significance refers to the magnitude of impact on the overall number value.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify MSB and LSB in any binary number",
+        "Explain the impact of changing MSB vs LSB on total value",
+        "Understand why MSB changes have greater effect on number magnitude"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking 'significance' means importance rather than magnitude",
+          "remedy": "Use concrete examples showing how changing MSB vs LSB affects the decimal value differently"
+        },
+        {
+          "misconception": "Confusing left/right orientation with significance",
+          "remedy": "Practice with numbers written in different orientations, emphasize positional weight concept"
+        }
+      ],
+      "prerequisites": ["bit position numbering", "positional notation understanding"],
+      "assessment_strategies": ["MSB/LSB identification exercises", "impact analysis of bit changes"]
     },
     {
       "id": "CSCD210-D1-S1-C1-A3",
       "title": "Distinguish bit, byte, and word sizes",
       "name": "Distinguish bit, byte, and word sizes",
-      "description": "",
-      "level": 4
+      "description": "Students learn the hierarchical relationship between bits (single binary digits), bytes (8 bits), and words (architecture-dependent, typically 32 or 64 bits). Common misconception: Students often assume word size is universal rather than processor-dependent. Teaching remedy: Show examples from different processor architectures and explain how Java abstracts these differences.",
+      "level": 4,
+      "learning_objectives": [
+        "Define bit, byte, and word in computer architecture context",
+        "Calculate number of possible values for different data sizes",
+        "Understand why data size affects memory usage and performance"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming word size is always the same across all computers",
+          "remedy": "Show examples of 32-bit vs 64-bit systems, explain architecture dependency"
+        },
+        {
+          "misconception": "Thinking bigger data types are always better",
+          "remedy": "Discuss memory efficiency trade-offs, show when smaller types are appropriate"
+        }
+      ],
+      "prerequisites": ["basic binary understanding", "concept of memory storage"],
+      "assessment_strategies": ["data size calculation problems", "memory efficiency analysis exercises"]
     },
     {
       "id": "CSCD210-D1-S1-C2",
       "title": "Binary Addition",
       "name": "Binary Addition",
-      "description": "",
-      "level": 3
+      "description": "Students learn to perform addition operations directly in binary, understanding how carries propagate through bit positions. This fundamental skill underpins all computer arithmetic operations. Common difficulty: Students often try to convert to decimal, add, then convert back rather than working directly in binary.",
+      "level": 3,
+      "learning_objectives": [
+        "Perform binary addition without decimal conversion",
+        "Track carry propagation through multiple bit positions",
+        "Recognize patterns in binary arithmetic"
+      ],
+      "pedagogical_approach": "Start with single-bit addition (0+0, 0+1, 1+0, 1+1), then progress to multi-bit problems with increasing complexity",
+      "common_difficulties": [
+        "Forgetting to propagate carries correctly",
+        "Mixing up binary and decimal addition rules",
+        "Losing track of bit positions in longer numbers"
+      ]
     },
     {
       "id": "CSCD210-D1-S1-C2-A1",
       "title": "Perform binary addition with carries",
       "name": "Perform binary addition with carries",
-      "description": "",
-      "level": 4
+      "description": "Students master the four basic binary addition cases: 0+0=0, 0+1=1, 1+0=1, 1+1=10 (with carry). They learn to track carries across multiple bit positions. Common misconception: Students often write 1+1=2 instead of 1+1=10 in binary. Teaching remedy: Emphasize that in binary, there are only digits 0 and 1, so 'two' must be written as '10'.",
+      "level": 4,
+      "learning_objectives": [
+        "Execute all four binary addition combinations correctly",
+        "Manage carry propagation across multiple bit positions",
+        "Verify results using decimal conversion check"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Writing 1+1=2 instead of 1+1=10 in binary",
+          "remedy": "Repeatedly emphasize binary has only digits 0 and 1, practice with visual carry tracking"
+        },
+        {
+          "misconception": "Forgetting to carry when adding 1+1+carry",
+          "remedy": "Use step-by-step templates that force students to check for carries at each position"
+        }
+      ],
+      "prerequisites": ["understanding of binary digits", "concept of positional notation"],
+      "assessment_strategies": ["step-by-step binary addition problems", "carry propagation exercises"]
     },
     {
       "id": "CSCD210-D1-S1-C2-A2",
       "title": "Detect overflow in fixed-width sums",
       "name": "Detect overflow in fixed-width sums",
-      "description": "",
-      "level": 4
+      "description": "Students learn to recognize when addition results exceed the storage capacity of fixed-width binary representations (e.g., 4-bit, 8-bit). Common misconception: Students often ignore overflow assuming infinite precision. Teaching remedy: Use concrete examples showing how computers have finite storage and what happens when calculations exceed capacity.",
+      "level": 4,
+      "learning_objectives": [
+        "Calculate maximum representable value for given bit width",
+        "Identify when addition results cause overflow",
+        "Understand real-world implications of integer overflow"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming computers handle arbitrarily large numbers",
+          "remedy": "Demonstrate actual overflow examples in Java with int and long types"
+        },
+        {
+          "misconception": "Thinking overflow always causes errors",
+          "remedy": "Show how overflow often causes silent wraparound, discuss security implications"
+        }
+      ],
+      "prerequisites": ["binary addition skills", "understanding of data type limits"],
+      "assessment_strategies": ["overflow detection exercises", "fixed-width arithmetic problems"]
     },
     {
       "id": "CSCD210-D1-S1-C2-A3",
       "title": "Explain two's complement representation",
       "name": "Explain two's complement representation",
-      "description": "",
-      "level": 4
+      "description": "Students understand how computers represent negative numbers using two's complement, where the most significant bit indicates sign and negative values are formed by inverting all bits and adding 1. Common difficulty: Students struggle with why two's complement is used instead of simple sign-magnitude. Teaching remedy: Demonstrate how two's complement allows the same addition circuitry to work for both positive and negative numbers.",
+      "level": 4,
+      "learning_objectives": [
+        "Convert positive numbers to two's complement negative representation",
+        "Explain why two's complement is preferred over sign-magnitude",
+        "Perform arithmetic with two's complement numbers"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking the leftmost bit is just a simple sign bit",
+          "remedy": "Show that MSB has negative weight in two's complement, not just sign indication"
+        },
+        {
+          "misconception": "Believing two's complement is unnecessarily complex",
+          "remedy": "Demonstrate hardware efficiency: same circuits work for addition and subtraction"
+        }
+      ],
+      "prerequisites": ["binary arithmetic", "understanding of negative numbers"],
+      "assessment_strategies": ["two's complement conversion exercises", "signed arithmetic problems"]
     },
     {
       "id": "CSCD210-D1-S1-C3",
       "title": "Overflow Detection",
       "name": "Overflow Detection",
-      "description": "",
-      "level": 3
+      "description": "Students learn to identify when arithmetic operations exceed the representable range of a data type, distinguishing between unsigned overflow (wrapping around) and signed overflow (potentially changing sign). This concept is critical for understanding program reliability and security vulnerabilities.",
+      "level": 3,
+      "learning_objectives": [
+        "Recognize signs of overflow in arithmetic operations",
+        "Distinguish between unsigned and signed overflow behavior",
+        "Understand security and reliability implications of overflow"
+      ],
+      "pedagogical_approach": "Use visual representations showing number lines and wraparound behavior, connect to real-world examples of overflow bugs",
+      "real_world_connections": [
+        "Y2K problem as date overflow example",
+        "Video game score rollover bugs",
+        "Security vulnerabilities from integer overflow"
+      ]
     },
     {
       "id": "CSCD210-D1-S1-C3-A1",
       "title": "Contrast signed and unsigned overflow",
       "name": "Contrast signed and unsigned overflow",
-      "description": "",
-      "level": 4
+      "description": "Students understand that unsigned integers wrap around to zero when they exceed maximum value, while signed integers may flip from positive to negative due to two's complement representation. Common misconception: Students expect all overflow to behave the same way. Teaching remedy: Demonstrate with concrete examples using Java's int vs long behavior, and show unsigned behavior using languages or methods that support unsigned arithmetic.",
+      "level": 4,
+      "learning_objectives": [
+        "Predict overflow behavior for unsigned integers",
+        "Predict overflow behavior for signed integers",
+        "Explain why signed overflow can cause negative results"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting consistent overflow behavior across all data types",
+          "remedy": "Show side-by-side examples of signed vs unsigned overflow with visual number lines"
+        },
+        {
+          "misconception": "Thinking overflow always causes program crashes",
+          "remedy": "Demonstrate silent overflow in Java, show how programs continue with wrong values"
+        }
+      ],
+      "prerequisites": ["two's complement understanding", "data type ranges"],
+      "assessment_strategies": ["overflow prediction exercises", "comparison analysis problems"]
     },
     {
       "id": "CSCD210-D1-S1-C3-A2",
       "title": "Identify limits for n-bit integers",
       "name": "Identify limits for n-bit integers",
-      "description": "",
-      "level": 4
+      "description": "Students calculate the minimum and maximum representable values for integers of any bit width, understanding that unsigned n-bit integers range from 0 to 2^n-1, while signed n-bit integers range from -2^(n-1) to 2^(n-1)-1. Common difficulty: Students often forget the asymmetry in signed ranges (one more negative value than positive). Teaching remedy: Emphasize that zero takes up one of the positive 'slots', leaving unequal positive/negative ranges.",
+      "level": 4,
+      "learning_objectives": [
+        "Calculate range limits for any bit width",
+        "Explain asymmetry in signed integer ranges",
+        "Apply range knowledge to prevent overflow in programs"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting equal numbers of positive and negative values in signed types",
+          "remedy": "Show number line diagrams emphasizing that zero 'uses up' a positive slot"
+        },
+        {
+          "misconception": "Forgetting to subtract 1 from 2^n for maximum values",
+          "remedy": "Emphasize that counting starts at 0, so n bits can represent 0 through 2^n-1"
+        }
+      ],
+      "prerequisites": ["exponent calculation", "signed vs unsigned concept"],
+      "assessment_strategies": ["range calculation problems", "overflow boundary testing"]
     },
     {
       "id": "CSCD210-D1-S1-C3-A3",
       "title": "Trace overflow errors in sample code",
       "name": "Trace overflow errors in sample code",
-      "description": "",
-      "level": 4
+      "description": "Students analyze Java code examples to identify potential overflow conditions and predict the resulting incorrect behavior. Common difficulty: Students often focus on syntax rather than considering the mathematical limits of operations. Teaching remedy: Provide code examples with large number calculations and have students trace through step-by-step, checking against data type limits.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify overflow-prone operations in Java code",
+        "Predict incorrect results from overflow conditions",
+        "Suggest fixes for overflow-vulnerable code"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming Java will automatically prevent overflow",
+          "remedy": "Show concrete examples of Java int overflow, demonstrate silent failures"
+        },
+        {
+          "misconception": "Thinking overflow only happens with huge numbers",
+          "remedy": "Show how common operations like multiplication can quickly cause overflow"
+        }
+      ],
+      "prerequisites": ["Java arithmetic operators", "data type limits knowledge"],
+      "assessment_strategies": ["code analysis exercises", "debugging overflow scenarios"]
     },
     {
       "id": "CSCD210-D1-S2",
       "title": "Base Conversion Techniques",
       "name": "Base Conversion Techniques",
-      "description": "Moving numbers between decimal, binary, and hexadecimal forms.",
-      "level": 2
+      "description": "Students master systematic methods for converting numbers between different bases (decimal, binary, hexadecimal). This skill is fundamental for understanding how computers represent and manipulate data internally, and for debugging low-level programming issues.",
+      "level": 2,
+      "learning_objectives": [
+        "Convert between decimal, binary, and hexadecimal representations",
+        "Understand why different bases are useful in computing",
+        "Apply base conversion to debug program behavior"
+      ],
+      "pedagogical_approach": "Teach algorithmic methods rather than memorization, emphasize pattern recognition across different bases",
+      "real_world_applications": [
+        "Debugging memory addresses (hexadecimal)",
+        "Understanding file permissions (octal)",
+        "Color codes in web development (hexadecimal)"
+      ]
     },
     {
       "id": "CSCD210-D1-S2-C1",
       "title": "Decimal to Binary",
       "name": "Decimal to Binary",
-      "description": "",
-      "level": 3
+      "description": "Students learn the repeated division method to convert decimal numbers to binary representation. This algorithmic approach provides a systematic way to handle any size decimal number without memorizing conversion tables.",
+      "level": 3,
+      "learning_objectives": [
+        "Apply repeated division algorithm systematically",
+        "Verify conversions by converting back to decimal",
+        "Handle both small and large decimal numbers"
+      ],
+      "pedagogical_notes": "Start with small numbers to build confidence, then progress to larger examples that require systematic approach"
     },
     {
       "id": "CSCD210-D1-S2-C1-A1",
       "title": "Manually convert positive integers to binary",
       "name": "Manually convert positive integers to binary",
-      "description": "",
-      "level": 4
+      "description": "Students perform step-by-step conversion from decimal to binary using the division-by-2 method, collecting remainders to form the binary result. Common difficulty: Students often write the binary digits in the wrong order (reading remainders top-to-bottom instead of bottom-to-top). Teaching remedy: Emphasize that remainders must be read in reverse order of generation, use visual stacking to show correct reading direction.",
+      "level": 4,
+      "learning_objectives": [
+        "Execute division-by-2 algorithm correctly",
+        "Collect remainders in proper order for binary result",
+        "Verify accuracy through reverse conversion"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Reading remainders in order of generation rather than reverse",
+          "remedy": "Use visual aids showing remainders stacked vertically, emphasize bottom-to-top reading"
+        },
+        {
+          "misconception": "Stopping division before reaching zero",
+          "remedy": "Emphasize continuing division until quotient becomes zero, practice with examples"
+        }
+      ],
+      "prerequisites": ["division with remainders", "understanding of binary representation"],
+      "assessment_strategies": ["step-by-step conversion exercises", "error identification in student work"]
     },
     {
       "id": "CSCD210-D1-S2-C1-A2",
       "title": "Use repeated division for base changes",
       "name": "Use repeated division for base changes",
-      "description": "",
-      "level": 4
+      "description": "Students generalize the division method to convert between any two bases (not just decimal to binary). They understand that dividing by the target base and collecting remainders works universally. Common difficulty: Students may struggle with division in non-decimal bases. Teaching remedy: Allow students to work in decimal for the arithmetic, converting only the final result.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply division method to any base conversion",
+        "Understand why division-by-target-base works universally",
+        "Convert between arbitrary bases (binary, octal, hexadecimal)"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking different bases require completely different methods",
+          "remedy": "Show that same algorithm works for all bases, only the divisor changes"
+        },
+        {
+          "misconception": "Confusion about which base to use for arithmetic during conversion",
+          "remedy": "Clarify that arithmetic can be done in familiar base, result interpreted in target base"
+        }
+      ],
+      "prerequisites": ["decimal-to-binary conversion", "understanding of positional notation"],
+      "assessment_strategies": ["multi-base conversion problems", "algorithm explanation exercises"]
     },
     {
       "id": "CSCD210-D1-S2-C1-A3",
       "title": "Verify conversions by reconverting",
       "name": "Verify conversions by reconverting",
-      "description": "",
-      "level": 4
+      "description": "Students learn to check their conversion accuracy by performing the reverse operation and confirming they get back to the original number. This verification step builds confidence and catches errors. Common oversight: Students often skip verification step due to time pressure. Teaching remedy: Make verification a required step in all assignments, emphasize that professional programmers always verify their work.",
+      "level": 4,
+      "learning_objectives": [
+        "Perform reverse conversions to verify accuracy",
+        "Develop habits of self-checking mathematical work",
+        "Identify and correct conversion errors systematically"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Viewing verification as optional or time-wasting",
+          "remedy": "Emphasize professional practice, show how verification catches errors that would be costly later"
+        },
+        {
+          "misconception": "Assuming verification is always straightforward",
+          "remedy": "Show cases where verification reveals subtle errors, demonstrate debugging process"
+        }
+      ],
+      "prerequisites": ["forward conversion skills", "reverse conversion methods"],
+      "assessment_strategies": ["verification requirement in all problems", "error detection exercises"]
     },
     {
       "id": "CSCD210-D1-S2-C2",
       "title": "Binary to Hexadecimal",
       "name": "Binary to Hexadecimal",
-      "description": "",
-      "level": 3
+      "description": "Students learn the direct grouping method to convert between binary and hexadecimal, understanding that each hex digit represents exactly 4 binary digits (a nibble). This shortcut method is essential for efficiently reading memory addresses and debugging low-level code.",
+      "level": 3,
+      "learning_objectives": [
+        "Group binary digits into 4-bit chunks (nibbles)",
+        "Convert each nibble directly to hexadecimal digit",
+        "Understand why hexadecimal is convenient for binary representation"
+      ],
+      "pedagogical_approach": "Emphasize pattern recognition rather than arithmetic conversion, show practical applications in debugging and memory analysis"
     },
     {
       "id": "CSCD210-D1-S2-C2-A1",
       "title": "Group binary digits into nibbles",
       "name": "Group binary digits into nibbles",
-      "description": "",
-      "level": 4
+      "description": "Students practice dividing binary numbers into 4-bit groups (nibbles), starting from the rightmost bit and padding with leading zeros if necessary. Common difficulty: Students sometimes group from left to right instead of right to left. Teaching remedy: Emphasize that grouping starts from the least significant bit (rightmost) to maintain positional value meaning.",
+      "level": 4,
+      "learning_objectives": [
+        "Systematically group binary digits from right to left",
+        "Add leading zeros when necessary for complete nibbles",
+        "Understand why grouping preserves positional meaning"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Grouping binary digits from left to right",
+          "remedy": "Show how left-to-right grouping can misalign positional values, practice with examples"
+        },
+        {
+          "misconception": "Forgetting to pad with leading zeros",
+          "remedy": "Emphasize that incomplete left nibbles need zero padding, provide practice problems"
+        }
+      ],
+      "prerequisites": ["binary number understanding", "positional notation concepts"],
+      "assessment_strategies": ["nibble grouping exercises", "padding practice problems"]
     },
     {
       "id": "CSCD210-D1-S2-C2-A2",
       "title": "Map 4-bit patterns to hex symbols",
       "name": "Map 4-bit patterns to hex symbols",
-      "description": "",
-      "level": 4
+      "description": "Students memorize or reference the mapping between each 4-bit binary pattern (0000 through 1111) and corresponding hexadecimal symbols (0 through F). Common difficulty: Students often confuse hex digits A-F with their decimal values. Teaching remedy: Create memorable associations (A=10, B=11, etc.) and provide reference cards for practice.",
+      "level": 4,
+      "learning_objectives": [
+        "Quickly identify hex symbols for any 4-bit pattern",
+        "Understand that A-F represent values 10-15",
+        "Use reference materials efficiently during conversion"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Treating hex digits A-F as having values beyond 15",
+          "remedy": "Repeatedly emphasize that F represents 15, highest single-digit hex value"
+        },
+        {
+          "misconception": "Confusing hex digits with alphabetic letters",
+          "remedy": "Show hex in context of numeric values, practice with mixed problems"
+        }
+      ],
+      "prerequisites": ["4-bit binary patterns", "hexadecimal digit system"],
+      "assessment_strategies": ["pattern-to-hex mapping drills", "reference sheet usage practice"]
     },
     {
       "id": "CSCD210-D1-S2-C2-A3",
       "title": "Perform quick mental conversions",
       "name": "Perform quick mental conversions",
-      "description": "",
-      "level": 4
+      "description": "Students develop fluency in binary-to-hexadecimal conversion through pattern recognition, aiming for immediate recognition of common nibble patterns without calculation. Common challenge: Students want to convert through decimal as intermediate step. Teaching remedy: Emphasize direct pattern matching, provide frequent practice with immediate feedback.",
+      "level": 4,
+      "learning_objectives": [
+        "Recognize common binary-hex patterns immediately",
+        "Convert without intermediate decimal calculations",
+        "Build fluency through repetitive practice"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Always converting through decimal as intermediate step",
+          "remedy": "Show efficiency of direct conversion, time practice exercises to encourage speed"
+        },
+        {
+          "misconception": "Thinking speed comes before accuracy",
+          "remedy": "Emphasize accuracy first, then build speed through pattern familiarity"
+        }
+      ],
+      "prerequisites": ["binary-hex pattern knowledge", "nibble grouping skills"],
+      "assessment_strategies": ["timed conversion exercises", "pattern recognition drills"]
     },
     {
       "id": "CSCD210-D1-S2-C3",
       "title": "Common Conversion Errors",
       "name": "Common Conversion Errors",
-      "description": "",
-      "level": 3
+      "description": "Students learn to identify and avoid typical mistakes made during base conversions, developing systematic checking habits that prevent errors in real-world programming contexts. Understanding common pitfalls helps students become more reliable programmers.",
+      "level": 3,
+      "learning_objectives": [
+        "Recognize patterns of common conversion mistakes",
+        "Develop systematic verification habits",
+        "Apply error prevention strategies in programming contexts"
+      ],
+      "pedagogical_approach": "Show actual student work examples with errors, have students identify and correct mistakes before learning prevention strategies"
     },
     {
       "id": "CSCD210-D1-S2-C3-A1",
       "title": "Avoid off-by-one mistakes in base changes",
       "name": "Avoid off-by-one mistakes in base changes",
-      "description": "",
-      "level": 4
+      "description": "Students learn to prevent common off-by-one errors such as miscounting bit positions or using wrong ranges for data types. Common error: Starting bit position counts at 1 instead of 0. Teaching remedy: Consistently reinforce that computer science uses zero-based indexing, provide visual aids showing position labels.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply zero-based indexing consistently",
+        "Double-check position counting in multi-step problems",
+        "Recognize off-by-one patterns in own work"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using 1-based indexing from mathematical background",
+          "remedy": "Explicitly contrast math vs computer science conventions, provide labeled diagrams"
+        },
+        {
+          "misconception": "Inconsistent indexing within same problem",
+          "remedy": "Require students to explicitly state indexing convention at start of each problem"
+        }
+      ],
+      "prerequisites": ["understanding of indexing conventions", "base conversion fundamentals"],
+      "assessment_strategies": ["error identification exercises", "index checking requirements"]
     },
     {
       "id": "CSCD210-D1-S2-C3-A2",
       "title": "Handle leading zeros correctly",
       "name": "Handle leading zeros correctly",
-      "description": "",
-      "level": 4
+      "description": "Students understand when leading zeros are significant (in fixed-width representations) versus when they can be omitted (in mathematical contexts). Common confusion: Students sometimes drop significant leading zeros or add unnecessary ones. Teaching remedy: Clearly distinguish between mathematical equivalence (where leading zeros don't matter) and computer representation (where they often do matter).",
+      "level": 4,
+      "learning_objectives": [
+        "Determine when leading zeros are significant",
+        "Preserve zeros in fixed-width representations",
+        "Understand context-dependent zero handling"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking leading zeros never matter",
+          "remedy": "Show examples where leading zeros indicate data width or alignment requirements"
+        },
+        {
+          "misconception": "Always including maximum possible leading zeros",
+          "remedy": "Explain when brevity is acceptable vs when fixed width is required"
+        }
+      ],
+      "prerequisites": ["fixed-width number representation", "mathematical notation"],
+      "assessment_strategies": ["context-specific zero handling problems", "representation format exercises"]
     },
     {
       "id": "CSCD210-D1-S2-C3-A3",
       "title": "Detect when numbers mix base representations",
       "name": "Detect when numbers mix base representations",
-      "description": "",
-      "level": 4
+      "description": "Students learn to identify and correct situations where they accidentally mix different base representations within the same calculation (e.g., treating a binary number as decimal). Common error: Seeing '101' and treating it as 'one hundred one' instead of recognizing it might be binary. Teaching remedy: Require explicit base notation (101₂, 101₁₀) and teach students to question ambiguous numbers.",
+      "level": 4,
+      "learning_objectives": [
+        "Recognize ambiguous number representations",
+        "Use explicit base notation consistently",
+        "Question context when base is unclear"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming numbers are always in decimal unless told otherwise",
+          "remedy": "Provide problems where context clues indicate non-decimal bases, emphasize notation importance"
+        },
+        {
+          "misconception": "Mixing bases within single calculation without realizing",
+          "remedy": "Require base notation throughout multi-step problems, teach systematic checking"
+        }
+      ],
+      "prerequisites": ["multiple base familiarity", "notation conventions"],
+      "assessment_strategies": ["base detection exercises", "mixed-base error identification"]
     },
     {
       "id": "CSCD210-D1-S3",
@@ -300,99 +656,295 @@
       "id": "CSCD210-D2",
       "title": "Primitive Data Types & Expressions",
       "name": "Primitive Data Types & Expressions",
-      "description": "Variables, numeric operations, logical expressions, and casting rules in Java.",
-      "level": 1
+      "description": "Students master Java's primitive data types (int, double, boolean, char), variable declaration and initialization, type conversions, and mathematical expressions. This foundational domain bridges computer science theory with practical programming implementation, emphasizing both conceptual understanding and professional coding practices.",
+      "level": 1,
+      "learning_objectives": [
+        "Declare and initialize variables using appropriate primitive types",
+        "Perform type conversions and understand precision implications",
+        "Apply mathematical operators and understand precedence rules",
+        "Design meaningful variable names following Java conventions"
+      ],
+      "pedagogical_approach": "Connect abstract data type concepts to concrete Java implementations, emphasize debugging skills through type mismatch errors",
+      "real_world_connections": [
+        "Financial calculations requiring decimal precision",
+        "Game development using different numeric ranges",
+        "Data analysis with appropriate variable selection"
+      ]
     },
     {
       "id": "CSCD210-D2-S1",
       "title": "Variable Declaration & Scope",
       "name": "Variable Declaration & Scope",
-      "description": "Naming, initialization, and lifetime of variables.",
-      "level": 2
+      "description": "Students learn to declare variables with appropriate data types and meaningful names, understanding where variables are accessible within Java programs. This section emphasizes professional naming conventions and scope rules that prevent common programming errors.",
+      "level": 2,
+      "learning_objectives": [
+        "Declare variables using proper Java syntax and naming conventions",
+        "Understand variable scope and lifetime within code blocks",
+        "Initialize variables appropriately to avoid undefined behavior"
+      ],
+      "common_student_struggles": [
+        "Forgetting to initialize variables before use",
+        "Confusion about when variables go out of scope",
+        "Using inappropriate data types for given problems"
+      ],
+      "pedagogical_tips": "Use visual diagrams showing scope boundaries, demonstrate scope errors that students can relate to"
     },
     {
       "id": "CSCD210-D2-S1-C1",
       "title": "Declare variables with meaningful identifiers",
       "name": "Declare variables with meaningful identifiers",
-      "description": "",
-      "level": 3
+      "description": "Students learn to create variables with names that clearly communicate purpose and content, following Java naming conventions. This fundamental skill improves code readability and maintainability throughout professional software development.",
+      "level": 3,
+      "learning_objectives": [
+        "Apply camelCase naming convention consistently",
+        "Choose names that describe variable purpose and content",
+        "Avoid misleading or abbreviated variable names"
+      ],
+      "pedagogical_approach": "Show side-by-side code examples with good vs poor variable names, emphasize long-term maintenance perspective"
     },
     {
       "id": "CSCD210-D2-S1-C1-A1",
       "title": "Choose descriptive names",
       "name": "Choose descriptive names",
-      "description": "",
-      "level": 4
+      "description": "Students practice selecting variable names that clearly indicate the data being stored and its intended use within the program. Common misconception: Students often think shorter names are better for efficiency. Teaching remedy: Explain that modern compilers optimize regardless of name length, and readability is paramount for debugging and collaboration.",
+      "level": 4,
+      "learning_objectives": [
+        "Select names that indicate data content and purpose",
+        "Avoid single-letter variables except for loop counters",
+        "Balance brevity with clarity in naming choices"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Believing shorter variable names improve program performance",
+          "remedy": "Explain compiler optimization and emphasize that readability has no runtime cost"
+        },
+        {
+          "misconception": "Using abbreviations that seem obvious but confuse others",
+          "remedy": "Show examples of ambiguous abbreviations, emphasize collaborative programming perspective"
+        }
+      ],
+      "prerequisites": ["basic understanding of data storage", "concept of program readability"],
+      "assessment_strategies": ["variable naming improvement exercises", "code review activities"]
     },
     {
       "id": "CSCD210-D2-S1-C1-A2",
       "title": "Predict lifetime of local variables",
       "name": "Predict lifetime of local variables",
-      "description": "",
-      "level": 4
+      "description": "Students understand that local variables exist only within the code block where they are declared, and are automatically destroyed when execution leaves that block. Common confusion: Students expect variables to retain values between method calls. Teaching remedy: Use visual diagrams showing stack frames and variable creation/destruction during program execution.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify scope boundaries using curly braces",
+        "Predict when variables become inaccessible",
+        "Understand automatic memory management for local variables"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting local variables to retain values between method calls",
+          "remedy": "Demonstrate variable recreation with each method invocation, show stack frame diagrams"
+        },
+        {
+          "misconception": "Thinking variables declared in loops persist after loop completion",
+          "remedy": "Show scope diagrams with nested blocks, demonstrate compilation errors for out-of-scope access"
+        }
+      ],
+      "prerequisites": ["understanding of code blocks and curly braces", "basic method concept"],
+      "assessment_strategies": ["scope prediction exercises", "debugging scope error problems"]
     },
     {
       "id": "CSCD210-D2-S1-C1-A3",
       "title": "Differentiate initialization from assignment",
       "name": "Differentiate initialization from assignment",
-      "description": "",
-      "level": 4
+      "description": "Students distinguish between giving a variable its first value (initialization) and changing the value of an already-existing variable (assignment). Common confusion: Students may try to re-declare variables with different types. Teaching remedy: Emphasize that declaration happens once per scope, while assignment can happen multiple times to change the stored value.",
+      "level": 4,
+      "learning_objectives": [
+        "Recognize initialization syntax during variable declaration",
+        "Understand that assignment changes existing variable values",
+        "Avoid redeclaring variables within the same scope"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Attempting to redeclare variables with different types in same scope",
+          "remedy": "Show compiler errors for redeclaration, emphasize one declaration per scope rule"
+        },
+        {
+          "misconception": "Thinking uninitialized variables automatically contain zero or null",
+          "remedy": "Demonstrate compiler errors for uninitialized variable use, emphasize explicit initialization requirement"
+        }
+      ],
+      "prerequisites": ["variable declaration syntax", "understanding of data types"],
+      "assessment_strategies": ["initialization vs assignment identification exercises", "debugging uninitialized variable errors"]
     },
     {
       "id": "CSCD210-D2-S1-C2",
       "title": "Arithmetic & Logical Expressions",
       "name": "Arithmetic & Logical Expressions",
-      "description": "",
-      "level": 3
+      "description": "Students construct and evaluate mathematical and logical expressions in Java, understanding operator precedence, type interactions, and the differences between integer and floating-point arithmetic. This section builds computational thinking skills essential for algorithm implementation.",
+      "level": 3,
+      "learning_objectives": [
+        "Construct mathematical expressions using appropriate operators",
+        "Understand operator precedence and association rules",
+        "Distinguish between integer and floating-point arithmetic behavior",
+        "Combine logical operators to create complex boolean expressions"
+      ],
+      "pedagogical_approach": "Use concrete examples from mathematics and real-world problems, emphasize hands-on experimentation with different data types"
     },
     {
       "id": "CSCD210-D2-S1-C2-A1",
       "title": "Trace integer division versus floating results",
       "name": "Trace integer division versus floating results",
-      "description": "",
-      "level": 4
+      "description": "Students understand that division between two integers produces integer results (truncating decimal portions), while division involving floating-point numbers preserves decimal precision. Common misconception: Students expect all division to behave like mathematical division. Teaching remedy: Demonstrate side-by-side comparisons showing how 7/2 gives different results with integers versus doubles.",
+      "level": 4,
+      "learning_objectives": [
+        "Predict results of integer division operations",
+        "Understand when division truncates vs preserves decimals",
+        "Choose appropriate data types for accurate division results"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting integer division to always produce decimal results",
+          "remedy": "Show concrete examples: 7/2 = 3 (integers) vs 7.0/2 = 3.5 (floating-point)"
+        },
+        {
+          "misconception": "Confusion about when Java performs automatic type promotion",
+          "remedy": "Demonstrate rules: integer operations stay integer unless one operand is floating-point"
+        }
+      ],
+      "prerequisites": ["variable declaration with different numeric types", "basic arithmetic concepts"],
+      "assessment_strategies": ["prediction exercises with mixed data types", "debugging arithmetic precision problems"]
     },
     {
       "id": "CSCD210-D2-S1-C2-A2",
       "title": "Construct boolean expressions with && and ||",
       "name": "Construct boolean expressions with && and ||",
-      "description": "",
-      "level": 4
+      "description": "Students learn to combine multiple conditions using logical AND (&&) and OR (||) operators, understanding short-circuit evaluation behavior. Common difficulty: Students struggle with the logical structure of compound conditions. Teaching remedy: Use truth tables and real-world scenarios (like 'if it's raining AND I don't have an umbrella, then get wet') to make logical relationships concrete.",
+      "level": 4,
+      "learning_objectives": [
+        "Combine multiple boolean conditions using logical operators",
+        "Understand short-circuit evaluation and its performance implications",
+        "Construct expressions that accurately represent complex logical requirements"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Confusion between & vs && and | vs || operators",
+          "remedy": "Emphasize that && and || provide short-circuit behavior for boolean logic, while & and | are bitwise operators"
+        },
+        {
+          "misconception": "Difficulty translating English logic to programming logic",
+          "remedy": "Practice with real-world scenarios, break complex conditions into simpler parts"
+        }
+      ],
+      "prerequisites": ["boolean data type understanding", "comparison operators"],
+      "assessment_strategies": ["truth table completion exercises", "real-world logic translation problems"]
     },
     {
       "id": "CSCD210-D2-S1-C2-A3",
       "title": "Use modulo for cyclical patterns",
       "name": "Use modulo for cyclical patterns",
-      "description": "",
-      "level": 4
+      "description": "Students apply the modulo operator (%) to create repeating patterns and determine remainders, essential for algorithms involving cycles, rotations, and periodic behavior. Common difficulty: Students often confuse modulo with division. Teaching remedy: Use visual examples like clock arithmetic (hour 15 becomes 3 PM using 15 % 12) and demonstrate how modulo 'wraps around' values.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply modulo operator to create cyclical behavior",
+        "Use modulo for determining even/odd numbers",
+        "Implement algorithms requiring remainder calculations"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Confusing modulo (remainder) with division (quotient)",
+          "remedy": "Show side-by-side: 17/5 = 3 (quotient) while 17%5 = 2 (remainder)"
+        },
+        {
+          "misconception": "Not understanding negative number behavior with modulo",
+          "remedy": "Demonstrate that in Java, result sign matches dividend: -7%3 = -1, not 2"
+        }
+      ],
+      "prerequisites": ["division and remainder concepts", "understanding of cyclical patterns"],
+      "assessment_strategies": ["pattern generation exercises", "clock arithmetic problems", "even/odd detection tasks"]
     },
     {
       "id": "CSCD210-D2-S1-C3",
       "title": "Type Casting & Promotion",
       "name": "Type Casting & Promotion",
-      "description": "",
-      "level": 3
+      "description": "Students learn when and how Java automatically converts between data types, and when explicit casting is required. Understanding type conversion prevents data loss and runtime errors while enabling flexible numeric computations.",
+      "level": 3,
+      "learning_objectives": [
+        "Predict when Java performs automatic type conversions",
+        "Apply explicit casting to prevent compilation errors",
+        "Understand potential for data loss during narrowing conversions"
+      ],
+      "pedagogical_approach": "Use concrete examples showing data loss, emphasize compiler error messages as learning tools",
+      "real_world_applications": ["Converting user input between different numeric formats", "Handling data from different sources with varying precision requirements"]
     },
     {
       "id": "CSCD210-D2-S1-C3-A1",
       "title": "Explain implicit widening conversions",
       "name": "Explain implicit widening conversions",
-      "description": "",
-      "level": 4
+      "description": "Students understand that Java automatically converts smaller data types to larger ones (e.g., int to double) when no precision is lost. Common confusion: Students may not realize when widening occurs automatically. Teaching remedy: Show examples where int values become double in mixed arithmetic, emphasize that the conversion preserves all information safely.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify situations where automatic widening occurs",
+        "Understand the safety guarantee of widening conversions",
+        "Predict resulting data type in mixed arithmetic expressions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking all type conversions require explicit casting",
+          "remedy": "Show examples of automatic int-to-double conversion in arithmetic expressions"
+        },
+        {
+          "misconception": "Not understanding why some conversions are automatic while others aren't",
+          "remedy": "Explain safety principle: automatic conversions never lose information"
+        }
+      ],
+      "prerequisites": ["understanding of data type hierarchies", "concept of information preservation"],
+      "assessment_strategies": ["type prediction exercises", "mixed arithmetic evaluation problems"]
     },
     {
       "id": "CSCD210-D2-S1-C3-A2",
       "title": "Perform explicit casts safely",
       "name": "Perform explicit casts safely",
-      "description": "",
-      "level": 4
+      "description": "Students learn to use explicit casting syntax when converting larger types to smaller ones, understanding the risk of data loss. Common difficulty: Students forget that casting can truncate values. Teaching remedy: Demonstrate explicit examples showing how large double values lose decimal portions when cast to int, emphasize the programmer's responsibility to verify safe ranges.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply correct casting syntax for narrowing conversions",
+        "Understand potential for data loss during casting",
+        "Verify value ranges before performing risky casts"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming casting always preserves original values",
+          "remedy": "Show concrete examples: (int)3.7 becomes 3, (int)130.5 becomes 130"
+        },
+        {
+          "misconception": "Using casting to 'fix' type errors without understanding implications",
+          "remedy": "Emphasize that casting changes actual data, not just how compiler views it"
+        }
+      ],
+      "prerequisites": ["explicit casting syntax", "understanding of data type capacities"],
+      "assessment_strategies": ["casting prediction exercises", "data loss identification problems"]
     },
     {
       "id": "CSCD210-D2-S1-C3-A3",
       "title": "Avoid precision loss when mixing int and double",
       "name": "Avoid precision loss when mixing int and double",
-      "description": "",
-      "level": 4
+      "description": "Students develop strategies to prevent unintended precision loss when combining integer and floating-point arithmetic. Common pitfall: Students divide integers first, then assign to double, losing decimal precision. Teaching remedy: Show the difference between (double)(7/2) which gives 3.0, and (double)7/2 which gives 3.5, emphasizing order of operations matters.",
+      "level": 4,
+      "learning_objectives": [
+        "Recognize operations that may cause precision loss",
+        "Apply parentheses and casting to preserve decimal precision",
+        "Choose appropriate operation ordering for desired results"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking casting the result fixes precision loss that already occurred",
+          "remedy": "Show that (double)(7/2) = 3.0, not 3.5, because integer division happens first"
+        },
+        {
+          "misconception": "Not understanding when integer division vs floating-point division occurs",
+          "remedy": "Emphasize rule: if both operands are integers, result is integer regardless of destination variable type"
+        }
+      ],
+      "prerequisites": ["arithmetic operator precedence", "type conversion rules"],
+      "assessment_strategies": ["precision preservation exercises", "debugging mixed-type calculations"]
     },
     {
       "id": "CSCD210-D2-S2",
