@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "version": "3.0",
-    "created": "2025-08-18T23:15:15Z",
-  "last_updated": "2025-08-19T00:15:00Z",
-    "total_nodes": 34,
-  "total_links": 58
+    "version": "2.0",
+    "created": "2025-08-20T00:00:00Z",
+    "last_updated": "2025-08-20T00:00:00Z",
+    "description": "CSCD211 concept map aligned with official course description and Java-focused content.",
+    "total_nodes": 361,
+    "total_links": 360
   },
-{
   "nodes": [
     {
       "id": "N0",
