@@ -1,6 +1,6 @@
 # Concept Map Frontend (React + Vite)
 
-Interactive D3.js concept map UI that fetches data from the Spring Boot backend, with an option to load directly from a raw JSON URL.
+Interactive D3.js concept map UI that fetches data from a backend API (Spring Boot by default), with an option to load directly from a raw JSON URL.
 
 ## Scripts
 

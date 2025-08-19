@@ -1925,11 +1925,20 @@ const ConceptMapVisualization = () => {
   // tooltip. The current approach removes that extra visualization to keep the
   // card lightweight and focused on a single concept.
 
+  // Until the API responds we show a lightweight loading screen.
+  // Accessibility hints (`role`, `aria-*`) keep screen readers informed.
   if (loading) {
     return (
-      <div className="concept-map-loading">
+      <div
+        className="concept-map-loading"
+        role="status"
+        aria-live="polite"
+        aria-busy="true"
+      >
+        {/* CSS-only spinner keeps the bundle small yet signals progress */}
+        <div className="concept-map-spinner" />
         <h2>Loading Concept Map...</h2>
-        <p>Fetching data from Spring Boot backend...</p>
+        <p>Fetching data...</p>
       </div>
     );
   }
@@ -1939,7 +1948,7 @@ const ConceptMapVisualization = () => {
         <h2>Error Loading Concept Map</h2>
         <p>Error: {error}</p>
         <p>
-          Ensure the Spring Boot backend is running. Last endpoint tried:{' '}
+          Ensure the backend server is reachable. Last endpoint tried:{' '}
           <code>{endpointTried || 'http://127.0.0.1:8080/api/concept-map'}</code>.{' '}
           Also verify CORS allows this origin.
         </p>

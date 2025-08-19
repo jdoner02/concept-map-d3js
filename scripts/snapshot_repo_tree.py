@@ -3,7 +3,8 @@
 Snapshot repository tree to a Markdown file with line counts.
 
 Usage (from repo root):
-  python3 scripts/snapshot_repo_tree.py --out "_Test_Guardian_Homebase/data/repo-tree-$(date +%Y-%m-%d_%H-%M-%S).md"
+  # Save snapshot under docs/ so it can be browsed in the repo
+  python3 scripts/snapshot_repo_tree.py --out "docs/repo-tree-$(date +%Y-%m-%d_%H-%M-%S).md"
 
 Options:
   --root PATH          Root directory to scan (default: current working directory)

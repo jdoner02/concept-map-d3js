@@ -33,3 +33,10 @@ frontend/test-results/
 
 # Misc
 Thumbs.db
+
+# AI/dev tooling artifacts
+.ai-development/
+_Test_Guardian_Homebase/
+
+# Editor workspaces
+*.code-workspace
