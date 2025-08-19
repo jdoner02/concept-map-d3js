@@ -595,7 +595,6 @@
     { "source": "N63", "target": "N67" },
     { "source": "N64", "target": "N68" },
     { "source": "N65", "target": "N69" },
-    { "source": "N66", "target": "N70" },
-    // ... (Additional links connecting all remaining domains and nodes appropriately)
+    { "source": "N66", "target": "N70" }
   ]
 }
