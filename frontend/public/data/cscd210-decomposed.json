@@ -950,512 +950,1727 @@
       "id": "CSCD210-D2-S2",
       "title": "Expression Evaluation",
       "name": "Expression Evaluation",
-      "description": "Operator precedence and evaluation order.",
-      "level": 2
+      "description": "Students master how Java evaluates complex expressions containing multiple operators, understanding precedence rules and evaluation strategies that ensure predictable program behavior. This foundational skill prevents logic errors and enables construction of sophisticated computational expressions.",
+      "level": 2,
+      "learning_objectives": [
+        "Apply operator precedence rules to predict expression results",
+        "Use parentheses strategically to ensure intended evaluation order",
+        "Understand short-circuit evaluation in boolean expressions",
+        "Debug expressions by tracing step-by-step evaluation"
+      ],
+      "pedagogical_approach": "Break complex expressions into evaluation steps, use visual tracing, emphasize that unclear expressions should use explicit parentheses"
     },
     {
       "id": "CSCD210-D2-S2-C1",
       "title": "Operator Precedence",
       "name": "Operator Precedence",
-      "description": "",
-      "level": 3
+      "description": "Students learn the hierarchy of operator evaluation in Java, understanding that multiplication and division occur before addition and subtraction, and that assignment has the lowest precedence. Mastering precedence prevents logic errors and enables confident construction of mathematical expressions.",
+      "level": 3,
+      "learning_objectives": [
+        "Memorize standard operator precedence hierarchy",
+        "Trace expression evaluation following precedence rules",
+        "Identify when parentheses are needed to override default precedence",
+        "Write clear expressions that communicate intended evaluation order"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming left-to-right evaluation for all operators",
+          "remedy": "Show examples where precedence overrides left-to-right: 2 + 3 * 4 = 14, not 20"
+        }
+      ],
+      "pedagogical_approach": "Use mathematical expressions students recognize from algebra, create evaluation trees for complex expressions"
     },
     {
       "id": "CSCD210-D2-S2-C1-A1",
       "title": "Apply PEMDAS to Java expressions",
       "name": "Apply PEMDAS to Java expressions",
-      "description": "",
-      "level": 4
+      "description": "Students transfer their mathematical knowledge of order of operations (Parentheses, Exponents, Multiplication/Division, Addition/Subtraction) to Java programming context. Common confusion: Students may forget that programming follows the same mathematical rules they learned in algebra. Teaching remedy: Start with familiar math problems, then show equivalent Java expressions to reinforce that the rules are identical.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply mathematical order of operations to programming expressions",
+        "Recognize that Java follows standard mathematical precedence",
+        "Evaluate complex expressions step-by-step using PEMDAS"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking programming has different precedence rules than mathematics",
+          "remedy": "Emphasize that Java intentionally follows mathematical conventions for consistency"
+        },
+        {
+          "misconception": "Forgetting that multiplication and division have equal precedence (left-to-right)",
+          "remedy": "Show examples: 8/2*3 = 12 (not 8/6), emphasize left-to-right for equal precedence"
+        }
+      ],
+      "prerequisites": ["basic arithmetic operators", "mathematical order of operations"],
+      "assessment_strategies": ["step-by-step expression evaluation", "precedence prediction exercises"]
     },
     {
       "id": "CSCD210-D2-S2-C1-A2",
       "title": "Use parentheses to clarify intent",
       "name": "Use parentheses to clarify intent",
-      "description": "",
-      "level": 4
+      "description": "Students learn that parentheses serve dual purposes: overriding default precedence when needed, and making complex expressions easier to understand even when precedence is correct. Common oversight: Students write expressions that are technically correct but difficult for humans to parse. Teaching remedy: Emphasize that code is written once but read many times, so clarity is more valuable than brevity.",
+      "level": 4,
+      "learning_objectives": [
+        "Add parentheses to override default operator precedence",
+        "Use parentheses to improve code readability",
+        "Balance expression clarity with unnecessary complexity"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Believing extra parentheses hurt program performance",
+          "remedy": "Explain that compilers optimize away unnecessary parentheses, readability has no runtime cost"
+        },
+        {
+          "misconception": "Adding parentheses everywhere instead of learning precedence",
+          "remedy": "Teach when parentheses add clarity vs when they create clutter"
+        }
+      ],
+      "prerequisites": ["operator precedence rules", "concept of code readability"],
+      "assessment_strategies": ["expression clarification exercises", "peer code review for readability"]
     },
     {
       "id": "CSCD210-D2-S2-C1-A3",
       "title": "Predict evaluation of mixed operators",
       "name": "Predict evaluation of mixed operators",
-      "description": "",
-      "level": 4
+      "description": "Students develop skill in mentally tracing through expressions containing arithmetic, comparison, and logical operators with different precedence levels. Common difficulty: Students struggle when expressions mix different operator categories (arithmetic + comparison + logical). Teaching remedy: Create step-by-step evaluation tables showing how expressions like 'x > 5 && y < 10 * 2' are processed in phases.",
+      "level": 4,
+      "learning_objectives": [
+        "Evaluate expressions mixing arithmetic and boolean operators",
+        "Understand precedence relationships between operator categories",
+        "Trace evaluation order in complex multi-operator expressions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Not understanding that arithmetic operators execute before comparison operators",
+          "remedy": "Show examples: x > 3 + 2 evaluates as x > (3 + 2), not (x > 3) + 2"
+        },
+        {
+          "misconception": "Confusion when mixing comparison and logical operators",
+          "remedy": "Emphasize that comparisons produce boolean values that logical operators then process"
+        }
+      ],
+      "prerequisites": ["individual operator precedence rules", "understanding of boolean results from comparisons"],
+      "assessment_strategies": ["multi-operator evaluation exercises", "debugging precedence-related logic errors"]
     },
     {
       "id": "CSCD210-D2-S2-C2",
       "title": "Boolean Evaluation",
       "name": "Boolean Evaluation",
-      "description": "",
-      "level": 3
+      "description": "Students master how Java evaluates boolean expressions, particularly understanding short-circuit evaluation where the second part of an AND or OR expression may not execute if the first part determines the final result. This knowledge prevents runtime errors and enables efficient conditional logic.",
+      "level": 3,
+      "learning_objectives": [
+        "Understand short-circuit evaluation behavior in && and || operations",
+        "Write defensive code that prevents null pointer exceptions using short-circuiting",
+        "Optimize boolean expressions for both clarity and performance",
+        "Distinguish between short-circuit (&& ||) and non-short-circuit (& |) operators"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting all parts of boolean expressions to always execute",
+          "remedy": "Demonstrate with method calls that show when second conditions are skipped"
+        }
+      ],
+      "pedagogical_approach": "Use examples with method calls to make evaluation order visible, emphasize practical safety benefits"
     },
     {
       "id": "CSCD210-D2-S2-C2-A1",
       "title": "Short-circuit AND and OR",
       "name": "Short-circuit AND and OR",
-      "description": "",
-      "level": 4
+      "description": "Students learn that Java stops evaluating && expressions when the first part is false (since the whole expression must be false), and stops evaluating || expressions when the first part is true (since the whole expression must be true). Common application: Using this behavior to safely check for null before accessing object methods. Teaching example: 'if (obj != null && obj.getValue() > 0)' prevents null pointer exceptions.",
+      "level": 4,
+      "learning_objectives": [
+        "Predict when second conditions will be skipped in logical expressions",
+        "Use short-circuit evaluation to prevent runtime errors",
+        "Understand performance implications of condition ordering"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting all parts of && and || expressions to always execute",
+          "remedy": "Show examples where method calls in second condition don't happen when first condition determines result"
+        },
+        {
+          "misconception": "Not understanding the safety benefits for null checking",
+          "remedy": "Demonstrate null pointer exception prevention using proper condition ordering"
+        }
+      ],
+      "prerequisites": ["logical operators", "understanding of null values"],
+      "assessment_strategies": ["short-circuit prediction exercises", "null-safe condition writing"]
     },
     {
       "id": "CSCD210-D2-S2-C2-A2",
       "title": "Negate complex conditions with De Morgan",
       "name": "Negate complex conditions with De Morgan",
-      "description": "",
-      "level": 4
+      "description": "Students apply De Morgan's laws to transform complex boolean expressions, understanding that !(A && B) equals (!A || !B) and !(A || B) equals (!A && !B). Common difficulty: Students struggle with negating compound conditions correctly. Teaching remedy: Practice with concrete examples like '!(sunny && warm)' meaning 'not sunny OR not warm', showing that both conditions don't need to be false, just at least one.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply De Morgan's laws to negate compound boolean expressions",
+        "Transform complex conditions into equivalent simpler forms",
+        "Debug logical errors involving negated conditions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking !(A && B) equals (!A && !B) instead of (!A || !B)",
+          "remedy": "Use real-world examples: 'not (rich AND tall)' means 'poor OR short', not 'poor AND short'"
+        },
+        {
+          "misconception": "Applying negation incorrectly to comparison operators",
+          "remedy": "Show that !(x > 5) becomes (x <= 5), not (x < 5)"
+        }
+      ],
+      "prerequisites": ["logical operators", "boolean logic", "negation concept"],
+      "assessment_strategies": ["condition negation exercises", "logical equivalence problems"]
     },
     {
       "id": "CSCD210-D2-S2-C2-A3",
       "title": "Compare strings using equals",
       "name": "Compare strings using equals",
-      "description": "",
-      "level": 4
+      "description": "Students learn that string comparison in Java requires the .equals() method rather than == operator, understanding that == compares object references while .equals() compares content. Common error: Students use == for string comparison and get unpredictable results. Teaching remedy: Demonstrate that 'hello' == 'hello' may work due to string pooling, but new String('hello') == new String('hello') is always false, showing why .equals() is essential.",
+      "level": 4,
+      "learning_objectives": [
+        "Use .equals() method for reliable string content comparison",
+        "Understand the difference between reference equality (==) and content equality (.equals())",
+        "Handle null strings safely using proper equals patterns"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using == operator for string comparison assuming it compares content",
+          "remedy": "Show examples where == fails: new String('test') == new String('test') returns false"
+        },
+        {
+          "misconception": "Not understanding string pooling and when == might accidentally work",
+          "remedy": "Explain string literals vs new String() objects, emphasize .equals() as consistent approach"
+        }
+      ],
+      "prerequisites": ["String objects", "concept of object references", "null values"],
+      "assessment_strategies": ["string comparison debugging exercises", "reference vs content equality identification"]
     },
     {
       "id": "CSCD210-D2-S2-C3",
       "title": "Type Promotion",
       "name": "Type Promotion",
-      "description": "",
-      "level": 3
+      "description": "Students understand how Java automatically promotes smaller numeric types to larger ones during arithmetic operations, ensuring mathematical accuracy while sometimes producing unexpected results. This concept builds on type casting knowledge and prepares students for handling mixed-type calculations effectively.",
+      "level": 3,
+      "learning_objectives": [
+        "Predict when automatic type promotion occurs in expressions",
+        "Understand the promotion hierarchy: byte → short → int → long → float → double",
+        "Handle mixed arithmetic operations correctly",
+        "Recognize when explicit casting is needed vs automatic promotion"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Not realizing that byte and short operations promote to int",
+          "remedy": "Show that byte + byte produces int result, requiring cast back to byte if needed"
+        }
+      ],
+      "pedagogical_approach": "Use examples showing unexpected int results from byte/short arithmetic, emphasize safety of widening conversions"
     },
     {
       "id": "CSCD210-D2-S2-C3-A1",
       "title": "Observe automatic widening",
       "name": "Observe automatic widening",
-      "description": "",
-      "level": 4
+      "description": "Students recognize situations where Java automatically converts values to wider data types, observing this behavior in mixed arithmetic and assignment operations. Common surprise: Students may not expect byte or short operations to become int automatically. Teaching remedy: Show practical examples where byte arithmetic requires casting back to byte, demonstrating Java's conservative approach to preventing overflow.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify operations that trigger automatic widening",
+        "Understand that Java promotes to prevent data loss",
+        "Recognize widening in assignment and method parameter contexts"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting byte + byte to remain byte type",
+          "remedy": "Demonstrate that Java promotes to int to prevent overflow, requires explicit cast back to byte"
+        },
+        {
+          "misconception": "Not understanding when char participates in numeric promotion",
+          "remedy": "Show that char arithmetic promotes to int, revealing underlying Unicode values"
+        }
+      ],
+      "prerequisites": ["numeric data type hierarchy", "arithmetic operators"],
+      "assessment_strategies": ["type prediction exercises", "widening identification in code samples"]
     },
     {
       "id": "CSCD210-D2-S2-C3-A2",
       "title": "Detect narrowing warnings",
       "name": "Detect narrowing warnings",
-      "description": "",
-      "level": 4
+      "description": "Students learn to recognize and respond to compiler warnings about potential data loss when assigning larger types to smaller variables. Common oversight: Students may ignore warnings without understanding the implications. Teaching remedy: Show specific examples where int values like 300 cannot fit in byte variables (which hold only -128 to 127), resulting in unexpected wraparound behavior.",
+      "level": 4,
+      "learning_objectives": [
+        "Interpret compiler warnings about possible lossy conversions",
+        "Understand data range limitations for smaller integer types",
+        "Use explicit casting when narrowing is intentional"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Ignoring compiler warnings about narrowing conversions",
+          "remedy": "Show concrete examples of data loss: assigning 300 to byte results in 44 due to overflow"
+        },
+        {
+          "misconception": "Not understanding value range limits for smaller types",
+          "remedy": "Demonstrate byte range (-128 to 127) and short range (-32768 to 32767) with overflow examples"
+        }
+      ],
+      "prerequisites": ["data type ranges", "concept of overflow"],
+      "assessment_strategies": ["compiler warning interpretation exercises", "data loss prediction problems"]
     },
     {
       "id": "CSCD210-D2-S2-C3-A3",
       "title": "Combine ints and doubles correctly",
       "name": "Combine ints and doubles correctly",
-      "description": "",
-      "level": 4
+      "description": "Students master the interaction between integer and floating-point arithmetic, understanding that any operation involving a double promotes the entire expression to double precision. Common pitfall: Students perform integer division first, losing precision before converting to double. Teaching remedy: Show the difference between (double)(7/2) which gives 3.0 and 7/2.0 which gives 3.5, emphasizing the importance of having at least one floating-point operand.",
+      "level": 4,
+      "learning_objectives": [
+        "Predict result types when mixing int and double operations",
+        "Preserve precision by ensuring floating-point context",
+        "Understand promotion precedence in mixed expressions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting integer division to become floating-point when assigned to double variable",
+          "remedy": "Show that int/int produces int result regardless of destination variable type"
+        },
+        {
+          "misconception": "Not understanding that one floating-point operand promotes entire expression",
+          "remedy": "Demonstrate: 7/2 = 3, but 7.0/2 = 3.5 and 7/2.0 = 3.5"
+        }
+      ],
+      "prerequisites": ["integer vs floating-point division", "type promotion rules"],
+      "assessment_strategies": ["mixed arithmetic prediction exercises", "precision preservation problems"]
     },
     {
       "id": "CSCD210-D2-S3",
       "title": "Assignment Operators",
       "name": "Assignment Operators",
-      "description": "Compound assignments and increment/decrement.",
-      "level": 2
+      "description": "Students master efficient coding techniques using compound assignment operators (+=, -=, *=, /=) and increment/decrement operators (++, --), understanding both their convenience and potential pitfalls. These operators are fundamental for loop construction and accumulator patterns essential in algorithmic programming.",
+      "level": 2,
+      "learning_objectives": [
+        "Use compound assignment operators for concise variable updates",
+        "Understand pre-increment vs post-increment behavior and applications",
+        "Apply increment operators correctly in loop contexts",
+        "Recognize hidden type casting in compound assignments"
+      ],
+      "pedagogical_approach": "Start with simple examples, build to complex expressions, emphasize readability vs cleverness",
+      "real_world_applications": ["Loop counters", "accumulator patterns", "efficient memory updates"]
     },
     {
       "id": "CSCD210-D2-S3-C1",
       "title": "Compound Assignment",
       "name": "Compound Assignment",
-      "description": "",
-      "level": 3
+      "description": "Students learn to use compound assignment operators as shorthand for common variable update patterns, understanding that 'x += 5' is equivalent to 'x = x + 5' but more concise and sometimes more efficient. These operators are essential for accumulator patterns and reduce repetitive typing in mathematical computations.",
+      "level": 3,
+      "learning_objectives": [
+        "Use +=, -=, *=, /=, %= operators correctly",
+        "Understand equivalence between compound and expanded forms",
+        "Apply compound assignments for accumulator patterns",
+        "Recognize automatic type casting in compound operations"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking compound operators are only cosmetic shortcuts",
+          "remedy": "Explain that compound operators include implicit casting that expanded form doesn't"
+        }
+      ],
+      "pedagogical_approach": "Show side-by-side expanded vs compound forms, emphasize accumulator use cases"
     },
     {
       "id": "CSCD210-D2-S3-C1-A1",
       "title": "Use +=, -=, *=, /= correctly",
       "name": "Use +=, -=, *=, /= correctly",
-      "description": "",
-      "level": 4
+      "description": "Students practice applying compound assignment operators in various contexts, understanding proper syntax and behavior. Common error: Students may forget that the operator modifies the original variable. Teaching remedy: Emphasize that 'total += amount' both reads the current value of total and updates it with the new sum, contrasting with creating new variables.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply compound operators with correct syntax",
+        "Understand that compound assignment modifies the original variable",
+        "Use appropriate compound operator for each mathematical operation"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking compound assignments create new variables",
+          "remedy": "Emphasize that x += 5 modifies x itself, doesn't create a new variable"
+        },
+        {
+          "misconception": "Using compound operators incorrectly with final variables",
+          "remedy": "Show compiler errors when trying to modify final variables with compound operators"
+        }
+      ],
+      "prerequisites": ["basic assignment operator", "arithmetic operators"],
+      "assessment_strategies": ["compound operator substitution exercises", "accumulator pattern implementation"]
     },
     {
       "id": "CSCD210-D2-S3-C1-A2",
       "title": "Update counters efficiently",
       "name": "Update counters efficiently",
-      "description": "",
-      "level": 4
+      "description": "Students apply compound assignment operators to implement counter and accumulator patterns that are fundamental in programming algorithms. Common pattern: Using += to build running totals and counters in data processing. Teaching example: Show how 'count += 1' and 'sum += currentValue' create essential accumulator patterns used throughout programming.",
+      "level": 4,
+      "learning_objectives": [
+        "Implement counter patterns using compound assignment",
+        "Build accumulator algorithms for sum, product, and counting",
+        "Choose appropriate compound operators for different accumulation needs"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Not understanding accumulator patterns as fundamental algorithms",
+          "remedy": "Show how accumulators are building blocks for loops, statistics, and data processing"
+        },
+        {
+          "misconception": "Using compound operators incorrectly for conditional updates",
+          "remedy": "Emphasize that compound operators always perform the operation, unlike conditional logic"
+        }
+      ],
+      "prerequisites": ["loop concepts", "variable modification"],
+      "assessment_strategies": ["accumulator implementation exercises", "counter pattern problems"]
     },
     {
       "id": "CSCD210-D2-S3-C1-A3",
       "title": "Avoid hidden casting with compound ops",
       "name": "Avoid hidden casting with compound ops",
-      "description": "",
-      "level": 4
+      "description": "Students understand that compound assignment operators perform implicit casting that the expanded equivalent does not, which can mask type conversion issues. Common surprise: 'byte b = 10; b += 5;' compiles successfully, but 'byte b = 10; b = b + 5;' produces a compiler error. Teaching remedy: Explain that compound operators include automatic casting to the variable's type, which can hide potential overflow issues.",
+      "level": 4,
+      "learning_objectives": [
+        "Understand implicit casting in compound assignment operations",
+        "Recognize when compound operators mask type conversion issues",
+        "Choose between compound and expanded forms based on type safety needs"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting compound and expanded forms to have identical compiler behavior",
+          "remedy": "Show that 'byte b += 5' compiles but 'byte b = b + 5' doesn't due to implicit int promotion"
+        },
+        {
+          "misconception": "Not understanding that hidden casting can mask overflow",
+          "remedy": "Demonstrate potential overflow when compound operators automatically cast back to smaller types"
+        }
+      ],
+      "prerequisites": ["type casting concepts", "compiler error interpretation"],
+      "assessment_strategies": ["compound vs expanded form comparison exercises", "type safety analysis problems"]
     },
     {
       "id": "CSCD210-D2-S3-C2",
       "title": "Increment & Decrement",
       "name": "Increment & Decrement",
-      "description": "",
-      "level": 3
+      "description": "Students master the ++ and -- operators, understanding the crucial difference between pre-increment (++x) and post-increment (x++) forms. These operators are essential for loop construction and iterator patterns, but their subtlety in expressions requires careful understanding to prevent bugs.",
+      "level": 3,
+      "learning_objectives": [
+        "Distinguish between pre-increment and post-increment behavior",
+        "Use increment operators appropriately in loop contexts",
+        "Understand side effects and evaluation order in expressions",
+        "Avoid common pitfalls with increment operators in complex expressions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking ++ and -- only affect variables after statement completion",
+          "remedy": "Show that pre-increment changes value before use, post-increment changes after use in same expression"
+        }
+      ],
+      "pedagogical_approach": "Start with simple standalone statements, progress to complex expressions, emphasize loop usage patterns"
     },
     {
       "id": "CSCD210-D2-S3-C2-A1",
       "title": "Distinguish pre- vs post-increment",
       "name": "Distinguish pre- vs post-increment",
-      "description": "",
-      "level": 4
+      "description": "Students learn that ++x increments x and returns the new value, while x++ increments x but returns the original value. Common confusion: Students may not understand when this difference matters. Teaching remedy: Use concrete examples like 'int a = 5; int b = ++a;' (b gets 6) versus 'int a = 5; int b = a++;' (b gets 5), showing how the timing of increment affects expression results.",
+      "level": 4,
+      "learning_objectives": [
+        "Predict results of pre-increment vs post-increment in expressions",
+        "Understand when increment timing affects program behavior",
+        "Choose appropriate increment form based on intended logic"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking pre and post increment always produce the same results",
+          "remedy": "Show side-by-side examples where timing makes a difference in expression evaluation"
+        },
+        {
+          "misconception": "Not understanding that both forms modify the variable",
+          "remedy": "Emphasize that both ++x and x++ change x's value, only return value differs"
+        }
+      ],
+      "prerequisites": ["assignment operations", "expression evaluation"],
+      "assessment_strategies": ["increment timing prediction exercises", "expression result evaluation problems"]
     },
     {
       "id": "CSCD210-D2-S3-C2-A2",
       "title": "Use ++ in loops safely",
       "name": "Use ++ in loops safely",
-      "description": "",
-      "level": 4
+      "description": "Students apply increment operators correctly in loop contexts, understanding that for simple loop counters, both ++i and i++ work identically in the increment section. Common best practice: Many programmers prefer ++i for consistency and slight efficiency benefits. Teaching emphasis: In loop increment sections, pre vs post doesn't matter for the loop behavior, but using increment operators correctly is essential for loop termination.",
+      "level": 4,
+      "learning_objectives": [
+        "Use increment operators correctly in for loop increment sections",
+        "Understand that pre/post distinction doesn't affect basic loop behavior",
+        "Apply increment operators for array traversal and counting patterns"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Overthinking pre vs post increment choice in simple loop contexts",
+          "remedy": "Show that for(int i=0; i<10; i++) and for(int i=0; i<10; ++i) behave identically"
+        },
+        {
+          "misconception": "Using increment operators incorrectly in loop conditions",
+          "remedy": "Emphasize that increment belongs in increment section, not condition section of loops"
+        }
+      ],
+      "prerequisites": ["for loop structure", "increment operators"],
+      "assessment_strategies": ["loop construction exercises", "increment placement identification"]
     },
     {
       "id": "CSCD210-D2-S3-C2-A3",
       "title": "Explain side effects in expressions",
       "name": "Explain side effects in expressions",
-      "description": "",
-      "level": 4
+      "description": "Students understand that increment and decrement operators cause side effects (changing variable values) that can make expressions difficult to read and debug. Common pitfall: Using multiple increment operators on the same variable in one expression. Teaching remedy: Show examples like 'array[i++] = ++i' that produce undefined behavior, emphasizing that clarity should take precedence over cleverness.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify side effects caused by increment/decrement operators",
+        "Understand why multiple side effects in one expression are problematic",
+        "Write clear expressions that avoid confusing side effects"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking complex expressions with multiple increments are more efficient",
+          "remedy": "Show that unclear expressions cause bugs and maintenance problems that outweigh any minor efficiency gains"
+        },
+        {
+          "misconception": "Not understanding that side effect timing can be undefined",
+          "remedy": "Demonstrate expressions where evaluation order affects results unpredictably"
+        }
+      ],
+      "prerequisites": ["increment/decrement operators", "expression evaluation"],
+      "assessment_strategies": ["side effect identification exercises", "expression clarity evaluation"]
     },
     {
       "id": "CSCD210-D2-S3-C3",
       "title": "Assignment Evaluation Order",
       "name": "Assignment Evaluation Order",
-      "description": "",
-      "level": 3
+      "description": "Students learn how Java evaluates complex assignment expressions, understanding right-to-left evaluation for assignment operators and the importance of writing clear, maintainable code rather than overly clever expressions. This knowledge prevents bugs and promotes professional code readability.",
+      "level": 3,
+      "learning_objectives": [
+        "Understand right-to-left evaluation of assignment operators",
+        "Predict results of chained assignments",
+        "Prioritize code clarity over complex assignment tricks",
+        "Recognize when assignment expressions become unmaintainable"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming all operators evaluate left-to-right",
+          "remedy": "Show that assignment is right-associative: a = b = c assigns c to b, then b to a"
+        }
+      ],
+      "pedagogical_approach": "Start with simple chained assignments, emphasize readability principles over complexity"
     },
     {
       "id": "CSCD210-D2-S3-C3-A1",
       "title": "Predict result of chained assignments",
       "name": "Predict result of chained assignments",
-      "description": "",
-      "level": 4
+      "description": "Students trace through chained assignment statements like 'a = b = c = 5', understanding that assignment operators evaluate right-to-left, so this assigns 5 to c, then c's value to b, then b's value to a. Common confusion: Students may expect left-to-right evaluation. Teaching remedy: Show step-by-step evaluation: first c=5, then b=(c=5), then a=(b=(c=5)), emphasizing the right-associative nature.",
+      "level": 4,
+      "learning_objectives": [
+        "Trace evaluation order in chained assignment expressions",
+        "Understand right-associative behavior of assignment operators",
+        "Predict final variable values after chained assignments"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Expecting assignment to evaluate left-to-right like arithmetic",
+          "remedy": "Show explicit parentheses: a = b = c becomes a = (b = c), not (a = b) = c"
+        },
+        {
+          "misconception": "Not understanding that assignment expressions return values",
+          "remedy": "Explain that assignment both changes the variable and returns the assigned value"
+        }
+      ],
+      "prerequisites": ["assignment operator basics", "expression evaluation"],
+      "assessment_strategies": ["chained assignment tracing exercises", "evaluation order prediction problems"]
     },
     {
       "id": "CSCD210-D2-S3-C3-A2",
       "title": "Avoid unreadable assignment tricks",
       "name": "Avoid unreadable assignment tricks",
-      "description": "",
-      "level": 4
+      "description": "Students recognize that while complex assignment expressions are technically possible, they often reduce code readability and maintainability. Common temptation: Students may try to show cleverness with expressions like 'while((line = reader.readLine()) != null)'. Teaching guidance: Explain when such patterns are appropriate (like the common input loop pattern) versus when they should be avoided for clarity.",
+      "level": 4,
+      "learning_objectives": [
+        "Recognize the difference between useful and unnecessarily complex assignment patterns",
+        "Balance code conciseness with readability",
+        "Understand when assignment in expressions is conventional vs confusing"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Believing complex expressions always demonstrate programming skill",
+          "remedy": "Emphasize that professional code prioritizes maintainability and team understanding"
+        },
+        {
+          "misconception": "Not understanding conventional patterns vs unnecessary complexity",
+          "remedy": "Show examples of accepted patterns (like input loops) versus unnecessarily complex assignments"
+        }
+      ],
+      "prerequisites": ["assignment operators", "code readability principles"],
+      "assessment_strategies": ["code clarity evaluation exercises", "refactoring complex assignments for readability"]
     },
     {
       "id": "CSCD210-D2-S3-C3-A3",
       "title": "Place side effects intentionally",
       "name": "Place side effects intentionally",
-      "description": "",
-      "level": 4
+      "description": "Students learn to use assignment expressions deliberately in appropriate contexts while avoiding accidental side effects that make code unpredictable. Common appropriate use: Assignment in loop conditions for input processing. Teaching principle: Side effects should be intentional, documented, and follow established patterns rather than being clever shortcuts that confuse readers.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify when assignment expressions serve legitimate purposes",
+        "Avoid accidental side effects in complex expressions",
+        "Document intentional side effects for code maintainability"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using assignment expressions everywhere to reduce line count",
+          "remedy": "Show that fewer lines doesn't mean better code if readability suffers"
+        },
+        {
+          "misconception": "Not understanding that side effects can make debugging difficult",
+          "remedy": "Demonstrate how assignment in expressions can hide the source of variable changes"
+        }
+      ],
+      "prerequisites": ["side effects understanding", "professional coding standards"],
+      "assessment_strategies": ["intentional vs accidental side effect identification", "code review for appropriate assignment usage"]
     },
     {
       "id": "CSCD210-D3",
       "title": "Control Structures",
       "name": "Control Structures",
-      "description": "Decision making and repetition mechanisms that govern program flow.",
-      "level": 1
+      "description": "Students master the fundamental mechanisms that control program execution flow, including conditional statements (if/else, switch) and repetition structures (while, for, do-while loops). These constructs transform linear programs into dynamic, decision-making applications that can respond to user input and process varying amounts of data efficiently.",
+      "level": 1,
+      "learning_objectives": [
+        "Implement conditional logic using if/else statements and boolean expressions",
+        "Design and construct all three types of loops for different iteration scenarios",
+        "Apply control structures to solve real-world programming problems",
+        "Understand when to use each control structure for optimal code clarity and efficiency"
+      ],
+      "pedagogical_approach": "Start with simple decisions, build to complex nested structures, emphasize problem-solving patterns",
+      "real_world_applications": ["User input validation", "data processing workflows", "game logic", "business rule implementation"]
     },
     {
       "id": "CSCD210-D3-S1",
       "title": "Conditional Logic",
       "name": "Conditional Logic",
-      "description": "Branching based on relational and logical expressions.",
-      "level": 2
+      "description": "Students learn to implement decision-making in programs using if/else statements, boolean expressions, and logical operators. This foundational skill enables programs to respond differently based on user input, data values, or calculated conditions, forming the basis for interactive and intelligent software behavior.",
+      "level": 2,
+      "learning_objectives": [
+        "Construct conditional statements using proper if/else syntax",
+        "Combine multiple conditions using logical operators (&&, ||, !)",
+        "Design nested decision structures for complex logic requirements",
+        "Apply conditional logic to validate input and implement business rules"
+      ],
+      "pedagogical_approach": "Begin with simple two-way decisions, progress to multi-way structures, emphasize real-world decision scenarios",
+      "common_misconceptions": [
+        {
+          "misconception": "Using assignment (=) instead of comparison (==) in conditions",
+          "remedy": "Emphasize the difference between assignment and equality testing"
+        }
+      ]
     },
     {
       "id": "CSCD210-D3-S1-C1",
       "title": "Combine Relational Operators",
       "name": "Combine Relational Operators",
-      "description": "",
-      "level": 3
+      "description": "Students master the use of comparison operators (>, <, >=, <=, ==, !=) and learn to combine them with logical operators to create sophisticated conditional expressions. This skill is essential for input validation, range checking, and implementing complex business logic in programs.",
+      "level": 3,
+      "learning_objectives": [
+        "Use all six relational operators correctly in conditional expressions",
+        "Chain multiple comparisons using logical AND (&&) and OR (||)",
+        "Apply appropriate comparison operators for range and boundary checking",
+        "Write readable compound conditions with proper parentheses"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Confusing assignment (=) with equality (==) in conditions",
+          "remedy": "Practice with concrete examples showing the difference between setting and testing values"
+        },
+        {
+          "misconception": "Misunderstanding boundary conditions with >= vs >",
+          "remedy": "Use number line examples to clarify inclusive vs exclusive boundaries"
+        }
+      ],
+      "pedagogical_approach": "Start with single comparisons, build to compound conditions, use real-world scenarios like age verification or grade boundaries"
     },
     {
       "id": "CSCD210-D3-S1-C1-A1",
       "title": "Use >, <, >=, <= appropriately",
       "name": "Use >, <, >=, <= appropriately",
-      "description": "",
-      "level": 4
+      "description": "Students learn to choose the correct relational operator based on whether boundaries should be inclusive or exclusive. Common confusion: Students may not understand when to use >= versus > for boundary conditions. Teaching remedy: Use concrete examples like 'age >= 18 for voting' (inclusive) versus 'score > 90 for an A+' (exclusive), helping students understand the logical meaning behind boundary decisions.",
+      "level": 4,
+      "learning_objectives": [
+        "Choose appropriate operators for inclusive vs exclusive boundaries",
+        "Understand the logical meaning of each relational operator",
+        "Apply correct operators for range checking and validation"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Not understanding the difference between >= and > for boundary conditions",
+          "remedy": "Use number line visualizations and real-world examples like age requirements or grade boundaries"
+        },
+        {
+          "misconception": "Randomly choosing operators without considering the logical requirement",
+          "remedy": "Practice with specific scenarios that clearly define whether boundaries are inclusive or exclusive"
+        }
+      ],
+      "prerequisites": ["boolean expressions", "concept of mathematical inequalities"],
+      "assessment_strategies": ["boundary condition identification exercises", "real-world validation scenarios"]
     },
     {
       "id": "CSCD210-D3-S1-C1-A2",
       "title": "Chain comparisons with &&",
       "name": "Chain comparisons with &&",
-      "description": "",
-      "level": 4
+      "description": "Students learn to combine multiple comparison expressions using the logical AND operator to create range checks and compound conditions. Common pattern: Checking if a value falls within a specific range using expressions like 'age >= 18 && age <= 65'. Teaching emphasis: Show how && requires ALL conditions to be true, making it perfect for defining valid ranges or ensuring multiple requirements are met simultaneously.",
+      "level": 4,
+      "learning_objectives": [
+        "Combine multiple comparisons using logical AND (&&)",
+        "Create range checking conditions for input validation",
+        "Understand that && requires all conditions to be true"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Trying to write range checks like '18 <= age <= 65' which doesn't work in Java",
+          "remedy": "Show that range checks must be written as 'age >= 18 && age <= 65' using explicit comparison for each boundary"
+        },
+        {
+          "misconception": "Confusing when to use && versus || for compound conditions",
+          "remedy": "Emphasize that && means 'both conditions must be true' while || means 'at least one condition must be true'"
+        }
+      ],
+      "prerequisites": ["individual relational operators", "logical AND concept"],
+      "assessment_strategies": ["range validation implementation", "compound condition truth table exercises"]
     },
     {
       "id": "CSCD210-D3-S1-C1-A3",
       "title": "Readability through parentheses",
       "name": "Readability through parentheses",
-      "description": "",
-      "level": 4
+      "description": "Students learn to use parentheses strategically to make complex boolean expressions clear and unambiguous, even when operator precedence rules would produce the same result. Common challenge: Complex expressions mixing &&, ||, and ! operators can be difficult to read. Teaching principle: Parentheses cost nothing at runtime but greatly improve code maintainability by making the programmer's intent explicit to human readers.",
+      "level": 4,
+      "learning_objectives": [
+        "Use parentheses to clarify complex boolean expressions",
+        "Group related conditions logically for better readability",
+        "Balance operator precedence knowledge with explicit clarity"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Believing that unnecessary parentheses hurt program performance",
+          "remedy": "Explain that compilers optimize away extra parentheses, so clarity has no runtime cost"
+        },
+        {
+          "misconception": "Either avoiding parentheses completely or using them excessively",
+          "remedy": "Show examples where parentheses add meaningful clarity versus where they create visual clutter"
+        }
+      ],
+      "prerequisites": ["boolean operator precedence", "complex boolean expressions"],
+      "assessment_strategies": ["expression clarity improvement exercises", "peer code review for readability"]
     },
     {
       "id": "CSCD210-D3-S1-C2",
       "title": "Nested if/else",
       "name": "Nested if/else",
-      "description": "",
-      "level": 3
+      "description": "Students master the construction of nested conditional statements to handle complex, multi-level decision scenarios. This advanced technique allows programs to implement sophisticated logic trees where decisions depend on the results of previous decisions, essential for real-world applications with complex business rules.",
+      "level": 3,
+      "learning_objectives": [
+        "Structure multi-level decision trees using nested if/else statements",
+        "Choose between nested if/else and if/else-if chains based on logic requirements",
+        "Implement proper indentation and bracket placement for code readability",
+        "Design default cases using final else clauses"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Creating unnecessarily deep nesting when simpler alternatives exist",
+          "remedy": "Show when to use if/else-if chains versus true nesting based on the decision logic"
+        },
+        {
+          "misconception": "Forgetting to handle all possible cases in nested structures",
+          "remedy": "Emphasize importance of else clauses and systematic case analysis"
+        }
+      ],
+      "pedagogical_approach": "Start with two-level nesting, progress to more complex structures, emphasize code organization and readability"
     },
     {
       "id": "CSCD210-D3-S1-C2-A1",
       "title": "Structure multi-way decisions",
       "name": "Structure multi-way decisions",
-      "description": "",
-      "level": 4
+      "description": "Students learn to organize complex decision logic using either nested if/else statements or if/else-if chains, choosing the most appropriate structure based on the relationship between conditions. Common decision: Use nesting when decisions are truly hierarchical (like checking age first, then checking income), but use if/else-if chains when testing mutually exclusive categories (like letter grades A, B, C, D, F).",
+      "level": 4,
+      "learning_objectives": [
+        "Choose between nested if/else and if/else-if chains based on decision logic",
+        "Structure hierarchical decisions using appropriate nesting levels",
+        "Organize mutually exclusive choices using if/else-if patterns"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Always using nesting when if/else-if chains would be clearer",
+          "remedy": "Show examples where flat if/else-if structure is more appropriate for mutually exclusive options"
+        },
+        {
+          "misconception": "Not understanding when decisions are truly hierarchical versus independent",
+          "remedy": "Use decision trees and flowcharts to visualize the logical relationship between conditions"
+        }
+      ],
+      "prerequisites": ["basic if/else statements", "logical decision analysis"],
+      "assessment_strategies": ["decision structure design exercises", "logic flow diagram creation"]
     },
     {
       "id": "CSCD210-D3-S1-C2-A2",
       "title": "Guard against ladder complexity",
       "name": "Guard against ladder complexity",
-      "description": "",
-      "level": 4
+      "description": "Students recognize when nested if/else structures become too complex and learn to refactor them for better readability and maintainability. Common problem: 'Arrow code' where deep nesting creates a ladder-like appearance that's difficult to follow. Teaching solution: Show techniques like early returns, guard clauses, and restructuring logic to reduce nesting depth while preserving the same decision-making behavior.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify when nesting becomes too complex for maintainability",
+        "Apply refactoring techniques to reduce nesting depth",
+        "Use guard clauses and early returns to simplify control flow"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking deeper nesting always means more sophisticated programming",
+          "remedy": "Show that professional code prioritizes readability and maintainability over clever complexity"
+        },
+        {
+          "misconception": "Not recognizing when logic can be simplified or restructured",
+          "remedy": "Practice with refactoring exercises that maintain the same behavior while improving structure"
+        }
+      ],
+      "prerequisites": ["nested control structures", "code refactoring concepts"],
+      "assessment_strategies": ["code complexity identification exercises", "nesting refactoring problems"]
     },
     {
       "id": "CSCD210-D3-S1-C2-A3",
       "title": "Default cases with else",
       "name": "Default cases with else",
-      "description": "",
-      "level": 4
+      "description": "Students learn the importance of providing else clauses to handle unexpected or default cases in conditional logic, ensuring that programs behave predictably in all scenarios. Common oversight: Students may forget that not all possible input values are explicitly handled by their if conditions. Teaching emphasis: Final else clauses serve as safety nets that prevent programs from silently ignoring unexpected conditions.",
+      "level": 4,
+      "learning_objectives": [
+        "Include appropriate else clauses to handle all possible cases",
+        "Design meaningful default behaviors for unexpected conditions",
+        "Ensure complete case coverage in conditional logic"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming that if/else-if chains will always match one of the explicit conditions",
+          "remedy": "Show examples where user input or data doesn't match any expected case"
+        },
+        {
+          "misconception": "Using empty else blocks without providing meaningful default behavior",
+          "remedy": "Emphasize that else clauses should handle unexpected cases gracefully, not just exist for syntax"
+        }
+      ],
+      "prerequisites": ["if/else statement structure", "comprehensive case analysis"],
+      "assessment_strategies": ["case coverage analysis exercises", "default behavior design problems"]
     },
     {
       "id": "CSCD210-D3-S1-C3",
       "title": "De Morgan Simplification",
       "name": "De Morgan Simplification",
-      "description": "",
-      "level": 3
+      "description": "Students apply De Morgan's laws to simplify complex boolean expressions by transforming negated compound conditions into logically equivalent but more readable forms. This mathematical principle helps students write cleaner conditional logic and better understand the relationship between AND/OR operations when negation is involved.",
+      "level": 3,
+      "learning_objectives": [
+        "Apply De Morgan's laws to transform !(a && b) into !a || !b and vice versa",
+        "Simplify complex negated boolean expressions for improved readability",
+        "Verify logical equivalence using truth tables and testing",
+        "Choose between equivalent expressions based on code clarity"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking that negating both sides of an expression is equivalent to negating the whole expression",
+          "remedy": "Show concrete examples where !(a && b) is not the same as !a && !b"
+        },
+        {
+          "misconception": "Applying De Morgan's laws incorrectly by not changing the operator",
+          "remedy": "Emphasize that both the variables AND the operator must change: && becomes ||, || becomes &&"
+        }
+      ],
+      "prerequisites": ["boolean logic", "logical operators", "negation"],
+      "assessment_strategies": ["expression transformation exercises", "truth table verification", "code readability comparisons"],
+      "pedagogical_approach": "Start with simple examples, use truth tables to verify equivalence, progress to practical code scenarios"
     },
     {
       "id": "CSCD210-D3-S1-C3-A1",
       "title": "Transform !(a && b) into !a || !b",
       "name": "Transform !(a && b) into !a || !b",
-      "description": "",
-      "level": 4
+      "description": "Students master the fundamental De Morgan transformation where a negated AND expression becomes an OR of negated terms. Critical understanding: When you negate a compound AND condition, each individual condition becomes negated AND the operator changes from && to ||. Real example: !(age >= 18 && hasLicense) becomes (age < 18 || !hasLicense) - meaning 'either under 18 OR doesn't have license'.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply the !(a && b) = !a || !b transformation correctly",
+        "Recognize when this transformation improves code readability",
+        "Understand the logical meaning of the transformed expression"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Forgetting to change the && operator to || when applying the transformation",
+          "remedy": "Emphasize that BOTH the negation AND the operator must change"
+        },
+        {
+          "misconception": "Incorrectly transforming !(a && b) to !a && !b",
+          "remedy": "Use truth tables to show these expressions are not equivalent"
+        }
+      ],
+      "prerequisites": ["logical AND operations", "negation operator", "boolean logic"],
+      "assessment_strategies": ["step-by-step transformation exercises", "truth table verification"]
     },
     {
       "id": "CSCD210-D3-S1-C3-A2",
       "title": "Reduce complex negations",
       "name": "Reduce complex negations",
-      "description": "",
-      "level": 4
+      "description": "Students learn to simplify deeply nested or multiple negations in boolean expressions to improve code clarity and reduce logical errors. Common scenario: Expressions like !(!(a || b) && c) can be systematically reduced using De Morgan's laws and double negation elimination. Teaching emphasis: Complex negations are error-prone and hard to debug, so simplification is both a clarity and correctness issue.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify opportunities to reduce complex negations for clarity",
+        "Apply De Morgan's laws iteratively to simplify nested expressions",
+        "Eliminate double negations using the !!a = a rule"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Attempting to simplify complex expressions without systematic step-by-step approach",
+          "remedy": "Teach methodical application of rules: work from inside parentheses outward"
+        },
+        {
+          "misconception": "Not recognizing that complex negations often indicate poorly designed logic",
+          "remedy": "Show how restructuring the original logic can eliminate need for complex negations"
+        }
+      ],
+      "prerequisites": ["De Morgan's laws", "operator precedence", "boolean expression evaluation"],
+      "assessment_strategies": ["step-by-step simplification exercises", "code refactoring for clarity"]
     },
     {
       "id": "CSCD210-D3-S1-C3-A3",
       "title": "Verify equivalence with truth tables",
       "name": "Verify equivalence with truth tables",
-      "description": "",
-      "level": 4
+      "description": "Students use truth tables as a systematic method to verify that De Morgan transformations and other boolean simplifications produce logically equivalent expressions. This verification technique builds confidence in algebraic manipulations and provides a concrete way to check work when simplifying complex boolean logic.",
+      "level": 4,
+      "learning_objectives": [
+        "Construct truth tables to verify boolean expression equivalence",
+        "Compare original and simplified expressions systematically",
+        "Use truth table verification to build confidence in algebraic transformations"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Trusting algebraic manipulations without verification",
+          "remedy": "Emphasize that truth tables provide concrete proof of logical equivalence"
+        },
+        {
+          "misconception": "Thinking that truth tables are only for simple expressions",
+          "remedy": "Show how systematic table construction works even for complex nested expressions"
+        }
+      ],
+      "prerequisites": ["truth table construction", "boolean operators", "logical equivalence"],
+      "assessment_strategies": ["truth table construction exercises", "equivalence verification problems"]
     },
     {
       "id": "CSCD210-D3-S2",
       "title": "Looping Constructs",
       "name": "Looping Constructs",
-      "description": "Repeated execution through for, while, and do-while loops.",
-      "level": 2
+      "description": "Students master the fundamental programming concept of repetition through for, while, and do-while loops, understanding when to choose each type based on the problem requirements. This section emphasizes proper loop design including initialization, condition testing, and update mechanisms, while highlighting common pitfalls like infinite loops and off-by-one errors.",
+      "level": 2,
+      "learning_objectives": [
+        "Choose appropriate loop types (for, while, do-while) based on problem characteristics",
+        "Design proper loop initialization, condition, and update patterns",
+        "Implement sentinel-controlled and counter-controlled loop patterns",
+        "Prevent infinite loops and off-by-one errors through careful design"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Always defaulting to for loops regardless of the problem type",
+          "remedy": "Show specific scenarios where while or do-while loops are more natural and readable"
+        },
+        {
+          "misconception": "Not understanding the relationship between loop conditions and termination",
+          "remedy": "Emphasize that loop conditions specify when to CONTINUE, not when to STOP"
+        }
+      ],
+      "prerequisites": ["conditional logic", "variable assignment", "boolean expressions"],
+      "assessment_strategies": ["loop type selection exercises", "trace table completion", "infinite loop debugging"],
+      "pedagogical_approach": "Start with simple counting loops, progress to data processing patterns, emphasize loop design methodology",
+      "real_world_applications": ["data processing", "input validation", "game loops", "statistical calculations"]
     },
     {
       "id": "CSCD210-D3-S2-C1",
       "title": "Sentinel-Controlled Loops",
       "name": "Sentinel-Controlled Loops",
-      "description": "",
-      "level": 3
+      "description": "Students learn to design loops that continue processing input until a special 'sentinel' value signals termination, a fundamental pattern for handling variable amounts of data. This technique is essential for programs that process user input, file data, or any scenario where the number of iterations isn't known in advance.",
+      "level": 3,
+      "learning_objectives": [
+        "Design appropriate sentinel values that won't conflict with valid data",
+        "Implement priming read and loop update patterns correctly",
+        "Handle sentinel detection without processing the sentinel as data",
+        "Choose between while and do-while loops for sentinel-controlled scenarios"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Processing the sentinel value as if it were regular data",
+          "remedy": "Emphasize checking for sentinel BEFORE processing each input value"
+        },
+        {
+          "misconception": "Choosing sentinel values that conflict with valid input ranges",
+          "remedy": "Show examples of poor sentinel choices and their consequences"
+        }
+      ],
+      "prerequisites": ["while loops", "input/output operations", "conditional logic"],
+      "assessment_strategies": ["sentinel value selection exercises", "input processing implementations"],
+      "pedagogical_approach": "Start with simple examples like -1 to end positive numbers, progress to more complex data scenarios"
     },
     {
       "id": "CSCD210-D3-S2-C1-A1",
       "title": "Choose sentinel value",
       "name": "Choose sentinel value",
-      "description": "",
-      "level": 4
+      "description": "Students learn to select appropriate sentinel values that clearly distinguish termination signals from valid data, avoiding conflicts that could cause premature loop termination or processing errors. Key principle: Choose sentinels outside the valid data range or use special strings/characters that users would never enter as legitimate input.",
+      "level": 4,
+      "learning_objectives": [
+        "Select sentinel values that don't conflict with valid input ranges",
+        "Understand the importance of communicating sentinel values clearly to users",
+        "Choose sentinels that are easy for users to type and remember"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using sentinel values that overlap with valid data ranges",
+          "remedy": "Show concrete examples where poor sentinel choice causes incorrect program behavior"
+        },
+        {
+          "misconception": "Assuming users will never accidentally enter the sentinel value",
+          "remedy": "Discuss robust input validation and confirmation strategies"
+        }
+      ],
+      "prerequisites": ["data type ranges", "user interface design", "input validation"],
+      "assessment_strategies": ["sentinel selection justification exercises", "user experience evaluation"]
     },
     {
       "id": "CSCD210-D3-S2-C1-A2",
       "title": "Update loop variables correctly",
       "name": "Update loop variables correctly",
-      "description": "",
-      "level": 4
+      "description": "Students master the critical pattern of updating loop control variables to ensure progress toward termination, particularly the 'priming read' technique where input is read both before the loop and at the end of each iteration. Common error: Forgetting the update step, which leads to infinite loops when the loop condition never changes.",
+      "level": 4,
+      "learning_objectives": [
+        "Implement the priming read pattern for input-controlled loops",
+        "Ensure loop variables are updated in every iteration path",
+        "Prevent infinite loops through proper variable modification"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Forgetting to read new input at the end of each loop iteration",
+          "remedy": "Emphasize that without updates, loop conditions never change, causing infinite loops"
+        },
+        {
+          "misconception": "Updating loop variables in the wrong location within the loop body",
+          "remedy": "Show how variable update placement affects when sentinel detection occurs"
+        }
+      ],
+      "prerequisites": ["while loop structure", "variable assignment", "input operations"],
+      "assessment_strategies": ["loop trace exercises", "infinite loop debugging activities"]
     },
     {
       "id": "CSCD210-D3-S2-C1-A3",
       "title": "Terminate on sentinel detection",
       "name": "Terminate on sentinel detection",
-      "description": "",
-      "level": 4
+      "description": "Students understand the precise logic for detecting sentinel values and terminating loops without processing the sentinel as regular data. Critical insight: The loop condition should test for non-sentinel values (continue while NOT sentinel), and sentinel detection should immediately trigger loop exit without any data processing on that value.",
+      "level": 4,
+      "learning_objectives": [
+        "Write loop conditions that properly test for sentinel values",
+        "Ensure sentinel values are not processed as regular data",
+        "Implement clean loop termination when sentinels are detected"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Testing for sentinel values inside the loop body instead of in the loop condition",
+          "remedy": "Show how this approach can lead to processing sentinel values as data"
+        },
+        {
+          "misconception": "Using break statements unnecessarily when proper loop conditions would suffice",
+          "remedy": "Demonstrate clean loop design using appropriate while conditions"
+        }
+      ],
+      "prerequisites": ["loop conditions", "boolean logic", "sentinel concepts"],
+      "assessment_strategies": ["sentinel detection implementation exercises", "loop logic verification problems"]
     },
     {
       "id": "CSCD210-D3-S2-C2",
       "title": "Off-by-One Prevention",
       "name": "Off-by-One Prevention",
-      "description": "",
-      "level": 3
+      "description": "Students learn to identify and prevent off-by-one errors, one of the most common and subtle bugs in programming that occurs when loops execute one too many or one too few times. This section emphasizes careful analysis of loop boundaries, proper use of comparison operators, and systematic testing of edge cases.",
+      "level": 3,
+      "learning_objectives": [
+        "Identify potential off-by-one errors in loop design",
+        "Choose appropriate comparison operators (< vs <=) based on loop requirements",
+        "Test boundary conditions systematically to verify correct loop behavior",
+        "Trace loop execution manually to verify iteration counts"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming that < and <= are interchangeable in loop conditions",
+          "remedy": "Show concrete examples where the choice affects whether boundary values are included"
+        },
+        {
+          "misconception": "Not testing loops with minimal data sets (0, 1, 2 items)",
+          "remedy": "Emphasize that edge cases often reveal off-by-one errors most clearly"
+        }
+      ],
+      "prerequisites": ["for loops", "comparison operators", "array indexing"],
+      "assessment_strategies": ["boundary condition testing exercises", "loop trace verification", "bug identification problems"],
+      "pedagogical_approach": "Use concrete examples with small data sets, emphasize systematic testing methodology"
     },
     {
       "id": "CSCD210-D3-S2-C2-A1",
       "title": "Trace index ranges carefully",
       "name": "Trace index ranges carefully",
-      "description": "",
-      "level": 4
+      "description": "Students develop the critical skill of manually tracing through loop iterations to verify that index values stay within valid ranges and that all intended elements are processed exactly once. This systematic approach prevents array bounds exceptions and ensures complete data processing.",
+      "level": 4,
+      "learning_objectives": [
+        "Manually trace loop execution with specific start and end values",
+        "Verify that all intended array elements or data items are processed",
+        "Identify when loop indices exceed valid ranges"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Assuming that loop bounds are correct without manual verification",
+          "remedy": "Require students to trace through loops with concrete examples before implementation"
+        },
+        {
+          "misconception": "Not considering what happens when arrays or data sets are empty",
+          "remedy": "Always test loop behavior with zero-length inputs"
+        }
+      ],
+      "prerequisites": ["array indexing", "loop variables", "manual tracing techniques"],
+      "assessment_strategies": ["index trace table completion", "bounds checking exercises"]
     },
     {
       "id": "CSCD210-D3-S2-C2-A2",
       "title": "Use < vs <= appropriately",
       "name": "Use < vs <= appropriately",
-      "description": "",
-      "level": 4
+      "description": "Students learn the crucial distinction between exclusive (<) and inclusive (<=) comparisons in loop conditions, understanding that this choice determines whether boundary values are included in processing. Key insight: For array processing with length n, use 'i < n' to access indices 0 through n-1, but use 'i <= target' when counting up to and including a specific target value.",
+      "level": 4,
+      "learning_objectives": [
+        "Choose between < and <= based on whether boundary values should be included",
+        "Understand how comparison choice affects loop iteration count",
+        "Apply appropriate comparisons for array bounds and counting scenarios"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using <= when processing arrays, leading to index out of bounds errors",
+          "remedy": "Emphasize that array indices run from 0 to length-1, so use 'i < array.length'"
+        },
+        {
+          "misconception": "Using < when counting should include the final value",
+          "remedy": "Show examples where counting from 1 to 10 requires 'i <= 10', not 'i < 10'"
+        }
+      ],
+      "prerequisites": ["comparison operators", "array indexing", "loop bounds"],
+      "assessment_strategies": ["comparison operator selection exercises", "array bounds debugging"]
     },
     {
       "id": "CSCD210-D3-S2-C2-A3",
       "title": "Test boundary conditions",
       "name": "Test boundary conditions",
-      "description": "",
-      "level": 4
+      "description": "Students develop systematic testing practices by deliberately checking loop behavior with edge cases: empty collections, single-element arrays, and maximum-size data sets. This testing discipline reveals off-by-one errors that might not appear with typical test data, ensuring robust loop implementation.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify critical boundary conditions for systematic testing",
+        "Test loops with empty, single-element, and maximum-size inputs",
+        "Verify that edge cases produce expected results without errors"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Only testing loops with 'normal' data sizes and overlooking edge cases",
+          "remedy": "Emphasize that bugs often hide in boundary conditions that seem unlikely"
+        },
+        {
+          "misconception": "Assuming that if a loop works for some data sizes, it works for all",
+          "remedy": "Show examples where loops fail specifically on empty or single-element inputs"
+        }
+      ],
+      "prerequisites": ["loop design", "testing methodology", "edge case analysis"],
+      "assessment_strategies": ["boundary condition test design", "edge case debugging exercises"]
     },
     {
       "id": "CSCD210-D3-S2-C3",
       "title": "Loop Selection",
       "name": "Loop Selection",
-      "description": "",
-      "level": 3
+      "description": "Students learn to choose the most appropriate loop construct (for, while, do-while) based on the specific characteristics of the problem, emphasizing that different loop types excel in different scenarios. This decision-making skill leads to more readable, maintainable code and demonstrates understanding of each loop's unique strengths.",
+      "level": 3,
+      "learning_objectives": [
+        "Choose for loops when the iteration count is known in advance",
+        "Select while loops for condition-based repetition with possible zero iterations",
+        "Apply do-while loops when at least one iteration is guaranteed",
+        "Justify loop type selection based on problem requirements"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Always using for loops regardless of the problem characteristics",
+          "remedy": "Show examples where while or do-while loops result in cleaner, more understandable code"
+        },
+        {
+          "misconception": "Not considering whether zero iterations should be possible",
+          "remedy": "Emphasize the difference between 'might not execute' (while) vs 'executes at least once' (do-while)"
+        }
+      ],
+      "prerequisites": ["for loops", "while loops", "do-while loops", "problem analysis"],
+      "assessment_strategies": ["loop type selection justification exercises", "code readability comparisons"],
+      "pedagogical_approach": "Present scenarios and have students justify their loop choice before implementation"
     },
     {
       "id": "CSCD210-D3-S2-C3-A1",
       "title": "Pick while vs do-while for user input",
       "name": "Pick while vs do-while for user input",
-      "description": "",
-      "level": 4
+      "description": "Students learn to distinguish between scenarios where input validation might require zero iterations (while loop) versus situations where the user must provide at least one input attempt (do-while loop). Key decision factor: Do-while guarantees one execution, making it ideal for 'prompt until valid' patterns, while while loops handle cases where the input might already be acceptable.",
+      "level": 4,
+      "learning_objectives": [
+        "Choose do-while when at least one user input attempt is required",
+        "Select while loops when input might already meet the validation criteria",
+        "Understand the 'prompt until valid' pattern and its implementation"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using while loops for input validation when do-while would be more natural",
+          "remedy": "Show examples where do-while eliminates awkward code duplication in input validation"
+        },
+        {
+          "misconception": "Not considering that some validation scenarios might require zero prompts",
+          "remedy": "Present cases where data might already be valid, making while loops appropriate"
+        }
+      ],
+      "prerequisites": ["while loops", "do-while loops", "input validation"],
+      "assessment_strategies": ["input validation scenario analysis", "loop pattern implementation"]
     },
     {
       "id": "CSCD210-D3-S2-C3-A2",
       "title": "Apply for loops for known counts",
       "name": "Apply for loops for known counts",
-      "description": "",
-      "level": 4
+      "description": "Students recognize that for loops are the natural choice when the number of iterations is determined before the loop begins, whether through literal values, variable contents, or array lengths. The for loop's structure (initialization, condition, update) makes the iteration pattern explicit and prevents common errors like forgotten updates.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify scenarios where iteration count is known in advance",
+        "Use for loops for array processing and counting operations",
+        "Appreciate how for loop structure prevents infinite loop errors"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using while loops for simple counting when for loops would be clearer",
+          "remedy": "Show how for loops make the iteration pattern explicit and self-contained"
+        },
+        {
+          "misconception": "Not recognizing that array.length provides a known count for iteration",
+          "remedy": "Emphasize that processing all array elements is a classic for loop scenario"
+        }
+      ],
+      "prerequisites": ["for loop structure", "counting patterns", "array processing"],
+      "assessment_strategies": ["scenario analysis for loop type selection", "counting loop implementation"]
     },
     {
       "id": "CSCD210-D3-S2-C3-A3",
       "title": "Refactor repetitive code into loops",
       "name": "Refactor repetitive code into loops",
-      "description": "",
-      "level": 4
+      "description": "Students develop the critical skill of recognizing repetitive code patterns and transforming them into efficient loop structures, improving code maintainability and reducing the chance of errors. This refactoring ability helps students see beyond immediate solutions to more elegant, scalable approaches.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify repetitive code patterns that could benefit from loop conversion",
+        "Transform duplicated statements into parameterized loop iterations",
+        "Choose appropriate loop types based on the repetition pattern"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Accepting code duplication without considering loop alternatives",
+          "remedy": "Show examples where loops dramatically reduce code length and improve maintainability"
+        },
+        {
+          "misconception": "Thinking that loops are only for processing collections",
+          "remedy": "Demonstrate loops for repeated calculations, output formatting, and validation attempts"
+        }
+      ],
+      "prerequisites": ["loop design", "code patterns", "refactoring concepts"],
+      "assessment_strategies": ["code refactoring exercises", "pattern recognition activities"]
     },
     {
       "id": "CSCD210-D3-S3",
       "title": "Switch-Based Branching",
       "name": "Switch-Based Branching",
-      "description": "Multi-way selection using switch statements and expressions.",
-      "level": 2
+      "description": "Students explore switch statements as an elegant alternative to nested if/else chains when comparing a single variable against multiple discrete values. This section emphasizes understanding when switch statements improve code clarity, the critical importance of break statements, and the proper design of default cases for comprehensive coverage.",
+      "level": 2,
+      "learning_objectives": [
+        "Identify scenarios where switch statements are more appropriate than if/else chains",
+        "Implement proper break statement usage to prevent unintended fall-through",
+        "Design meaningful default cases for complete condition coverage",
+        "Group related cases effectively for code organization"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Forgetting break statements and not understanding fall-through behavior",
+          "remedy": "Demonstrate fall-through with concrete examples and trace execution step-by-step"
+        },
+        {
+          "misconception": "Trying to use switch statements for complex conditions or ranges of values",
+          "remedy": "Clarify that switch only works with discrete constant values, show when if/else is still needed"
+        }
+      ],
+      "prerequisites": ["conditional logic", "variable comparison", "control flow concepts"],
+      "assessment_strategies": ["switch vs. if/else decision exercises", "fall-through debugging activities", "menu system implementation"],
+      "pedagogical_approach": "Start with simple menu examples, progress to more complex state-based scenarios",
+      "real_world_applications": ["menu navigation systems", "game state management", "command parsing", "enumeration handling"]
     },
     {
       "id": "CSCD210-D3-S3-C1",
       "title": "Case Labels",
       "name": "Case Labels",
-      "description": "",
-      "level": 3
+      "description": "Students learn to design effective case labels in switch statements, understanding the constraints of constant expressions and the strategic use of case grouping for related actions. This section emphasizes that case labels must be compile-time constants and how intentional case grouping can eliminate code duplication.",
+      "level": 3,
+      "learning_objectives": [
+        "Use only constant expressions (literals, final variables) in case labels",
+        "Group related cases together to share common code blocks",
+        "Organize case labels in logical order for code readability",
+        "Handle all relevant values through comprehensive case coverage"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Trying to use variables or method calls in case labels",
+          "remedy": "Explain that case labels must be compile-time constants, show examples of valid vs invalid labels"
+        },
+        {
+          "misconception": "Duplicating identical code in multiple cases instead of grouping",
+          "remedy": "Demonstrate how case fall-through can eliminate redundant code"
+        }
+      ],
+      "prerequisites": ["switch statement structure", "constant expressions", "code organization"],
+      "assessment_strategies": ["case label validation exercises", "code deduplication through case grouping"],
+      "pedagogical_approach": "Show examples of both valid constant expressions and invalid variable usage"
     },
     {
       "id": "CSCD210-D3-S3-C1-A1",
       "title": "Match labels to constant expressions",
       "name": "Match labels to constant expressions",
-      "description": "",
-      "level": 4
+      "description": "Students understand that switch case labels must be compile-time constants: literal values (1, 'a', \"hello\") or final variables initialized with constant expressions. This restriction ensures that the compiler can build efficient jump tables for switch statement execution, but means that regular variables or method return values cannot be used as case labels.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify valid constant expressions for use in case labels",
+        "Distinguish between compile-time constants and runtime values",
+        "Use final variables appropriately in case labels"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Trying to use regular variables or method calls in case labels",
+          "remedy": "Show compiler errors and explain why only compile-time constants are allowed"
+        },
+        {
+          "misconception": "Not understanding the difference between final and non-final variables in case labels",
+          "remedy": "Demonstrate that final variables must be initialized with constant expressions to work in cases"
+        }
+      ],
+      "prerequisites": ["constant expressions", "final variables", "compiler concepts"],
+      "assessment_strategies": ["case label validity identification exercises", "constant expression classification"]
     },
     {
       "id": "CSCD210-D3-S3-C1-A2",
       "title": "Group cases intentionally",
       "name": "Group cases intentionally",
-      "description": "",
-      "level": 4
+      "description": "Students learn to strategically group multiple case labels together when they should execute the same code block, leveraging fall-through behavior to eliminate code duplication. This technique is particularly useful for handling categories of values (like grouping all vowels, or all weekdays vs weekends) where multiple input values should trigger identical responses.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify opportunities to group related case values",
+        "Use intentional fall-through to eliminate code duplication",
+        "Organize case groups for logical clarity and maintainability"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Duplicating identical code blocks across multiple cases",
+          "remedy": "Show how case grouping reduces redundancy and simplifies maintenance"
+        },
+        {
+          "misconception": "Grouping unrelated cases just to reduce code length",
+          "remedy": "Emphasize that case grouping should reflect logical relationships between values"
+        }
+      ],
+      "prerequisites": ["switch statements", "fall-through behavior", "code organization"],
+      "assessment_strategies": ["case grouping optimization exercises", "code deduplication projects"]
     },
     {
       "id": "CSCD210-D3-S3-C1-A3",
       "title": "Ensure completeness with default",
       "name": "Ensure completeness with default",
-      "description": "",
-      "level": 4
+      "description": "Students understand that default cases serve as essential safety nets in switch statements, handling unexpected values and ensuring that programs respond predictably to all possible inputs. The default case should provide meaningful feedback or graceful error handling rather than silent failure, contributing to robust program design.",
+      "level": 4,
+      "learning_objectives": [
+        "Include appropriate default cases to handle unexpected values",
+        "Design meaningful responses for unmatched switch values",
+        "Understand when default cases are optional vs required"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Omitting default cases and assuming all possible values are explicitly handled",
+          "remedy": "Show examples where unexpected input causes silent program failure without default cases"
+        },
+        {
+          "misconception": "Using empty default cases that provide no user feedback",
+          "remedy": "Emphasize that default cases should inform users about unexpected values or provide appropriate alternatives"
+        }
+      ],
+      "prerequisites": ["switch statements", "error handling", "user experience design"],
+      "assessment_strategies": ["default case design exercises", "completeness analysis problems"]
     },
     {
       "id": "CSCD210-D3-S3-C2",
       "title": "Break & Fall-through",
       "name": "Break & Fall-through",
-      "description": "",
-      "level": 3
+      "description": "Students master the critical concept of break statements in switch structures and understand when fall-through behavior is intentional versus accidental. This section emphasizes that break prevents execution from continuing to subsequent cases, while deliberate fall-through can eliminate code duplication when multiple cases should execute the same logic.",
+      "level": 3,
+      "learning_objectives": [
+        "Use break statements to prevent unintended fall-through execution",
+        "Recognize when fall-through behavior is beneficial for code organization",
+        "Debug switch statements with missing or misplaced break statements",
+        "Design intentional fall-through patterns for related case groupings"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Not understanding that execution continues through all subsequent cases without break",
+          "remedy": "Trace execution step-by-step showing how missing breaks cause unintended behavior"
+        },
+        {
+          "misconception": "Adding break statements to every case without considering if fall-through would be beneficial",
+          "remedy": "Show examples where intentional fall-through reduces code duplication and improves maintainability"
+        }
+      ],
+      "prerequisites": ["switch statements", "case labels", "execution flow"],
+      "assessment_strategies": ["break statement debugging exercises", "fall-through design problems"],
+      "pedagogical_approach": "Start with examples showing problematic fall-through, then demonstrate beneficial uses"
     },
     {
       "id": "CSCD210-D3-S3-C2-A1",
       "title": "Use break to prevent fall-through",
       "name": "Use break to prevent fall-through",
-      "description": "",
-      "level": 4
+      "description": "Students learn that break statements are essential for preventing unintended execution flow in switch statements, where omitting break causes execution to 'fall through' to subsequent cases regardless of their labels. This fundamental control flow concept prevents bugs where multiple unrelated cases execute when only one was intended.",
+      "level": 4,
+      "learning_objectives": [
+        "Place break statements appropriately to control switch execution flow",
+        "Understand that break immediately exits the entire switch statement",
+        "Recognize symptoms of missing break statements in program behavior"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking that case labels automatically stop execution",
+          "remedy": "Demonstrate that case labels are just entry points, not stopping points"
+        },
+        {
+          "misconception": "Forgetting that the last case also needs a break if there's a default",
+          "remedy": "Show how execution flows from the last case into default without break"
+        }
+      ],
+      "prerequisites": ["switch statements", "control flow", "case labels"],
+      "assessment_strategies": ["break placement exercises", "fall-through debugging problems"]
     },
     {
       "id": "CSCD210-D3-S3-C2-A2",
       "title": "Leverage fall-through deliberately",
       "name": "Leverage fall-through deliberately",
-      "description": "",
-      "level": 4
+      "description": "Students understand that intentional fall-through (omitting break statements) can be a powerful technique for handling multiple related cases with the same logic, reducing code duplication while maintaining clarity. Common examples include grouping weekdays vs weekends, vowels vs consonants, or similar categories that require identical processing.",
+      "level": 4,
+      "learning_objectives": [
+        "Identify scenarios where multiple cases should execute the same code",
+        "Implement intentional fall-through to eliminate code duplication",
+        "Document fall-through intentions clearly with comments"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking that fall-through is always a mistake to be avoided",
+          "remedy": "Show examples where fall-through creates cleaner, more maintainable code than duplication"
+        },
+        {
+          "misconception": "Using fall-through without clear documentation or logical grouping",
+          "remedy": "Emphasize that intentional fall-through should be documented and logically justified"
+        }
+      ],
+      "prerequisites": ["break statements", "code organization", "logical grouping"],
+      "assessment_strategies": ["fall-through optimization exercises", "code organization projects"]
     },
     {
       "id": "CSCD210-D3-S3-C2-A3",
       "title": "Compare with if/else chains",
       "name": "Compare with if/else chains",
-      "description": "",
-      "level": 4
+      "description": "Students develop decision-making skills for choosing between switch statements and if/else chains based on the nature of the conditions being tested. Switch statements excel for discrete value matching against a single variable, while if/else chains are better for complex conditions, ranges, or multiple variable comparisons.",
+      "level": 4,
+      "learning_objectives": [
+        "Choose appropriate control structure based on condition complexity",
+        "Recognize when switch statements improve code readability over if/else chains",
+        "Understand performance implications of each approach"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Always preferring switch statements because they seem more advanced",
+          "remedy": "Show scenarios where if/else chains are clearer and more appropriate"
+        },
+        {
+          "misconception": "Thinking that switch and if/else are always interchangeable",
+          "remedy": "Demonstrate that switch only works with discrete constant values, not ranges or complex conditions"
+        }
+      ],
+      "prerequisites": ["switch statements", "if/else chains", "condition analysis"],
+      "assessment_strategies": ["control structure selection exercises", "readability comparison problems"]
     },
     {
       "id": "CSCD210-D3-S3-C3",
       "title": "Switch Expressions",
       "name": "Switch Expressions",
-      "description": "",
-      "level": 3
+      "description": "Students explore modern Java switch expressions (Java 14+) that can return values directly and use arrow syntax to eliminate break statement requirements. This advanced feature allows more concise and functional programming approaches to multi-way selection while maintaining type safety and exhaustiveness checking.",
+      "level": 3,
+      "learning_objectives": [
+        "Use arrow syntax (->) to eliminate break statements in switch expressions",
+        "Return values directly from switch expressions for cleaner code",
+        "Understand when switch expressions are preferable to traditional switch statements",
+        "Apply switch expressions in assignment and return contexts"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Mixing traditional switch statement syntax with switch expression features",
+          "remedy": "Clarify the distinction between statements (execute code) and expressions (return values)"
+        },
+        {
+          "misconception": "Not understanding that switch expressions require exhaustive case coverage",
+          "remedy": "Emphasize that expressions must handle all possible values or include default cases"
+        }
+      ],
+      "prerequisites": ["traditional switch statements", "expressions vs statements", "modern Java features"],
+      "assessment_strategies": ["switch expression conversion exercises", "functional programming applications"],
+      "pedagogical_approach": "Introduce after mastering traditional switch statements, emphasize the value-returning nature"
     },
     {
       "id": "CSCD210-D3-S3-C3-A1",
       "title": "Use arrow syntax in modern Java",
       "name": "Use arrow syntax in modern Java",
-      "description": "",
-      "level": 4
+      "description": "Students learn the arrow syntax (->) in switch expressions that eliminates the need for break statements by automatically preventing fall-through behavior. This modern syntax makes switch expressions more concise and less error-prone while clearly indicating that each case returns a value rather than executing a sequence of statements.",
+      "level": 4,
+      "learning_objectives": [
+        "Apply arrow syntax (->) to eliminate break statement requirements",
+        "Understand that arrow cases cannot fall through to subsequent cases",
+        "Write more concise switch expressions using modern syntax"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Trying to use break statements with arrow syntax",
+          "remedy": "Explain that arrow syntax automatically prevents fall-through, making break unnecessary"
+        },
+        {
+          "misconception": "Mixing arrow syntax with traditional colon syntax in the same switch",
+          "remedy": "Emphasize that all cases in a switch expression must use consistent syntax"
+        }
+      ],
+      "prerequisites": ["switch expressions", "modern Java syntax", "expression evaluation"],
+      "assessment_strategies": ["syntax conversion exercises", "modern Java feature application"]
     },
     {
       "id": "CSCD210-D3-S3-C3-A2",
       "title": "Return values from switch",
       "name": "Return values from switch",
-      "description": "",
-      "level": 4
+      "description": "Students understand that switch expressions evaluate to values that can be directly assigned to variables or returned from methods, enabling more functional programming patterns. This capability allows switch expressions to replace complex if/else chains in assignment contexts, leading to cleaner and more readable code.",
+      "level": 4,
+      "learning_objectives": [
+        "Use switch expressions in assignment statements and return contexts",
+        "Understand that switch expressions must evaluate to a single value",
+        "Apply switch expressions to eliminate temporary variables in conditional assignments"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Trying to execute multiple statements in switch expression cases",
+          "remedy": "Clarify that expressions return values, while statements execute actions"
+        },
+        {
+          "misconception": "Not ensuring all cases return the same type",
+          "remedy": "Emphasize type consistency across all branches of switch expressions"
+        }
+      ],
+      "prerequisites": ["switch expressions", "variable assignment", "return statements"],
+      "assessment_strategies": ["expression assignment exercises", "functional programming conversions"]
     },
     {
       "id": "CSCD210-D3-S3-C3-A3",
       "title": "Handle exhaustive enum switches",
       "name": "Handle exhaustive enum switches",
-      "description": "",
-      "level": 4
+      "description": "Students learn that switch expressions with enum types must be exhaustive, meaning they must handle all possible enum values either explicitly or through a default case. This compile-time safety feature prevents runtime errors when new enum values are added, making switch expressions particularly powerful for type-safe programming with enumerated types.",
+      "level": 4,
+      "learning_objectives": [
+        "Ensure switch expressions handle all enum values for compile-time safety",
+        "Understand how adding enum values affects existing switch expressions",
+        "Use default cases appropriately with enum switch expressions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Thinking that switch expressions with enums work the same as with primitive types",
+          "remedy": "Demonstrate that enum switches require exhaustive coverage for compilation success"
+        },
+        {
+          "misconception": "Not understanding how adding new enum values breaks existing code",
+          "remedy": "Show how exhaustive checking prevents silent failures when enums are extended"
+        }
+      ],
+      "prerequisites": ["enum types", "switch expressions", "compile-time checking"],
+      "assessment_strategies": ["enum exhaustiveness exercises", "type safety validation problems"]
     },
     {
       "id": "CSCD210-D4",
       "title": "Method Design & Modularization",
       "name": "Method Design & Modularization",
-      "description": "Building reusable code units with parameters and return values.",
-      "level": 1
+      "description": "Students master the fundamental programming principle of breaking down complex problems into smaller, manageable, reusable code units through method design. This domain emphasizes modular programming concepts including parameter passing, return values, method overloading, and the creation of well-documented APIs that form the foundation of professional software development.",
+      "level": 1,
+      "learning_objectives": [
+        "Design methods that follow single responsibility principle for code modularity",
+        "Implement proper parameter passing and return value strategies",
+        "Create reusable code components that eliminate duplication",
+        "Apply method overloading to provide flexible interfaces",
+        "Write comprehensive method documentation using JavaDoc standards"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Writing long methods that try to accomplish too many tasks",
+          "remedy": "Teach the single responsibility principle and show how to break complex operations into focused methods"
+        },
+        {
+          "misconception": "Not understanding the difference between parameters and arguments",
+          "remedy": "Clarify that parameters are method definitions, arguments are values passed when calling"
+        }
+      ],
+      "prerequisites": ["variables", "data types", "basic program structure"],
+      "assessment_strategies": ["method design projects", "code refactoring exercises", "API documentation evaluation"],
+      "pedagogical_approach": "Progress from simple void methods to complex parameter/return patterns, emphasize reusability",
+      "real_world_applications": ["business logic implementation", "API development", "code library creation"]
     },
     {
       "id": "CSCD210-D4-S1",
       "title": "Method Definition",
       "name": "Method Definition",
-      "description": "Syntax and documentation of methods.",
-      "level": 2
+      "description": "Students learn the fundamental syntax and structure of Java methods, including visibility modifiers, return types, method names, parameter lists, and method bodies. This section emphasizes professional naming conventions, clear documentation practices, and the essential components that make methods reusable and maintainable.",
+      "level": 2,
+      "learning_objectives": [
+        "Write syntactically correct method signatures with appropriate visibility modifiers",
+        "Choose descriptive method names that clearly indicate their purpose and behavior",
+        "Document methods effectively using JavaDoc comments and parameter descriptions",
+        "Understand the relationship between method signatures and method overloading"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Confusing method declaration with method invocation syntax",
+          "remedy": "Show clear examples of defining methods versus calling methods with parameter passing"
+        },
+        {
+          "misconception": "Using non-descriptive method names like doStuff() or method1()",
+          "remedy": "Emphasize that method names should describe what the method accomplishes using action verbs"
+        }
+      ],
+      "prerequisites": ["program structure", "data types", "naming conventions"],
+      "assessment_strategies": ["method signature writing exercises", "documentation quality evaluation"],
+      "pedagogical_approach": "Start with simple void methods, progress to parameters and return values"
     },
     {
       "id": "CSCD210-D4-S1-C1",
       "title": "Descriptive Headers",
       "name": "Descriptive Headers",
-      "description": "",
-      "level": 3
+      "description": "Students develop professional method naming and documentation practices that make code self-documenting and maintainable. This includes using action verbs for method names, following Java naming conventions, and writing clear JavaDoc comments that explain the method's purpose, parameters, and return values.",
+      "level": 3,
+      "learning_objectives": [
+        "Create method names using action verbs that clearly describe the method's purpose",
+        "Apply consistent Java naming conventions (camelCase, descriptive names)",
+        "Write comprehensive JavaDoc documentation for professional code quality",
+        "Design method signatures that are intuitive and self-explanatory"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using noun-based method names instead of action verbs",
+          "remedy": "Show examples of how calculateTotal() is clearer than total() or calculation()"
+        },
+        {
+          "misconception": "Writing minimal or missing documentation assuming code is self-explanatory",
+          "remedy": "Demonstrate how good documentation prevents misunderstanding and aids maintenance"
+        }
+      ],
+      "prerequisites": ["method syntax", "Java naming conventions", "documentation practices"],
+      "assessment_strategies": ["method naming evaluation", "documentation quality assessment"],
+      "pedagogical_approach": "Provide before/after examples showing poorly vs well-documented methods"
     },
     {
       "id": "CSCD210-D4-S1-C1-A1",
       "title": "Choose verbs for method names",
       "name": "Choose verbs for method names",
-      "description": "",
-      "level": 4
+      "description": "Students learn that method names should begin with action verbs that clearly describe what the method accomplishes, making code self-documenting and intuitive to use. Examples include calculateTax(), validateInput(), displayResults(), or processPayment() rather than vague names like doWork() or process().",
+      "level": 4,
+      "learning_objectives": [
+        "Use action verbs (calculate, validate, display, process) for method names",
+        "Avoid vague or generic names that don't describe the method's purpose",
+        "Choose names that make the method's behavior obvious to other programmers"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using noun-based method names or generic terms like 'process' or 'handle'",
+          "remedy": "Show specific examples: calculateTax() vs tax(), validateEmail() vs checkEmail()"
+        },
+        {
+          "misconception": "Making method names too long with unnecessary words",
+          "remedy": "Balance clarity with conciseness: calculateMonthlyPayment() not calculateTheMonthlyPaymentAmount()"
+        }
+      ],
+      "prerequisites": ["method syntax", "Java naming conventions"],
+      "assessment_strategies": ["method naming exercises", "code readability evaluation"]
     },
     {
       "id": "CSCD210-D4-S1-C1-A2",
       "title": "Specify clear parameter lists",
       "name": "Specify clear parameter lists",
-      "description": "",
-      "level": 4
+      "description": "Students design parameter lists that clearly communicate what data the method needs to accomplish its task, using descriptive parameter names and appropriate data types. Well-designed parameters make methods easier to understand, use correctly, and maintain over time.",
+      "level": 4,
+      "learning_objectives": [
+        "Choose descriptive parameter names that indicate their purpose",
+        "Use appropriate data types for parameter efficiency and clarity",
+        "Order parameters logically (inputs before outputs, required before optional)"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Using single-letter or cryptic parameter names like 'x', 'val', or 'temp'",
+          "remedy": "Show examples: calculateTax(double income, double rate) vs calculateTax(double x, double y)"
+        },
+        {
+          "misconception": "Including too many parameters, making methods difficult to use",
+          "remedy": "Suggest creating objects or breaking methods into smaller pieces when parameter lists become long"
+        }
+      ],
+      "prerequisites": ["data types", "method parameters", "naming conventions"],
+      "assessment_strategies": ["parameter design exercises", "method usability evaluation"]
     },
     {
       "id": "CSCD210-D4-S1-C1-A3",
       "title": "Summarize intent with comments",
       "name": "Summarize intent with comments",
-      "description": "",
-      "level": 4
+      "description": "Students write concise JavaDoc comments that explain what a method does, what parameters it expects, and what it returns, following professional documentation standards. Good method documentation serves as a contract between the method writer and users, preventing misunderstanding and reducing debugging time.",
+      "level": 4,
+      "learning_objectives": [
+        "Write clear JavaDoc comments explaining method purpose and behavior",
+        "Document all parameters with @param tags explaining their meaning and constraints",
+        "Include @return tags describing what the method produces and under what conditions"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Writing comments that simply repeat the method name or obvious facts",
+          "remedy": "Focus on WHY and WHAT rather than HOW: explain the method's purpose, not its implementation"
+        },
+        {
+          "misconception": "Skipping documentation for 'simple' methods that seem self-explanatory",
+          "remedy": "Emphasize that even simple methods benefit from brief documentation for future maintenance"
+        }
+      ],
+      "prerequisites": ["JavaDoc syntax", "method structure", "professional documentation"],
+      "assessment_strategies": ["documentation quality evaluation", "API documentation projects"]
     },
     {
       "id": "CSCD210-D4-S1-C2",
       "title": "Helper Methods",
       "name": "Helper Methods",
-      "description": "",
-      "level": 3
+      "description": "Students learn to create supporting methods that break complex operations into smaller, manageable pieces, promoting code reusability and following the single responsibility principle. Helper methods eliminate code duplication, improve readability, and make testing and debugging more manageable by isolating specific functionality.",
+      "level": 3,
+      "learning_objectives": [
+        "Identify opportunities to extract repeated code into helper methods",
+        "Design helper methods that accomplish single, focused tasks",
+        "Create reusable methods that can be called from multiple locations",
+        "Apply proper method visibility (private vs public) for helper methods"
+      ],
+      "common_misconceptions": [
+        {
+          "misconception": "Creating methods that are too large and try to accomplish multiple tasks",
+          "remedy": "Teach the single responsibility principle: each method should do one thing well"
+        },
+        {
+          "misconception": "Duplicating code instead of recognizing opportunities for helper methods",
+          "remedy": "Show before/after examples of code with and without appropriate helper method extraction"
+        }
+      ],
+      "prerequisites": ["method definition", "code organization", "single responsibility principle"],
+      "assessment_strategies": ["code refactoring exercises", "helper method identification problems"],
+      "pedagogical_approach": "Start with obvious code duplication, progress to more subtle opportunities for helper methods"
     },
     {
       "id": "CSCD210-D4-S1-C2-A1",
