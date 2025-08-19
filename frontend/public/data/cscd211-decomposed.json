@@ -13,8 +13,8 @@
     ],
     "pedagogical_purpose": "Provides unit-testable atomic concepts with evidence-based skill progression from novice to mastery, enabling personalized learning pathways and targeted misconception remediation.",
     "decomposition_methodology": "Explosive Recursive Decomposition (ERD) ensuring each concept is irreducible, measurable, and pedagogically sound based on cognitive load theory and expertise research.",
-    "total_nodes": 25,
-    "total_links": 37,
+  "total_nodes": 34,
+  "total_links": 58,
     "domains_completed": [
       "Object-Oriented Design Fundamentals",
       "Inheritance and Polymorphism", 
@@ -638,7 +638,9 @@
         "implements keyword indicates class provides concrete implementations", 
   "Interface methods are implicitly public and abstract (excluding default and static methods)",
         "Classes can implement multiple interfaces simultaneously",
-        "Interface implementation requires all abstract methods to be implemented"
+  "Interface implementation requires all abstract methods to be implemented",
+  "Marker interfaces (e.g., Serializable) convey capabilities without methods",
+  "Default-method conflicts require explicit disambiguation using InterfaceName.super.method()"
       ]
     },
     {
@@ -669,6 +671,144 @@
         "Collections of interface types enable heterogeneous object storage",
         "Interface polymorphism decouples client code from specific implementations",
   "The instanceof operator checks if an object implements a specific interface"
+      ]
+    }
+    ,
+    {
+      "id": "inner-nested-classes",
+      "name": "Inner and Nested Classes",
+      "description": "Defining classes inside other classes for logical grouping, controlled access, and event-style one-offs (anonymous).",
+      "group": "inner-classes",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Static nested classes do not capture an outer instance and behave like normal top-level classes for access rules",
+        "Non-static inner classes capture an enclosing instance; require an outer instance to construct",
+        "Qualified names (Outer.Inner) and construction syntax (new Outer().new Inner())",
+        "Local and anonymous classes for short-lived helpers and callbacks",
+        "Prefer lambdas over anonymous classes for single-method interfaces when possible"
+      ]
+    },
+    {
+      "id": "object-cloning-concepts",
+      "name": "Object Cloning Concepts",
+      "description": "Approaches for copying object state safely: shallow vs deep copy, Cloneable/clone(), and copy constructors.",
+      "group": "object-cloning",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Shallow copy duplicates top-level fields; referenced objects are shared",
+        "Deep copy duplicates referenced objects to achieve independence",
+        "Cloneable is a marker interface; Object.clone() performs a field-by-field shallow copy by default",
+        "Copy constructors and factory methods as explicit, type-safe alternatives to clone()",
+        "Beware mutable fields and invariants when defining equality and cloning behavior"
+      ]
+    }
+    ,
+    {
+      "id": "data-abstraction",
+      "name": "Data Abstraction",
+      "description": "Expose essential behavior through stable interfaces while hiding representation and enforcing invariants.",
+      "group": "data-abstraction",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Abstraction barrier separates interface from implementation details",
+        "Representation invariants define valid internal states",
+        "Clients depend on behavior contracts, not concrete representation",
+        "toString/equals/hashCode should respect observable behavior, not internal fields",
+        "Encapsulation supports safe evolution of implementations"
+      ]
+    },
+    {
+      "id": "composition-delegation",
+      "name": "Composition and Delegation",
+      "description": "Build complex behavior by combining objects (has-a) and forwarding operations to collaborators rather than inheriting.",
+      "group": "oop-design-fundamentals",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Prefer composition over inheritance for behavior reuse",
+        "Has-a relationships embed collaborators as fields",
+        "Delegation forwards method calls to composed objects",
+        "Fosters low coupling and high cohesion",
+        "Reusable components emerge from well-defined roles"
+      ]
+    },
+    {
+      "id": "polymorphic-collections",
+      "name": "Polymorphic Collections",
+      "description": "Use base or interface types for collections so heterogeneous subtype elements can co-exist with correct dynamic dispatch.",
+      "group": "inheritance-polymorphism",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "A List<Shape> can hold Circle, Rectangle, Triangle, etc.",
+        "Method dispatch remains dynamic per element runtime type",
+        "Favor programming to interfaces for flexibility (e.g., List over ArrayList)",
+        "PECS guideline for wildcards: producers use ? extends T, consumers use ? super T",
+        "Avoid downcasting by designing appropriate polymorphic operations"
+      ]
+    }
+    ,
+    {
+      "id": "prerequisite-review",
+      "name": "Prerequisite Review",
+      "description": "Core CSCD210 concepts (primitives, control flow, arrays, and basic methods) that underpin CSCD211 success.",
+      "group": "prerequisite-review",
+      "level": 1,
+      "size": 12,
+      "atomicConcepts": [
+        "Primitive types (int, double, boolean, char) and type conversion",
+        "Control flow: if/else and loops (for/while)",
+        "Arrays: declaration, indexing, iteration",
+        "Method basics: parameters, return values, and scope"
+      ]
+    },
+    {
+      "id": "ordering-and-sorting-apis",
+      "name": "Ordering and Sorting APIs",
+      "description": "Using Arrays.sort, Collections.sort/List.sort, and Comparator combinators to order arrays and collections.",
+      "group": "collections-data-structures",
+      "level": 2,
+      "size": 12,
+      "atomicConcepts": [
+        "Arrays.sort uses natural order (Comparable) or a provided Comparator",
+        "Collections.sort(List) and List.sort(Comparator) for lists",
+        "Comparator.comparing/thenComparing, reversed, nullsFirst/nullsLast",
+        "Avoid subtraction for compare (overflow risk); use compare methods",
+  "Stability and performance characteristics depend on implementation",
+  "Object sorting uses TimSort (stable) since Java 7; primitive arrays use Dual-Pivot Quicksort (not stable)"
+      ]
+    },
+    {
+      "id": "comparable-natural-order",
+      "name": "Comparable and Natural Ordering",
+      "description": "Implementing compareTo to define a class's natural ordering with correctness and contract compliance.",
+      "group": "abstract-classes-interfaces",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Implement Comparable<T> and define int compareTo(T other)",
+        "Contracts: antisymmetry, transitivity, and consistency",
+        "Consistency with equals recommended when natural identity matches equality",
+        "Use Comparator/secondary keys when multiple orderings are needed",
+        "Document ordering and null-handling semantics"
+      ]
+    },
+    {
+      "id": "comparator-custom-order",
+      "name": "Comparator and Custom Ordering",
+      "description": "Providing alternate orderings independent of natural order using Comparator implementations and combinators.",
+      "group": "abstract-classes-interfaces",
+      "level": 3,
+      "size": 6,
+      "atomicConcepts": [
+        "Implement Comparator<T> and define int compare(T a, T b)",
+        "Use Comparator.comparing, thenComparing, reversed for composition",
+        "Method references and lambdas create concise comparators",
+        "Null-handling with nullsFirst/nullsLast",
+        "Avoid inconsistent comparators that violate transitivity"
       ]
     }
   ],
@@ -866,6 +1006,42 @@
       "description": "Object-oriented foundation enables recursive algorithms that operate on object collections and hierarchical data structures."
     },
     {
+      "source": "cscd211",
+      "target": "data-abstraction",
+      "type": "contains",
+      "description": "Course topic: Students practice designing clear interfaces that hide representation details (data abstraction)."
+    },
+    {
+      "source": "encapsulation-mechanisms",
+      "target": "data-abstraction",
+      "type": "prerequisite",
+      "description": "Encapsulation and access control underpin effective data abstraction barriers."
+    },
+    {
+      "source": "oop-design-fundamentals",
+      "target": "composition-delegation",
+      "type": "contains",
+      "description": "Design fundamentals include has-a modeling and delegation for behavior reuse without inheritance."
+    },
+    {
+      "source": "collections-data-structures",
+      "target": "composition-delegation",
+      "type": "applies",
+      "description": "Collections are commonly used collaborators; classes delegate storage/iteration concerns to them."
+    },
+    {
+      "source": "inheritance-polymorphism",
+      "target": "polymorphic-collections",
+      "type": "contains",
+      "description": "Polymorphism in practice: collections typed by a base/interface hold heterogeneous subtypes."
+    },
+    {
+      "source": "collections-data-structures",
+      "target": "polymorphic-collections",
+      "type": "synergizes",
+      "description": "Using interface-typed collections enables flexible designs that accept future subtype additions."
+    },
+    {
       "source": "collections-data-structures",
       "target": "recursion-algorithms",
       "type": "synergizes",
@@ -875,13 +1051,13 @@
       "source": "recursion-algorithms",
       "target": "exception-handling",
       "type": "requires",
-  "description": "Recursive methods should validate inputs and handle exceptional conditions appropriately to avoid runtime errors."
+      "description": "Recursive methods should validate inputs and handle exceptional conditions appropriately to avoid runtime errors."
     },
     {
       "source": "method-overriding",
       "target": "exception-handling",
       "type": "constrains",
-  "description": "Overridden methods may only declare the same or narrower checked exceptions than parent methods, influencing exception hierarchy design."
+      "description": "Overridden methods may only declare the same or narrower checked exceptions than parent methods, influencing exception hierarchy design."
     },
     {
       "source": "cscd211",
@@ -930,6 +1106,96 @@
       "target": "polymorphism-through-interfaces", 
       "type": "synergizes",
       "description": "Complementary abstraction: Abstract classes and interfaces work together to provide both shared implementation and behavioral contracts."
+    },
+    {
+      "source": "cscd211",
+      "target": "prerequisite-review",
+      "type": "contains",
+      "description": "Course includes a focused review of CSCD210 fundamentals as scaffolding."
+    },
+    {
+      "source": "prerequisite-review",
+      "target": "collections-data-structures",
+      "type": "prerequisite",
+      "description": "Arrays and loops bridge into using and choosing collections."
+    },
+    {
+      "source": "prerequisite-review",
+      "target": "recursion-algorithms",
+      "type": "prerequisite",
+      "description": "Control flow and method tracing prepare students for recursive reasoning."
+    },
+    {
+      "source": "prerequisite-review",
+      "target": "oop-design-fundamentals",
+      "type": "prerequisite",
+      "description": "Variables, methods, and basic types scaffold object modeling and encapsulation."
+    },
+    {
+      "source": "collections-data-structures",
+      "target": "ordering-and-sorting-apis",
+      "type": "contains",
+      "description": "Sorting arrays and lists relies on natural order (Comparable) or custom comparators."
+    },
+    {
+      "source": "ordering-and-sorting-apis",
+      "target": "comparable-natural-order",
+      "type": "prerequisite",
+      "description": "Natural ordering requires implementing Comparable and honoring its contract."
+    },
+    {
+      "source": "ordering-and-sorting-apis",
+      "target": "comparator-custom-order",
+      "type": "prerequisite",
+      "description": "Custom orderings are provided via Comparator implementations or combinators."
+    },
+    {
+      "source": "generic-collections",
+      "target": "comparator-custom-order",
+      "type": "applies",
+      "description": "Generics ensure type-safe comparator definitions and usage."
+    },
+    {
+      "source": "interface-definition-implementation",
+      "target": "comparable-natural-order",
+      "type": "enables",
+      "description": "Interface design concepts apply when implementing Comparable for natural ordering."
+    },
+    {
+      "source": "interface-definition-implementation",
+      "target": "comparator-custom-order",
+      "type": "enables",
+      "description": "Comparator is an interface enabling alternate orderings decoupled from the type's natural order."
+    },
+    {
+      "source": "cscd211",
+      "target": "inner-nested-classes",
+      "type": "contains",
+      "description": "CSCD 211 includes inner and nested classes for grouping, scoping, and event-style helpers."
+    },
+    {
+      "source": "cscd211",
+      "target": "object-cloning-concepts",
+      "type": "contains",
+      "description": "CSCD 211 covers object cloning concepts including shallow/deep copy and clone alternatives."
+    },
+    {
+      "source": "encapsulation-mechanisms",
+      "target": "object-cloning-concepts",
+      "type": "prerequisite",
+      "description": "Understanding encapsulation and object state is prerequisite to designing correct cloning behavior."
+    },
+    {
+      "source": "collections-data-structures",
+      "target": "object-cloning-concepts",
+      "type": "related",
+      "description": "Cloning collections highlights shallow vs deep copy trade-offs for contained elements."
+    },
+    {
+      "source": "oop-design-fundamentals",
+      "target": "inner-nested-classes",
+      "type": "applies",
+      "description": "Inner/nested classes apply information hiding and responsibility grouping in object-oriented design."
     }
   ]
 }
