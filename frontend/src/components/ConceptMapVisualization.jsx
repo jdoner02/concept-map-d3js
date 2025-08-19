@@ -1314,8 +1314,24 @@ const ConceptMapVisualization = () => {
           } else if (Array.isArray(b.value)) {
             const items = b.value.slice(0, 8);
             let y = contentY + 8;
+
+            // Recursively walk arrays and objects so nested metadata becomes
+            // readable text.  JavaScript would otherwise stringify objects as
+            // "[object Object]", hiding useful details from learners.
+            const stringifyMeta = (val) => {
+              if (val == null) return '';
+              if (typeof val === 'string' || typeof val === 'number') return String(val);
+              if (Array.isArray(val)) return val.map(stringifyMeta).join('; ');
+              if (typeof val === 'object') {
+                return Object.entries(val)
+                  .map(([k, v]) => `${k.replace(/_/g, ' ')}: ${stringifyMeta(v)}`)
+                  .join('; ');
+              }
+              return String(val);
+            };
+
             items.forEach(item => {
-              const str = String(item);
+              const str = stringifyMeta(item);
               // Heuristic: treat plain URLs as links so they can be clicked.
               const isUrl = isValidHttpUrl(str);
               const parent = isUrl
