@@ -44,6 +44,11 @@ npm run dev
 # http://localhost:5173/?jsonUrl=https://raw.githubusercontent.com/jdoner02/concept-map-d3js/refs/heads/main/src/main/resources/concept-map.json
 # or simply reference a bundled file by name:
 # http://localhost:5173/?jsonUrl=hrv-research-nodes-v1.json
+
+# Preselect a dataset from the bundled manifest (sets dropdown & shareable link)
+# http://localhost:5173/?dataset=hrv-research-nodes-v1.json
+# or the hash-based equivalent if you prefer:
+# http://localhost:5173/#dataset=hrv-research-nodes-v1.json
 ```
 
 Notes:
