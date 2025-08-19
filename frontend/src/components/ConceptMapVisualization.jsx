@@ -16,6 +16,66 @@ const RELATION_COLOR_OVERRIDES = {
 // in heavier URL parsing utilities.
 const isValidHttpUrl = (str) => /^https?:\/\//i.test(String(str).trim());
 
+// ---------------------------------------------------------------------------
+// Minimal Markdown renderer
+// ---------------------------------------------------------------------------
+// Tooltips in the graph accept free‑form text.  To make that text expressive
+// without pulling in a large third‑party library we implement a tiny subset of
+// Markdown ourselves.  The function below understands a handful of common
+// patterns—bold, italics, inline code, links and basic bullet lists.  Every
+// step starts by escaping raw HTML so user content cannot inject scripts.
+// The goal is not to be perfectly spec‑compliant but to provide just enough
+// structure to keep educational snippets readable.
+const escapeHtml = (str) => String(str)
+  .replace(/&/g, '&amp;')
+  .replace(/</g, '&lt;')
+  .replace(/>/g, '&gt;');
+
+function markdownToHtml(md) {
+  let html = escapeHtml(md);
+
+  // Strong emphasis: **bold**
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  // Emphasis: *italic*
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  // Inline code: `code`
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  // Hyperlinks: [label](url)
+  html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g,
+    '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
+
+  // Lists: lines starting with - or * become <ul><li>...</li></ul>
+  const lines = html.split(/\n/);
+  const out = [];
+  let inList = false;
+  for (const line of lines) {
+    const m = line.match(/^\s*[-*]\s+(.*)/);
+    if (m) {
+      if (!inList) { out.push('<ul>'); inList = true; }
+      out.push(`<li>${m[1]}</li>`);
+    } else {
+      if (inList) { out.push('</ul>'); inList = false; }
+      out.push(line);
+    }
+  }
+  if (inList) out.push('</ul>');
+
+  // Paragraphs and line breaks. Two newlines start a new paragraph; single
+  // newlines translate to <br/> so stacked thoughts remain readable.
+  html = out.join('\n');
+  html = html.replace(/\n{2,}/g, '</p><p>');
+  html = `<p>${html.replace(/\n/g, '<br/>')}</p>`;
+  return html;
+}
+
+// React helper component.  We memoise the conversion so re-renders are cheap.
+// Consumers can pass inline styles to shape the surrounding container (useful
+// for the line‑clamp behaviour in the detailed tooltip).
+const Markdown = ({ text, style }) => {
+  const html = useMemo(() => markdownToHtml(text || ''), [text]);
+  return <div style={style} dangerouslySetInnerHTML={{ __html: html }} />;
+};
+
 const ConceptMapVisualization = () => {
   const svgRef = useRef(null);
   const simRef = useRef(null); // keep simulation across renders without touching DOM properties
@@ -2309,7 +2369,10 @@ const ConceptMapVisualization = () => {
         >
           <div style={{ fontWeight: 600, fontSize: 13 }}>{hoverInfo.node.name || hoverInfo.node.id}</div>
           {hoverInfo.node.description && (
-            <div style={{ fontSize: 12, color: '#444', marginTop: 2 }}>{hoverInfo.node.description}</div>
+            <Markdown
+              text={hoverInfo.node.description}
+              style={{ fontSize: 12, color: '#444', marginTop: 2 }}
+            />
           )}
         </div>
       )}
@@ -2349,18 +2412,27 @@ const ConceptMapVisualization = () => {
             <span style={{ marginLeft: 'auto', fontSize: 12, color: '#555' }}>{linkTooltip.data.type}</span>
           </div>
           {linkTooltip.data.description && (
-            <p style={{ margin: '4px 0 6px 0', color: '#333', fontSize: 13 }}>{linkTooltip.data.description}</p>
+            <Markdown
+              text={linkTooltip.data.description}
+              style={{ margin: '4px 0 6px 0', color: '#333', fontSize: 13 }}
+            />
           )}
           {linkTooltip.data.pedagogical_reasoning && (
             <div style={{ marginBottom: 6 }}>
               <div style={{ fontWeight: 600, fontSize: 12, color: '#444' }}>Why it matters</div>
-              <div style={{ fontSize: 12, color: '#333' }}>{linkTooltip.data.pedagogical_reasoning}</div>
+              <Markdown
+                text={linkTooltip.data.pedagogical_reasoning}
+                style={{ fontSize: 12, color: '#333' }}
+              />
             </div>
           )}
           {linkTooltip.data.cognitive_bridge && (
             <div style={{ marginBottom: 6 }}>
               <div style={{ fontWeight: 600, fontSize: 12, color: '#444' }}>Cognitive bridge</div>
-              <div style={{ fontSize: 12, color: '#333' }}>{linkTooltip.data.cognitive_bridge}</div>
+              <Markdown
+                text={linkTooltip.data.cognitive_bridge}
+                style={{ fontSize: 12, color: '#333' }}
+              />
             </div>
           )}
           {/* Render any array-based details generically */}
@@ -2455,7 +2527,8 @@ const ConceptMapVisualization = () => {
            */}
           {tooltip.node.description && (
             <div style={{ textAlign: 'center' }}>
-              <p
+              <Markdown
+                text={tooltip.node.description}
                 style={{
                   margin: 0,
                   color: '#444',
@@ -2464,9 +2537,7 @@ const ConceptMapVisualization = () => {
                   WebkitLineClamp: descExpanded ? 'unset' : 2,
                   WebkitBoxOrient: 'vertical'
                 }}
-              >
-                {tooltip.node.description}
-              </p>
+              />
               {tooltip.node.description.length > 120 && (
                 <button
                   onClick={() => setDescExpanded(prev => !prev)}
