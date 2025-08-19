@@ -1,8 +1,8 @@
 {
   "metadata": {
-    "version": "1.0",
+    "version": "1.1",
     "created": "2025-08-18T23:15:15Z",
-    "last_updated": "2025-08-18T23:31:15.297634Z",
+    "last_updated": "2025-08-19T00:00:00Z",
     "description": "Concept map for CSCD211 with prerequisite CSCD210 review and detailed topic breakdown.",
     "author": "Documentation Curator Agent",
     "audience": [
@@ -10,8 +10,8 @@
       "CSCD211 students"
     ],
     "pedagogical_purpose": "Scaffolds knowledge from CSCD210 fundamentals to CSCD211 advanced concepts.",
-    "total_nodes": 120,
-    "total_links": 125
+    "total_nodes": 131,
+    "total_links": 137
   },
   "nodes": [
     {
@@ -997,6 +997,94 @@
       "group": "prerequisite-review",
       "level": 3,
       "size": 6
+    },
+    {
+      "id": "data-abstraction",
+      "name": "Data Abstraction",
+      "description": "Providing only essential interfaces while hiding implementation details.",
+      "group": "data-abstraction",
+      "level": 1,
+      "size": 18
+    },
+    {
+      "id": "inner-classes",
+      "name": "Inner Classes",
+      "description": "Classes defined within other classes for logical grouping and access to outer members.",
+      "group": "inner-classes",
+      "level": 1,
+      "size": 18
+    },
+    {
+      "id": "static-nested-class",
+      "name": "Static Nested Class",
+      "description": "Nested class declared static, independent of outer class instances.",
+      "group": "inner-classes",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "non-static-inner-class",
+      "name": "Non-Static Inner Class",
+      "description": "Inner class tied to an instance of the outer class, accessing its members.",
+      "group": "inner-classes",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "local-classes",
+      "name": "Local Classes",
+      "description": "Inner classes declared within a method or block for short-lived helpers.",
+      "group": "inner-classes",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "anonymous-inner-classes",
+      "name": "Anonymous Inner Classes",
+      "description": "One-off inner classes without a name, often used for event handlers.",
+      "group": "inner-classes",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "object-cloning",
+      "name": "Object Cloning",
+      "description": "Creating copies of objects with shallow or deep duplication strategies.",
+      "group": "object-cloning",
+      "level": 1,
+      "size": 18
+    },
+    {
+      "id": "shallow-copy",
+      "name": "Shallow Copy",
+      "description": "Cloning that copies references, causing shared sub-objects.",
+      "group": "object-cloning",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "deep-copy",
+      "name": "Deep Copy",
+      "description": "Cloning that duplicates nested objects for independence.",
+      "group": "object-cloning",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "cloneable-interface",
+      "name": "Cloneable Interface",
+      "description": "Marker interface indicating a class allows cloning via Object.clone().",
+      "group": "object-cloning",
+      "level": 2,
+      "size": 12
+    },
+    {
+      "id": "copy-constructors",
+      "name": "Copy Constructors",
+      "description": "Alternative cloning approach using a constructor that accepts an existing instance.",
+      "group": "object-cloning",
+      "level": 2,
+      "size": 12
     }
   ],
   "links": [
@@ -1767,6 +1855,78 @@
       "target": "linkedlist-mechanics",
       "type": "related",
       "description": "Recursive Algorithms connects to Linkedlist Mechanics."
+    },
+    {
+      "source": "cscd211",
+      "target": "data-abstraction",
+      "type": "contains",
+      "description": "CSCD 211: Programming Principles II covers Data Abstraction."
+    },
+    {
+      "source": "encapsulation",
+      "target": "data-abstraction",
+      "type": "prerequisite",
+      "description": "Encapsulation enables Data Abstraction."
+    },
+    {
+      "source": "cscd211",
+      "target": "inner-classes",
+      "type": "contains",
+      "description": "CSCD 211: Programming Principles II covers Inner Classes."
+    },
+    {
+      "source": "inner-classes",
+      "target": "static-nested-class",
+      "type": "contains",
+      "description": "Inner Classes include Static Nested Class."
+    },
+    {
+      "source": "inner-classes",
+      "target": "non-static-inner-class",
+      "type": "contains",
+      "description": "Inner Classes include Non-Static Inner Class."
+    },
+    {
+      "source": "inner-classes",
+      "target": "local-classes",
+      "type": "contains",
+      "description": "Inner Classes include Local Classes."
+    },
+    {
+      "source": "inner-classes",
+      "target": "anonymous-inner-classes",
+      "type": "contains",
+      "description": "Inner Classes include Anonymous Inner Classes."
+    },
+    {
+      "source": "cscd211",
+      "target": "object-cloning",
+      "type": "contains",
+      "description": "CSCD 211: Programming Principles II covers Object Cloning."
+    },
+    {
+      "source": "object-cloning",
+      "target": "shallow-copy",
+      "type": "contains",
+      "description": "Object Cloning includes Shallow Copy."
+    },
+    {
+      "source": "object-cloning",
+      "target": "deep-copy",
+      "type": "contains",
+      "description": "Object Cloning includes Deep Copy."
+    },
+    {
+      "source": "object-cloning",
+      "target": "cloneable-interface",
+      "type": "contains",
+      "description": "Object Cloning uses the Cloneable Interface."
+    },
+    {
+      "source": "object-cloning",
+      "target": "copy-constructors",
+      "type": "contains",
+      "description": "Object Cloning can use Copy Constructors."
     }
   ]
 }
