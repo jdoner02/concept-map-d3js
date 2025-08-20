@@ -303,14 +303,18 @@ title {
   position: absolute;
   width: 0;
   height: 0;
-  /* Craft a right‑angled triangle that leans toward the node */
+  /*
+   * Create a downward pointing arrow centred along the tooltip's bottom
+   * edge. The triangle visually connects the card back to the node it
+   * describes.
+   */
   border: 8px solid transparent;
-  border-bottom-color: rgba(255, 255, 255, 0.98);
-  border-right-color: rgba(255, 255, 255, 0.98);
-  /* Anchor the arrow slightly above and left of the card */
-  top: -8px;
-  left: -8px;
-  /* Outline mirrors the tooltip border so the arrow feels attached */
-  box-shadow: -1px -1px 0 0 #e0e0e0;
+  border-top-color: rgba(255, 255, 255, 0.98);
+  /* Place the arrow at the bottom centre of the tooltip */
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  /* Mirror the tooltip's border colour so arrow and card feel unified */
+  box-shadow: 0 1px 0 0 #a6001a;
   z-index: -1;
 }

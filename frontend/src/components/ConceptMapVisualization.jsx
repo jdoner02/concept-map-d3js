@@ -2007,25 +2007,38 @@ const ConceptMapVisualization = () => {
         }
       }
 
-      // Tether tooltip to selected node position (screen coords)
+      // Tether tooltip to the selected node.  When collapsed the card hovers
+      // above the node like a speech bubble.  When expanded it floats in the
+      // centre of the viewport so longer content stays readable.
       if (tooltip.visible && tooltip.node && tooltipDivRef.current) {
-        const focus = filteredNodes.find(n => n.id === tooltip.node.id);
-        if (focus && typeof focus.x === 'number' && typeof focus.y === 'number') {
-          const t = zoomRef.current || d3.zoomIdentity;
-          const pt = t.apply([focus.x, focus.y]);
-          // Start with a point slightly offset from the node so the tooltip
-          // does not obscure it.
-          let left = pt[0] + 16;
-          let top = pt[1] + 16;
-          // Clamp the position so the card stays fully visible within the
-          // viewport; eight pixels of padding keeps it from kissing edges.
-          const margin = 8;
-          const w = tooltipDivRef.current.offsetWidth;
-          const h = tooltipDivRef.current.offsetHeight;
-          left = Math.min(Math.max(margin, left), window.innerWidth - w - margin);
-          top = Math.min(Math.max(margin, top), window.innerHeight - h - margin);
-          tooltipDivRef.current.style.left = `${left}px`;
-          tooltipDivRef.current.style.top = `${top}px`;
+        if (descExpanded) {
+          // Full‑screen view: centre the tooltip and bail out early so the
+          // node's position does not influence placement.
+          tooltipDivRef.current.style.left = '50%';
+          tooltipDivRef.current.style.top = '50%';
+          tooltipDivRef.current.style.transform = 'translate(-50%, -50%)';
+        } else {
+          const focus = filteredNodes.find(n => n.id === tooltip.node.id);
+          if (focus && typeof focus.x === 'number' && typeof focus.y === 'number') {
+            const t = zoomRef.current || d3.zoomIdentity;
+            const pt = t.apply([focus.x, focus.y]);
+            // Keep the tooltip square so it feels balanced.  Use 60% of the
+            // smaller viewport dimension so it never overwhelms small screens.
+            const size = Math.min(window.innerWidth, window.innerHeight) * 0.6;
+            tooltipDivRef.current.style.width = `${size}px`;
+            tooltipDivRef.current.style.height = `${size}px`;
+            // Position the card centred horizontally above the node with a
+            // small 12px gap.
+            let left = pt[0] - size / 2;
+            let top = pt[1] - size - 12;
+            // Clamp so the card remains fully visible with an 8px margin.
+            const margin = 8;
+            left = Math.min(Math.max(margin, left), window.innerWidth - size - margin);
+            top = Math.min(Math.max(margin, top), window.innerHeight - size - margin);
+            tooltipDivRef.current.style.left = `${left}px`;
+            tooltipDivRef.current.style.top = `${top}px`;
+            tooltipDivRef.current.style.transform = '';
+          }
         }
       }
 
@@ -2098,11 +2111,11 @@ const ConceptMapVisualization = () => {
               svg.transition().duration(900).ease(d3.easeCubicOut)
                 .call(zoomBehaviorRef.current.transform, tx)
                 .on('end', () => {
-                  // trigger UI
+                  // Reset any stale UI state then surface the node's tooltip so
+                  // idle viewers learn something new.
                   activeMetaRef.current = null;
-                  // open ring via simulated toggle
-                  // eslint-disable-next-line no-unused-expressions
-                  pick && (function(){ const event = new Event('click', { bubbles: true }); svgRef.current?.dispatchEvent(event); })();
+                  setDescExpanded(false);
+                  setTooltip({ visible: true, x: 0, y: 0, node: { ...pick } });
                 });
             }
           }
@@ -2297,8 +2310,8 @@ const ConceptMapVisualization = () => {
               svg.transition().duration(700).ease(d3.easeCubicOut)
                 .call(zoomBehaviorRef.current.transform, tx)
                 .on('end', () => {
-                  const sel = document.querySelector(`g.node-group[data-node-id='${CSS.escape(String(pick.id))}']`);
-                  sel && sel.dispatchEvent(new MouseEvent('click', { bubbles: true }));
+                  setDescExpanded(false);
+                  setTooltip({ visible: true, x: 0, y: 0, node: { ...pick } });
                 });
             }
           }}
@@ -2523,27 +2536,22 @@ const ConceptMapVisualization = () => {
           data-testid="node-tooltip"
           className="node-tooltip"
           /*
-           * We attach a class so CSS can draw a tiny triangular pointer using
-           * a ::before pseudo‑element.  This anchors the floating card back to
-           * the node it describes, sparing readers the "which one?" confusion.
-           *
-           * Visually the container itself resembles a small card.  Cards are a
-           * familiar pattern across mobile and desktop UIs, so reusing the
-           * style makes the tooltip feel instantly recognisable and polished.
+           * The container doubles as both a compact bubble and an expanded
+           * modal.  Inline styles keep the logic close to the behaviour so
+           * future contributors can see how layout choices support the UX.
            */
           style={{
-            position: 'absolute',
-            left: tooltip.x + 16,
-            top: tooltip.y + 16,
+            position: descExpanded ? 'fixed' : 'absolute',
+            left: 0,
+            top: 0,
             background: 'rgba(255,255,255,0.98)',
-            border: '1px solid #e0e0e0',
+            border: '2px solid #a6001a', // EWU eagle red ties the tooltip to the brand
             borderRadius: 8,
-            padding: '12px 14px',
+            padding: descExpanded ? '12px 14px' : '6px 8px',
             boxShadow: '0 8px 24px rgba(0,0,0,0.15)',
-            maxWidth: '90vw', // let tooltip span most of the viewport on narrow screens
-            maxHeight: '80vh', // prevent the tooltip from covering the entire page vertically
-            overflowY: 'auto', // allow scrolling when content exceeds maxHeight
-            zIndex: 10
+            overflowY: descExpanded ? 'auto' : 'hidden',
+            zIndex: descExpanded ? 20 : 10,
+            ...(descExpanded ? { maxWidth: '90vw', maxHeight: '90vh' } : {}),
           }}
           role="dialog"
           aria-modal="true"
@@ -2585,7 +2593,7 @@ const ConceptMapVisualization = () => {
             style={{
               textAlign: 'left',
               fontWeight: 'bold',
-              fontSize: 18,
+              fontSize: descExpanded ? 18 : 14,
               marginBottom: 8,
               color: '#111'
             }}
@@ -2607,7 +2615,7 @@ const ConceptMapVisualization = () => {
               <Markdown
                 text={tooltip.node.description}
                 style={{
-                  fontSize: 14, // bump legibility for paragraph text
+                  fontSize: descExpanded ? 14 : 12,
                   margin: 0,
                   color: '#444',
                   overflow: 'hidden',
